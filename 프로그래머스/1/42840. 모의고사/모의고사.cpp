@@ -1,31 +1,35 @@
-#include <string>
-#include <vector>
-
+#include <bits/stdc++.h>
 using namespace std;
-int Pattern[3][40] =
+vector<int> solution(vector<int> answers) 
 {
-    {1, 2, 3, 4, 5, 1, 2, 3, 4, 5, 1, 2, 3, 4, 5, 1, 2, 3, 4, 5, 1, 2, 3, 4, 5, 1, 2, 3, 4, 5, 1, 2, 3, 4, 5, 1, 2, 3, 4, 5},
-    {2, 1, 2, 3, 2, 4, 2, 5, 2, 1, 2, 3, 2, 4, 2, 5, 2, 1, 2, 3, 2, 4, 2, 5, 2, 1, 2, 3, 2, 4, 2, 5, 2, 1, 2, 3, 2, 4, 2, 5},
-    {3, 3, 1, 1, 2, 2, 4, 4, 5, 5, 3, 3, 1, 1, 2, 2, 4, 4, 5, 5, 3, 3, 1, 1, 2, 2, 4, 4, 5, 5, 3, 3, 1, 1, 2, 2, 4, 4, 5, 5}
-};
-vector<int> solution(vector<int> answers) {
-    int count[3] = {0, };
-    int result_max = 0;
+    std::vector<std::vector<int>> player;
+    std::vector<int> p1 = {1,2,3,4,5};
+    std::vector<int> p2 = {2,1,2,3,2,4,2,5};
+    std::vector<int> p3 = {3,3,1,1,2,2,4,4,5,5};
+    player.push_back(p1);
+    player.push_back(p2);
+    player.push_back(p3);
+    vector<int> score;
+    score.push_back(0);
+    score.push_back(0);
+    score.push_back(0);
+    int maximum = 0;
     for(int i = 0; i < answers.size(); i++)
     {
-        if(Pattern[0][i%40] == answers[i])
-            count[0]++;
-        if(Pattern[1][i%40] == answers[i])
-            count[1]++;
-        if(Pattern[2][i%40] == answers[i])
-            count[2]++;
-        result_max = std::max(result_max, count[0]);
-        result_max = std::max(result_max, count[1]);
-        result_max = std::max(result_max, count[2]);
+        if(player[0][i % player[0].size()] == answers[i])
+            score[0]++;
+        maximum = std::max(maximum, score[0]);
+        if(player[1][i % player[1].size()] == answers[i])
+            score[1]++;
+        maximum = std::max(maximum, score[1]);
+        if(player[2][i % player[2].size()] == answers[i])
+            score[2]++; 
+        maximum = std::max(maximum, score[2]);
+        
     }
     std::vector<int> answer;
-    for(int i = 0; i < 3; i++)
-        if(result_max == count[i])
+    for(int i = 0; i < score.size(); i++)
+        if(score[i] == maximum)
             answer.push_back(i+1);
     return answer;
 }
