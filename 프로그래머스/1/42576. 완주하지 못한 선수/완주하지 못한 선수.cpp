@@ -1,19 +1,17 @@
 #include <bits/stdc++.h>
 using namespace std;
-std::unordered_map<std::string, int> check;
+
 string solution(vector<string> participant, vector<string> completion) 
 {
-    std::string answer;
-    for(const std::string& str : completion)
+    string answer = "";
+    std::unordered_map<std::string, int> complet;
+    for(const auto& iter : completion)
+        complet[iter]++;
+    for(const auto& iter : participant)
     {
-        check[str]++;
+        complet[iter]--;
+        if(complet[iter] < 0)
+            answer = iter;
     }
-    for(const std::string& str : participant)
-    {
-        check[str]--;
-        if(check[str] < 0)
-            answer = str;
-    }
-    
     return answer;
 }
