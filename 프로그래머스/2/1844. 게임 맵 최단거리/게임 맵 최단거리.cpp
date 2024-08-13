@@ -5,13 +5,14 @@ const int dx[] = {1, -1, 0, 0};
 int dist[105][105];
 int solution(vector<vector<int>> maps)
 {
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(0);
+    std::cout.tie(0);
     int n = maps.size();
     int m = maps[0].size();
     std::queue<std::pair<int, int>> q;
     q.push({0, 0});
     dist[0][0] = 1;
-    if(!maps[0][0])
-        return -1;
     while(q.size())
     {
         int y = q.front().first;
