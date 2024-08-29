@@ -1,53 +1,36 @@
 #include <bits/stdc++.h>
+
 using namespace std;
 
-vector<int> solution(string s) {
-    std::vector<std::vector<int>> arrays;
-    std::vector<int> temps;
+vector<int> solution(string s) 
+{
     std::string num;
-    for(int i = 1; i < s.size() - 1; i++)
+    int counts[100005];
+    std::memset(counts, 0, sizeof(counts));
+    std::unordered_set<int> chks;
+    vector<int> answer;
+    for(const auto& iter : s)
     {
-        if(s[i] == '{')
+        if('0' <= iter && iter <= '9')
         {
-            temps.clear();
-        }
-            
-        else if(s[i] == '}')
-        {
-            temps.push_back(std::stoi(num));
-            num = "";
-            arrays.push_back(temps);
-        }
-        else if(s[i] == ',' && num.size())
-        {
-            temps.push_back(std::stoi(num));
-            num = "";
-        }
-        else if(s[i] == ',' && num.empty())
-        {
-            continue;
+            num += iter;
         }
         else
         {
-            num += s[i];
-        }
-    }
-    std::sort(arrays.begin(), arrays.end(), [](const std::vector<int>& a, const std::vector<int>& b)
-              {
-                  return a.size() < b.size();
-              });
-    std::set<int> chk;
-    vector<int> answer;
-    for(const auto& iter : arrays)
-    {
-        for(const auto& num : iter)
-        {
-            if(chk.find(num) == chk.end())
+            if(num.size())
             {
-                answer.push_back(num);
-                chk.insert(num);
+                int val = std::stoi(num);
+                counts[val]++;
+                chks.insert(val);
+                num.clear();
             }
         }
     }
+    for(const auto& iter : chks)
+        answer.push_back(iter);
+    std::sort(answer.begin(), answer.end(), [=](const int& a, const int& b)
+              {
+                  return counts[a] > counts[b];
+              });
     return answer;
 }
