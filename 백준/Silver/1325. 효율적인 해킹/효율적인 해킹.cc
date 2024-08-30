@@ -19,7 +19,8 @@ int main()
   }
   for(int i = 1; i <= n; i++)
   {
-    bool visited[MaxN] = {false, };
+    bool visited[MaxN];
+    std::memset(visited, false, sizeof(visited));
     visited[i] = true;
     std::queue<int> q;
     q.push(i);
