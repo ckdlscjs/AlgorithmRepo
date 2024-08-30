@@ -40,14 +40,9 @@ int main()
     }
   }
     
-  std::priority_queue<int, std::vector<int>, std::greater<int>> pq;
   for(int i = 1; i <= n; i++)
     if(result == cnt[i])
-      pq.push(i);
-  while(pq.size())
-  {
-    std::cout << pq.top() << ' ';
-    pq.pop();
-  }
+      std::cout << i << ' ';
+ 
   return 0;
 }
