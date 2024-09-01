@@ -1,22 +1,19 @@
 #include <bits/stdc++.h>
+
 using namespace std;
 
 vector<vector<int>> solution(vector<vector<int>> arr1, vector<vector<int>> arr2) 
 {
-    vector<vector<int>> answer;
+    vector<vector<int>> answer(arr1.size(), std::vector<int> (arr2[0].size(), 0));
     for(int i = 0; i < arr1.size(); i++)
-    {   
-        std::vector<int> i_result;
-        for(int idx = 0; idx < arr2[0].size(); idx++)
+    {
+        for(int j = 0; j < arr2[0].size(); j++)
         {
-            int sum = 0;
-            for(int j = 0; j < arr1[i].size(); j++)
+            for(int idx = 0; idx < arr1[0].size(); idx++)
             {
-                sum += arr1[i][j] * arr2[j][idx];
+                answer[i][j] += (arr1[i][idx] * arr2[idx][j]);
             }
-            i_result.push_back(sum);
         }
-        answer.push_back(i_result);
     }
     return answer;
 }
