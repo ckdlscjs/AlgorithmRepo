@@ -1,29 +1,32 @@
 #include <bits/stdc++.h>
-
 using namespace std;
-
 vector<int> solution(string s) 
 {
-    //vector<int> answer;
-    int count1 = 0, count2 = 0;
-    while(s.size() != 1)
+    vector<int> answer;
+    int cnt_change = 0;
+    int cnt_zero = 0;
+  
+    while(s != "1")
     {
-        while(s.find('0') != std::string::npos)
+        std::string temps;
+        for(const auto& iter : s)
         {
-            //std::cout << s <<'\n';
-            s.erase(s.find('0'), 1);
-            count1++;
+            if(iter == '1')
+                temps += iter;
+            else
+                cnt_zero++;
         }
-        int length = s.size();
-        s = "";
-        while(length)
+        int s_size = temps.size();
+        s.clear();
+        while(s_size > 0)
         {
-            s += std::to_string(length % 2);
-            length /= 2;
+            s += std::to_string(s_size % 2);
+            s_size /= 2;
         }
-        //std::cout << s <<'\n';
-        count2++;
+        std::reverse(s.begin(), s.end());
+        cnt_change++;
     }
-    
-    return {count2, count1};
+    answer.push_back(cnt_change);
+    answer.push_back(cnt_zero);
+    return answer;
 }
