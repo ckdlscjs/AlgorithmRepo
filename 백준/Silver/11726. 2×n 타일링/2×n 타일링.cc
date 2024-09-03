@@ -1,22 +1,15 @@
-#include <iostream>
-
-using namespace std;
-
+#include <stdio.h>
 int main() 
 {
-  std::ios::sync_with_stdio(false);
-  std::cin.tie(0);
-  std::cout.tie(0);
   int n = 0;
-  std::cin >> n;
   int dp[1005];
+  scanf("%d", &n);
   dp[1] = 1;
   dp[2] = 2;
-  for(int i = 3; i < 1005; i++)
+  for(int i = 3; i <=n; ++i)
   {
-    dp[i] = dp[i-1] + dp[i-2];
-    dp[i] %= 10007;
+    dp[i] = (dp[i-1] + dp[i-2]) % 10007;
   }
-  std::cout << dp[n];
+  printf("%d", dp[n]);
   return 0;
 }
