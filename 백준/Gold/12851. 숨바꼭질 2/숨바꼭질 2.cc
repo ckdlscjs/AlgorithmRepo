@@ -21,29 +21,14 @@ int main()
       cnt++;
       continue;
     }
-    int n1 = cur -1;
-    if(0 <= n1 && n1 <= 100000)
+    for(const auto& iter : {cur-1, cur+1, cur*2})
     {
-      if(!dp[n1])
-        dp[n1] = dp[cur] + 1;
-      if(dp[n1] == dp[cur] + 1)
-        q.push(n1);
-    }
-    int n2 = cur +1;
-    if(0 <= n2 && n2 <= 100000)
-    {
-       if(!dp[n2])
-        dp[n2] = dp[cur] + 1;
-      if(dp[n2] == dp[cur] + 1)
-        q.push(n2);
-    }
-    int n3 = cur*2;
-    if(0 <= n3 && n3 <= 100000)
-    {
-      if(!dp[n3])
-        dp[n3] = dp[cur] + 1;
-      if(dp[n3] == dp[cur] + 1)
-        q.push(n3);
+      if(iter < 0 || iter > 100000)
+        continue;
+      if(!dp[iter])
+        dp[iter] = dp[cur] + 1;
+      if(dp[iter] == dp[cur] + 1)
+        q.push(iter);
     }
   }
   std::cout << dp[k] - 1 <<'\n';
