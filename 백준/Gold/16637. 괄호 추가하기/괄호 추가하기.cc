@@ -3,11 +3,12 @@ using namespace std;
 int n;
 std::string input;
 int result = -987654321;
-int Calc(std::string str)
+int Calc(int sum, std::string str)
 {
   int num1 = str[1] - '0';
   int num2 = str[3] - '0';
-  return str[2] == '+' ? num1 + num2 : str[2] == '*' ? num1*num2 : num1-num2;
+  int res = str.size() <= 2 ? str[1] - '0' : str[2] == '+' ? num1 + num2 : str[2] == '*' ? num1*num2 : num1-num2;
+  return str[0] == '+' ? sum + res : str[0] == '*' ? sum * res : sum - res;
 }
 void Check(std::string str, int sum)
 {
@@ -16,24 +17,9 @@ void Check(std::string str, int sum)
     result = std::max(result, sum);
     return;
   }
-  std::string temp;
   if(str.size() >= 4)
-  {
-    temp = str.substr(0, 4);
-    if(temp[0] == '+')
-      Check(str.substr(4) ,sum + Calc(temp));
-    else if(temp[0] == '*')
-      Check(str.substr(4) ,sum * Calc(temp));
-    else
-      Check(str.substr(4) ,sum - Calc(temp));
-  }
-  temp = str.substr(0, 2);
-  if(temp[0] == '+')
-    Check(str.substr(2) ,sum + (temp[1]-'0'));
-  else if(temp[0] == '*')
-    Check(str.substr(2) ,sum * (temp[1]-'0'));
-  else
-    Check(str.substr(2) ,sum - (temp[1]-'0'));
+    Check(str.substr(4) ,Calc(sum, str.substr(0, 4)));
+  Check(str.substr(2) , Calc(sum, str.substr(0, 2)));
 }
 int main() 
 {
