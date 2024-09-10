@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-int n, k;
+int n, k, turn;
 int dp[500005][2];
 int main() 
 {
@@ -9,36 +9,37 @@ int main()
   std::cout.tie(0);
   std::cin >> n >> k;
   std::memset(dp, -1, sizeof(dp));
-  dp[n][0] = 0;
-  std::queue<std::pair<int, int>> q;
-  q.push({n, 0});
+  std::queue<int> q;
+  dp[n][turn%2] = turn;
+  q.push(n);
+  bool chk = false;
   while(q.size())
   {
-    int cur = q.front().first;
-    int t = q.front().second;
-    q.pop();
-    for(const auto& iter : {cur-1, cur+1, cur*2})
-    {
-      if(iter < 0 || iter > 500000 || dp[iter][(t+1)%2] != -1)
-        continue;
-      dp[iter][(t+1)%2] = t+1;
-      q.push({iter, t+1});
-    }
-  }
-  bool chk = false;
-  for(int t = 0; t <= 500000; t++)
-  {
-    k += t;
+    k += turn;
     if(k > 500000)
       break;
-    if(dp[k][t%2] != -1 && dp[k][t%2] <= t)
+    if(dp[k][turn%2] != -1)
     {
       chk = true;
-      std::cout << t;
       break;
     }
+    int qsize = q.size();
+    for(int i = 0; i < qsize; i++)
+    {
+      int cur = q.front(); q.pop();
+      for(const auto& iter : {cur-1, cur+1, cur*2})
+      {
+        if(iter < 0 || iter > 500000 || dp[iter][(turn + 1)%2] != -1)
+          continue;
+        dp[iter][(turn + 1)%2] = turn + 1;
+        q.push(iter);
+      }
+    }
+    turn++;
   }
-  if(!chk)
+  if(chk)
+    std::cout << turn;
+  else
     std::cout << -1;
   return 0;
 }
