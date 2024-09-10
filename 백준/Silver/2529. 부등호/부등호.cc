@@ -28,7 +28,7 @@ void chInEqual(bool last, int idx)
         if(chNum[i]) continue;
         ans[idx] = i;
         if(inEqual[idx-1] == '>' && ans[idx-1] < ans[idx]) continue;
-        if(inEqual[idx-1] == '<' && ans[idx-1] > ans[idx]) continue;
+        if(inEqual[idx-1] == '<' && ans[idx-1] > ans[idx]) break;
         chNum[i] = true;
         chInEqual(last, idx+1);
         chNum[i] = false;
