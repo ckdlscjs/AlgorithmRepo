@@ -1,44 +1,66 @@
-#include <bits/stdc++.h>
-using namespace std;
+#include <cstdio>
+
+
 int n;
-std::vector<char> opers;
-bool chkfirst = true;
-std::string result;
-void Check(std::string nums, int uses)
+char inEqual[10];
+bool chNum[10];
+int ans[10];
+bool chFirst = true;
+void chInEqual(bool last, int idx)
 {
-  if(nums.size() > n)
+  if(!chFirst) return;
+  if(idx > n)
   {
-    result = nums;
-    if(chkfirst)
-      std::cout << result <<'\n';
-    chkfirst = false;
-    return;
+    if(chFirst)
+    {
+      for(int i = 0; i <= n; i++) printf("%d",ans[i]);
+      printf("\n");
+      chFirst = false;
+    }
   }
-  char ch = opers[nums.size()-1];
-  for(int i = 9; i >= 0; i--)
+  else
   {
-    if(uses & (1 << i))
-      continue;
-    if(ch == '>' && nums[nums.size()-1] - '0' < i)
-      continue;
-    if(ch == '<' && nums[nums.size()-1] - '0' > i)
-      break;
-    Check(nums + std::to_string(i), uses | 1 << i);
-  }  
+    if(!last)
+    {
+      for(int i = 9; i >= 0; i--)
+      {
+        if(!chFirst) break;
+        if(chNum[i]) continue;
+        ans[idx] = i;
+        if(inEqual[idx-1] == '>' && ans[idx-1] < ans[idx]) continue;
+        if(inEqual[idx-1] == '<' && ans[idx-1] > ans[idx]) continue;
+        chNum[i] = true;
+        chInEqual(last, idx+1);
+        chNum[i] = false;
+      }
+    }
+    else
+    {
+      for(int i = 0; i <= 9; i++)
+      {
+        if(!chFirst) break;
+        if(chNum[i]) continue;
+        ans[idx] = i;
+        if(inEqual[idx-1] == '>' && ans[idx-1] < ans[idx]) continue;
+        if(inEqual[idx-1] == '<' && ans[idx-1] > ans[idx]) break;
+        chNum[i] = true;
+        chInEqual(last, idx+1);
+        chNum[i] = false;
+      }
+    }
+  }
 }
-int main() {
-  std::ios::sync_with_stdio(false);
-  std::cin.tie(0);
-  std::cout.tie(0);
-  std::cin >> n;
+
+int main(void)
+{
+  scanf("%d", &n);
   for(int i = 0; i < n; i++)
   {
-    char ch;
-    std::cin >> ch;
-    opers.push_back(ch);
+    char temp;
+    scanf(" %c", &temp);
+    inEqual[i] = temp;
   }
-  for(int i = 9; i >= 0; i--)
-    Check(""+std::to_string(i), 1 << i);
-  std::cout << result;
-  return 0;
+  chInEqual(false, 0);
+  chFirst = true;
+  chInEqual(true, 0);
 }
