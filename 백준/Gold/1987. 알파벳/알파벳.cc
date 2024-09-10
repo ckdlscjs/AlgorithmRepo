@@ -5,25 +5,27 @@ const int dx[] = {1, -1, 0, 0};
 const int MaxN = 22;
 int r, c;
 char arr[MaxN][MaxN];
-bool alps[30];
+int dp[MaxN][MaxN];
 bool visited[MaxN][MaxN];
 int result = 0;
-void Check(int y, int x, int cnt)
+void Check(int y, int x, int cnt, int alps)
 {
   result = std::max(result, cnt);
+  if(dp[y][x] == alps)
+    return;
+  dp[y][x] = alps;
   if(cnt >= r*c)
     return;
   for(int dir = 0; dir < 4; dir++)
   {
     int ny = y + dy[dir];
     int nx = x + dx[dir];
-    if(ny < 0 || nx < 0 || ny >= r || nx >= c || alps[arr[ny][nx] - 'A'] || visited[ny][nx])
+    int use_alp = 1<<(int)(arr[ny][nx] - 'A');
+    if(ny < 0 || nx < 0 || ny >= r || nx >= c || visited[ny][nx] || alps & use_alp)
       continue;
-    alps[arr[ny][nx] - 'A'] = true;
     visited[ny][nx] = true;
-    Check(ny, nx, cnt+1);
+    Check(ny, nx, cnt+1, alps | use_alp);
     visited[ny][nx] = false;
-    alps[arr[ny][nx] - 'A'] = false;
   }
 }
 int main() 
@@ -41,9 +43,8 @@ int main()
       arr[i][j] = str[j];
     }
   }
-  alps[arr[0][0] - 'A'] = true;
   visited[0][0] = true;
-  Check(0, 0, 1);
+  Check(0, 0, 1, 1 << (int)(arr[0][0] - 'A'));
   std::cout << result;
   return 0;
 }
