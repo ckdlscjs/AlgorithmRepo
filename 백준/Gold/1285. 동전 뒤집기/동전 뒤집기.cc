@@ -32,6 +32,7 @@ int main()
         temp_t += arrs[i][rev][j] == 'T' ?  1 : 0;
       }
       cnt_t += temp_t > n/2 ? n-temp_t : temp_t;
+      if(cnt_t > res) continue;
     }
     res = std::min(res, cnt_t);
   }
