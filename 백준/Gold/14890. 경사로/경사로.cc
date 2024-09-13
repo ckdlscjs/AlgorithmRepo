@@ -9,20 +9,16 @@ int Check(int arr[][MaxN])
   int ret = 0;
   for(int i = 0; i < n; i++)
   {
-    int cnt = 0;
+    int cnt = 1;
     int j = 0;
     for(j = 0; j < n-1; j++)
     {
       if(arr[i][j] == arr[i][j+1]) cnt++;
-      else if(arr[i][j] + 1 == arr[i][j+1] && cnt >= l-1) cnt = 0;
-      else if(arr[i][j] - 1 == arr[i][j+1] && cnt >= -1) cnt = -l;
+      else if(arr[i][j] + 1 == arr[i][j+1] && cnt >= l) cnt = 1;
+      else if(arr[i][j] - 1 == arr[i][j+1] && cnt >= 0) cnt = -l + 1;
       else break;
     }
-    if(j >= n-1 && cnt >= -1) 
-    {
-      //std::cout << i << '\n';
-      ret++;
-    }
+    if(j >= n-1 && cnt >= 0) ret++;
   }
   return ret;
 }
