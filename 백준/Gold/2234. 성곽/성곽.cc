@@ -5,12 +5,13 @@ const int MaxN = 55;
 const int dy[] = {0, -1, 0, 1};
 const int dx[] = {-1, 0, 1, 0};
 int arr[MaxN][MaxN];
-bool visited[MaxN][MaxN];
+int visited[MaxN][MaxN];
+int sizes[MaxN*MaxN];
 std::map<std::pair<int, int>, std::vector<int>> walls;
-int dfs(int y, int x)
+int dfs(int y, int x, int cnt)
 {
   int ret = 1;
-  visited[y][x] = true;
+  visited[y][x] = cnt;
   for(int dir = 0; dir < 4; dir++)
   {
     if(arr[y][x] & 1 << dir)
@@ -19,7 +20,7 @@ int dfs(int y, int x)
     int nx = x + dx[dir];
     if(ny < 0 || nx < 0 || ny >= m || nx >= n || visited[ny][nx])
       continue;
-    ret += dfs(ny, nx);
+    ret += dfs(ny, nx, cnt);
   }
   return ret;
 }
@@ -52,7 +53,8 @@ int main()
       if(visited[i][j])
         continue;
       res1++;
-      res2 = std::max(res2, dfs(i, j));
+      sizes[res1] = dfs(i, j, res1);
+      res2 = std::max(res2, sizes[res1]);
     }
   }
   for(const auto& iter : walls)
@@ -62,14 +64,10 @@ int main()
     int x = iter.first.second;
     for(const auto& val : iter.second)
     {
-      std::memset(visited, false, sizeof(visited));
       int ny = y + dy[val];
       int nx = x + dx[val];
-      arr[y][x] &= ~(1 << val);
-      arr[ny][nx] &= ~(1 << (val + 2) % 4);
-      res3 = std::max(res3, dfs(y, x));
-      arr[y][x] |= 1 << val;
-      arr[ny][nx] |= 1 << (val + 2) % 4;
+      if(visited[y][x] != visited[ny][nx])
+        res3 = std::max(res3, sizes[visited[y][x]] + sizes[visited[ny][nx]]);
     }
   }
   std::cout << res1 << '\n' << res2 <<'\n' << res3;
