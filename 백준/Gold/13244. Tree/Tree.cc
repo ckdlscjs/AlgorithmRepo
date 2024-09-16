@@ -42,9 +42,7 @@ int main()
         }
       }
     }
-    if(cnt == 1 && e+1 == n) std::cout << "tree";
-    else std::cout << "graph";
-    std::cout <<'\n';
+    std::cout << ((cnt == 1 && e+1 == n) ? "tree" : "graph") << '\n';
   }
   return 0;
 }
