@@ -11,17 +11,12 @@ int calc(int y, int x, int dir)
 {
   int ret = 0;
   int ny = y, nx = x;
-  while(1)
+  while(ny < n && nx < m && (mask[ny] & 1 << nx ? 1 : 0) == dir)
   {
     used[ny][nx] = true;
     ret = ret* 10 + arr[ny][nx];
     ny += dy[dir];
     nx += dx[dir];
-    if(ny >= n || nx >= m)
-      break;
-    int chk = mask[ny] & 1 << nx ? 1 : 0;
-    if(chk != dir)
-      break;
   }
   return ret;
 }
@@ -66,6 +61,5 @@ int main()
   }
   Check(0);
   std::cout << res;
-  
   return 0;
 }
