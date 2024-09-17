@@ -1,27 +1,25 @@
 #include <bits/stdc++.h>
-
-using namespace std;
-
-int n, cnt, ret;
-string str;
-stack<int> s;
-
-int main() {
-  cin >> n;
-  cin >> str; 
-  s.push(-1);
-  for (int i = 0; i < n; i++) {
-    if (str[i] == '(') s.push(i);
-    if (str[i] == ')') {
-      s.pop();
-      if (!s.empty()) {
-      	ret = max(ret, i - s.top()); 
-	  } else { 
-	  	s.push(i);
-	  } 
-  	}
+int n, res;
+std::string str;
+std::stack<int> st;
+int main() 
+{
+  std::ios::sync_with_stdio(false);
+  std::cin.tie(0); 
+  std::cout.tie(0);
+  std::cin >> n;
+  std::cin >> str;
+  st.push(-1);
+  for(int i = 0; i < n; i++)
+  {
+    if(str[i] == '(') st.push(i);  
+    else
+    {
+      st.pop();
+      if(!st.empty()) res = std::max(res, i - st.top());
+      else st.push(i);
+    }
   }
-  cout << ret << '\n';
-
+  std::cout << res;
   return 0;
-}  
+}
