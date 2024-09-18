@@ -50,7 +50,7 @@ int main()
     std::cin >> u >> v >> w;
     pq.push({w, {u, v}});
   }
-  while(pq.size() && cnt < n)
+  while(pq.size())
   {
     w = pq.top().first;
     u = pq.top().second.first;
@@ -60,7 +60,6 @@ int main()
       continue;
     ds.Union(u, v);
     weights += w;
-    cnt++;
   }
   
   std::cout << weights;
