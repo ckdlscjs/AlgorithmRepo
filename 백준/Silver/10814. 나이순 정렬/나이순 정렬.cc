@@ -1,34 +1,24 @@
 #include <bits/stdc++.h>
 int n;
 std::vector<std::pair<int, std::string>> arr;
-bool Compare(const std::pair<int, std::string>&a, const std::pair<int, std::string>& b)
+void MergeSort(int s, int e)
 {
-    return a.first == b.first ? false : a.first > b.first;
-}
-void QuickSort(int start, int end)
-{
-  if(start >= end)
+  if(s >= e)
     return;
-  int pivot = start;
-  std::pair<int, std::string> temp = arr[pivot];
-  std::vector<std::pair<int, std::string>> lefts;
-  std::vector<std::pair<int, std::string>> rights;
-  for(int i = start + 1; i <= end; i++)
-  {
-      if(Compare(temp, arr[i]))
-        lefts.push_back(arr[i]);
-      else 
-        rights.push_back(arr[i]);
-  }
-  int idx = start;
-  for(int i = 0; i < lefts.size(); i++)
-      arr[idx++] = lefts[i];
-  pivot = idx;
-  arr[idx++] = temp;
-  for(int i = 0; i < rights.size(); i++)
-      arr[idx++] = rights[i];
-  QuickSort(start, pivot-1);
-  QuickSort(pivot+1, end);
+  int mid = (s+e) / 2;
+  MergeSort(s, mid);
+  MergeSort(mid+1, e);
+  int ls = s;
+  int rs = mid+1;
+  std::vector<std::pair<int, std::string>> temp;
+  while(ls <= mid && rs <= e)
+    temp.push_back(arr[ls].first <= arr[rs].first ? arr[ls++] : arr[rs++]);
+  while(ls <= mid)
+    temp.push_back(arr[ls++]);
+  while(rs <= e)
+    temp.push_back(arr[rs++]);
+  for(const auto& iter : temp)
+    arr[s++] = iter;
 }
 int main(void)
 {
@@ -43,7 +33,7 @@ int main(void)
         std::cin >> age >> str;
         arr.push_back({age, str});
     }
-    QuickSort(0, n-1);
+    MergeSort(0, arr.size()-1);
     for(const auto& iter : arr)
     {
         std::cout << iter.first << ' ' <<iter.second <<'\n';
