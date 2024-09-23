@@ -35,10 +35,8 @@ int main(void)
     }
     else
     {
-      while(st.size() && orders[st.top()] >= orders[iter])
+      while(st.size() && st.top() != '(' && orders[st.top()] >= orders[iter])
       {
-        if(st.top() == '(')
-          break;
         std::cout << st.top();
         st.pop();
       }
