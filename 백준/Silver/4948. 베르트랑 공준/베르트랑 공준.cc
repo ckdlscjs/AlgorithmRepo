@@ -1,14 +1,14 @@
 #include <cstdio>
 #include <math.h>
 using namespace std;
-const int MAX = 300000;
+const int MAX = 246912;
 bool arr[MAX];
 
 int main(void)
 {
   arr[0] = true;
   arr[1] = true;
-  for(int i = 2; i <= sqrt(MAX); i++)
+  for(int i = 2; i <= sqrt(246912); i++)
   {
     if(arr[i]) continue;
     int temp = i + i;
