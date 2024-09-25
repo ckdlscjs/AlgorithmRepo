@@ -1,35 +1,39 @@
-//https://www.acmicpc.net/problem/2485
-#pragma once
 #include <bits/stdc++.h>
-int N;
+int n;
+int trees[100005];
 int main(void)
 {
-	std::ios::sync_with_stdio(false);
-	std::cin.tie(0);
-	std::cout.tie(0);
-	std::cin >> N;
-	int a, b, c;
-	int start, end;
-	std::cin >> a;
-	start = a;
-	std::cin >> b;
-	int gcd = b - a;
-	for (int i = 2; i < N; i++)
-	{
-		std::cin >> c;
-		int max_val = std::max(gcd, c - b);
-		int min_val = std::min(gcd, c - b);
-		while (max_val % min_val != 0)
-		{
-			int mod_val = max_val % min_val;
-			max_val = min_val;
-			min_val = mod_val;
-		}
-		gcd = min_val;
-		a = b;
-		b = c;
-	}
-	end = c;
-	std::cout << (end - start) / gcd + 1 - N;
-	return 0;
+  std::ios::sync_with_stdio(false);
+  std::cin.tie(0);
+  std::cout.tie(0);
+  std::cin >> n;
+  int cur, prev;
+  for(int i = 0; i < n; i++)
+  {
+    std::cin >> trees[i];
+    if(i == 2)
+    {
+      cur = trees[i] - trees[i-1];
+      prev = trees[i-1] - trees[i-2];
+      while(cur % prev)
+      {
+        int temp = cur % prev;
+        cur = prev;
+        prev = temp;
+      }
+    }
+    else if(i >= 3)
+    {
+      cur = trees[i] - trees[i-1];
+      while(cur % prev)
+      {
+        int temp = cur % prev;
+        cur = prev;
+        prev = temp;
+      }
+    }
+  }
+  std::cout << ((trees[n-1] - trees[0]) / prev) - n + 1;
+  
+  return 0;
 }
