@@ -6,20 +6,39 @@ int main(void)
   std::cin.tie(0);
   std::cout.tie(0);
   std::cin >> n >> m;
-  std::unordered_set<int> a;
+  std::vector<int> a;
+  std::vector<int> b;
   for(int i = 0; i < n; i++)
   {
     std::cin >> input;
-    a.insert(input);
+    a.push_back(input);
   }
-  std::unordered_set<int> dupli;
   for(int i = 0; i < m; i++)
   {
     std::cin >> input;
-    if(a.find(input) != a.end())
-      dupli.insert(input);
+    b.push_back(input);
   }
-  std::cout << n + m - dupli.size() * 2;
-  
+  std::sort(a.begin(), a.end(), std::less<>());
+  std::sort(b.begin(), b.end(), std::less<>());
+  int aidx, bidx, duplecnt;
+  aidx = bidx = duplecnt = 0;
+  while(aidx < a.size() && bidx < b.size())
+  {
+    if(a[aidx] > b[bidx])
+    {
+      bidx++;
+    }
+    else if(a[aidx] < b[bidx])
+    {
+      aidx++;
+    }
+    else
+    {
+      aidx++;
+      bidx++;
+      duplecnt++;
+    }
+  }
+  std::cout << n + m - duplecnt*2;
   return 0;
 }
