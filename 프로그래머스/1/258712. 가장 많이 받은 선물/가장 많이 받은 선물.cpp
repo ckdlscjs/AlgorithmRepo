@@ -1,63 +1,40 @@
 #include <bits/stdc++.h>
 using namespace std;
 const int MaxN = 55;
-std::unordered_map<std::string, int> index_fr;
-int checks[MaxN][MaxN];
-std::unordered_map<std::string, std::pair<int, int>> trade;
-std::unordered_map<std::string, int> score;
-std::unordered_map<std::string, int> result;
-
+std::unordered_map<std::string, int> idxs;
+int gifts_arr[MaxN][MaxN];
+std::pair<int, int> gifts_value[MaxN];
 int solution(vector<string> friends, vector<string> gifts) 
 {
     for(int i = 0; i < friends.size(); i++)
+        idxs[friends[i]] = i;
+    
+    for(const auto& iter : gifts)
     {
-        trade[friends[i]] = {0, 0};
-        index_fr[friends[i]] = i;
-        score[friends[i]] = 0;
-        result[friends[i]] = 0;
-    }
-        
-    for(const auto& str : gifts)
-    {
-        std::string name[2];
-        int str_idx = 0;
-        for(const auto& ch : str)
-        {
-            if(ch == ' ')
-            {
-                str_idx++;
-                continue;
-            }
-            name[str_idx] += ch;
-        }
-        trade[name[0]].first++;
-        trade[name[1]].second++;
-        checks[index_fr[name[0]]][index_fr[name[1]]]++;
-    }
-    for(const auto& iter : trade)
-    {
-        score[iter.first] = iter.second.first - iter.second.second;
+        int it = iter.find(' ');
+        std::string s = iter.substr(0, it);
+        std::string r = iter.substr(it+1);
+        gifts_arr[idxs[s]][idxs[r]]++;
+        gifts_value[idxs[s]].first++;
+        gifts_value[idxs[r]].second++;
     }
     int answer = 0;
     for(int i = 0; i < friends.size(); i++)
     {
-        for(int j = i+1; j < friends.size(); j++)
+        int u = idxs[friends[i]];
+        int res = 0;
+        for(int j = 0; j < friends.size(); j++)
         {
-            if(checks[i][j] || checks[j][i])
-            {
-                result[friends[i]] += checks[i][j] > checks[j][i] ? 1 : 0;
-                result[friends[j]] += checks[j][i] > checks[i][j] ? 1 : 0;
-            }
-            if(!checks[i][j] && !checks[j][i] || checks[i][j] == checks[j][i])
-            {
-                result[friends[i]] += score[friends[i]] > score[friends[j]] ? 1 : 0;
-                result[friends[j]] += score[friends[j]] > score[friends[i]] ? 1 : 0;
-            }
+            if(i == j)
+                continue;
+            int v = idxs[friends[j]];
+            if(gifts_arr[u][v] > gifts_arr[v][u])
+                res++;
+            if(gifts_arr[u][v] == gifts_arr[v][u] && gifts_value[u].first - gifts_value[u].second > gifts_value[v].first - gifts_value[v].second)
+                res++;
         }
+        answer = std::max(answer, res);
     }
-    for(const auto& iter : result)
-    {
-        answer = std::max(answer, iter.second);
-    }
+    
     return answer;
 }
