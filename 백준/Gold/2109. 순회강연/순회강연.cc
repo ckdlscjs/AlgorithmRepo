@@ -17,14 +17,14 @@ int main()
     for(int i = 0; i < n; i++)
     {
       pq.push(pd[i].first);
+      sum += pd[i].first;
       if(pq.size() > pd[i].second)
+      {
+        sum -= pq.top();
         pq.pop();
+      }
     }
-    while(pq.size())
-    {
-      sum += pq.top();
-      pq.pop();
-    }
+
     std::cout << sum;
     return 0;
 }
