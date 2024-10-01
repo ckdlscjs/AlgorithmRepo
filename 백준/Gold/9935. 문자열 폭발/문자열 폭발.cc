@@ -12,8 +12,8 @@ int main()
     for(const auto& iter : str)
     {
       st += iter;
-      if(st.size() >= fi.size() && st.substr(st.size() - fi.size(), fi.size()) == fi)
-        st.erase(st.size() - fi.size(), fi.size());
+      if(st.size() >= fi.size() && std::equal(fi.rbegin(), fi.rend(), st.rbegin()))
+        st.resize(st.size() - fi.size());
     }
     std::cout << (st.empty() ? "FRULA" : st);
     return 0;
