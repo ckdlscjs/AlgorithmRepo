@@ -10,8 +10,6 @@ int main()
     std::cin.tie(0);
     std::cout.tie(0);
     std::cin >> n;
-    NotPrime[0] |= (1 << 0);
-    NotPrime[0] |= (1 << 1);
     for(int i = 2; i <= MaxN; i++)
     {
       if(NotPrime[i / 32] & (1 << (i%32)))
