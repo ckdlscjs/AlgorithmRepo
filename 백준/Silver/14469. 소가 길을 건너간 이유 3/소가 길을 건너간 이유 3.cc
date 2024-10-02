@@ -14,13 +14,9 @@ int main()
     for(int i = 1; i < n; i++)
     {
       if(arr[i].first <= r)
-      {
         r += arr[i].second;
-      }
       else
-      {
         r = arr[i].first + arr[i].second;
-      }
     }
     std::cout << r;
     return 0;
