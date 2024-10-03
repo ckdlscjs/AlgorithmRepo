@@ -1,34 +1,34 @@
+//https://school.programmers.co.kr/learn/courses/30/lessons/160586
 #include <bits/stdc++.h>
 using namespace std;
-std::map<char, int> alp;
+std::unordered_map<char, int> keys;
 vector<int> solution(vector<string> keymap, vector<string> targets) 
 {
-    for(const std::string& str : keymap)
+    for(const auto& iter : keymap)
     {
-        for(int i = 0; i < str.size(); i++)
+        for(int i = 0; i < iter.size(); i++)
         {
-            if(!alp[str[i]])
-                alp[str[i]] = i + 1;
+            if(keys[iter[i]] == 0)
+                keys[iter[i]] = i+1;
             else
-                alp[str[i]] = std::min(i+1, alp[str[i]]);
-            std::cout << str[i] << " : " << alp[str[i]] << '\n';
+                keys[iter[i]] = std::min(keys[iter[i]], i+1);
         }
     }
     vector<int> answer;
-    for(const std::string& str : targets)
+    for(const auto& iter : targets)
     {
-        int sum = 0;
-        for(const char& ch : str)
+        int sum = -1;
+        for(const auto& it : iter)
         {
-            if(!alp[ch])
+            if(keys[it] != 0)
+                sum += keys[it];
+            else
             {
-                sum = 0;
+                sum = -1;
                 break;
             }
-            sum += alp[ch];
         }
-            
-        answer.push_back(sum ? sum : -1);
+        answer.push_back(sum > -1 ? sum+1: -1);
     }
     return answer;
 }
