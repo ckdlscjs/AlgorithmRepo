@@ -1,22 +1,18 @@
-#include <string>
-#include <vector>
-
+//https://school.programmers.co.kr/learn/courses/30/lessons/161989
+#include <bits/stdc++.h>
 using namespace std;
-const int MaxN = 100005;
-int area[MaxN];
 int solution(int n, int m, vector<int> section) 
 {
-    int answer = 0;
-    for(const int& idx : section)
+    int answer = 1;
+    int l = section[0];
+    int r = l + m - 1;
+    for(int i = 1; i < section.size(); i++)
     {
-        if(area[idx])
-            continue;
-        for(int i = 0; i < m && idx + i <= n; i++)
-                area[idx+i] = 1;
-        answer++;
+        if(section[i] > r)
+        {
+            answer++;
+            r = std::min(section[i]+m-1, n);
+        }
     }
-        
-    
-    
     return answer;
 }
