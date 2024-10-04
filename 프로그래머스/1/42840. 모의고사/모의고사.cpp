@@ -7,9 +7,8 @@ vector<int> solution(vector<int> answers)
 {
     for(int i = 0; i < answers.size(); i++)
     {
-        ans[0] += answers[i] == an[0][i%an[0].size()];
-        ans[1] += answers[i] == an[1][i%an[1].size()];
-        ans[2] += answers[i] == an[2][i%an[2].size()];
+        for(int j = 0; j < 3; j++)
+            ans[j] += answers[i] == an[j][i%an[j].size()]; 
     }
     maxcnt = std::max({ans[0], ans[1], ans[2]});
     std::vector<int> answer;
