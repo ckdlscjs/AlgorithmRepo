@@ -1,3 +1,4 @@
+//https://school.programmers.co.kr/learn/courses/30/lessons/147355
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -7,10 +8,7 @@ int solution(string t, string p)
     for(int i = 0; i <= t.size() - p.size(); i++)
     {
         std::string st = t.substr(i, p.size());
-        if(std::stoll(p) >= std::stoll(st))
-        {
-            answer++;
-        }
+        answer += st <= p ? 1 : 0;
             
     }
     return answer;
