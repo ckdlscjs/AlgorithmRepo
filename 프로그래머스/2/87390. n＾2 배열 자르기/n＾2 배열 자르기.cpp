@@ -1,25 +1,14 @@
-#include <string>
-#include <vector>
-
+#include <bits/stdc++.h>
 using namespace std;
-
 vector<int> solution(int n, long long left, long long right) 
 {
-    std::vector<int> answer;
-    int i_start = left / n;
-    int j_start = left % n;
-    int i_end = right / n;
-    int j_end = right%n;
-    while(i_start * n + j_start <= i_end*n + j_end)
+    vector<int> answer;
+    for(left; left <= right; left++)
     {
-        int num = std::max(i_start, j_start);
-        answer.push_back(num+1);
-        j_start++;
-        if(j_start >= n)
-        {
-            i_start++;
-            j_start = 0;
-        }
+        long long int i = left / n;
+        long long int j = left % n;
+        answer.push_back(std::max(i, j) + 1);
     }
+    
     return answer;
 }
