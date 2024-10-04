@@ -1,33 +1,25 @@
 #include <bits/stdc++.h>
-
 using namespace std;
-
 int solution(string s) 
 {
+    char ch = s[0];
+    int cnt_f = 0;
+    int cnt_other = 0;
     int answer = 0;
-    char x;
-    int count_x = 0;
-    int count_other = 0;
-    for(const auto& ch : s)
+    for(int i = 0; i < s.size(); i++)
     {
-        if(!count_x)
-        {
-            count_x = 1;
-            x = ch;
-        }
+        if(ch == s[i])
+            cnt_f++;
         else
+            cnt_other++;
+        if(cnt_f == cnt_other)
         {
-            if(ch == x)
-                count_x++;
-            else
-                count_other++;
-            if(count_x == count_other)
-            {
-                answer++;
-                count_x = 0;
-                count_other = 0;
-            }
+            //std::cout << i <<'\n';
+            answer++;
+            cnt_f = 0;
+            cnt_other = 0;
+            ch = s[i+1];
         }
     }
-    return count_x ? answer+1 : answer;
+    return cnt_f != 0 ? answer+1 : answer;
 }
