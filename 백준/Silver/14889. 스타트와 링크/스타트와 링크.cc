@@ -25,6 +25,7 @@ void check(int cnt, int idx, int mask)
       for(int j = i+1; j < link.size(); j++)
         sum_link += arr[link[i]][link[j]] + arr[link[j]][link[i]];
     res = std::min(res, std::abs(sum_start - sum_link));
+    return;
   }
   if(cnt > n / 2)
     return;
