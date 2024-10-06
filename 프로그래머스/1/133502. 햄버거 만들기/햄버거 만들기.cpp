@@ -1,31 +1,29 @@
+//https://school.programmers.co.kr/learn/courses/30/lessons/133502
 #include <bits/stdc++.h>
 using namespace std;
-std::stack<int> st;
+std::string chk = "1321";
 int solution(vector<int> ingredient) 
 {
     int answer = 0;
-    for(const auto& val : ingredient)
+    std::stack<int> st;
+    for(const auto& iter : ingredient)
     {
-        st.push(val);
-        if(st.size() >= 4 && st.top() == 1)
+        st.push(iter);
+        if(st.size() < 4 || st.top() != 1)
+            continue;
+        std::string temp = "";
+        for(int i = 0; i < 4; i++)
         {
-            int check[4];
-            for(int i = 0; i < 4; i++)
-            {
-                check[i] = st.top();
-                st.pop();
-            }
-            if(check[0] == 1 && check[1] == 3 && check[2] == 2 && check[3] == 1)
-                answer++;
-            else
-            {
-                for(int i = 3; i >= 0; i--)
-                {
-                    st.push(check[i]);
-                }
-            }
+            temp += std::to_string(st.top());
+            st.pop();
         }
+        if(temp == chk)
+        {
+            answer++;
+            continue;
+        } 
+       for(auto iter = temp.rbegin(); iter != temp.rend(); iter++)
+           st.push(*iter - '0');
     }
-    
     return answer;
 }
