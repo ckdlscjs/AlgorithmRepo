@@ -12,25 +12,23 @@ std::vector<std::vector<int>> MoveRight(std::vector<std::vector<int>> board)
     {
       if(!board[i][j])
       {
-        
+        j--;
       }
       else if(board[i][moveidx] && board[i][moveidx] == board[i][j])
       {
         board[i][moveidx--] *= 2;
-        board[i][j] = 0;
+        board[i][j--] = 0;
       }
       else if(board[i][moveidx] && board[i][moveidx] != board[i][j])
       {
         moveidx--;
         j = moveidx - 1;
-        continue;
       }
       else if(!board[i][moveidx] && board[i][moveidx] != board[i][j])
       {
         board[i][moveidx] = board[i][j];
-        board[i][j] = 0;
+        board[i][j--] = 0;
       }
-      j--;
     }
   }
   return board;
@@ -45,25 +43,23 @@ std::vector<std::vector<int>> MoveLeft(std::vector<std::vector<int>> board)
     {
       if(!board[i][j])
       {
-        
+        j++;
       }
       else if(board[i][moveidx] && board[i][moveidx] == board[i][j])
       {
         board[i][moveidx++] *= 2;
-        board[i][j] = 0;
+        board[i][j++] = 0;
       }
       else if(board[i][moveidx] && board[i][moveidx] != board[i][j])
       {
         moveidx++;
         j = moveidx+1;
-        continue;
       }
       else if(!board[i][moveidx] && board[i][moveidx] != board[i][j])
       {
         board[i][moveidx] = board[i][j];
-        board[i][j] = 0;
+        board[i][j++] = 0;
       }
-      j++;
     }
   }
   return board;
@@ -78,12 +74,12 @@ std::vector<std::vector<int>> MoveSouth(std::vector<std::vector<int>> board)
     {
       if(!board[i][j])
       {
-        
+        i--;
       }
       else if(board[moveidx][j] && board[moveidx][j] == board[i][j])
       {
         board[moveidx--][j] *= 2;
-        board[i][j] = 0;
+        board[i--][j] = 0;
       }
       else if(board[moveidx][j] && board[moveidx][j] != board[i][j])
       {
@@ -94,9 +90,8 @@ std::vector<std::vector<int>> MoveSouth(std::vector<std::vector<int>> board)
       else if(!board[moveidx][j] && board[moveidx][j] != board[i][j])
       {
         board[moveidx][j] = board[i][j];
-        board[i][j] = 0;
+        board[i--][j] = 0;
       }
-      i--;
     }
   }
   return board;
@@ -112,39 +107,37 @@ std::vector<std::vector<int>> MoveNorth(std::vector<std::vector<int>> board)
     {
       if(!board[i][j])
       {
-        
+        i++;
       }
       else if(board[moveidx][j] && board[moveidx][j] == board[i][j])
       {
         board[moveidx++][j] *= 2;
-        board[i][j] = 0;
+        board[i++][j] = 0;
       }
       else if(board[moveidx][j] && board[moveidx][j] != board[i][j])
       {
         moveidx++;
         i = moveidx+1;
-        continue;
       }
       else if(!board[moveidx][j] && board[moveidx][j] != board[i][j])
       {
         board[moveidx][j] = board[i][j];
-        board[i][j] = 0;
+        board[i++][j] = 0;
       }
-      i++;
     }
   }
   return board;
 }
 void Check(std::vector<std::vector<int>> board, int cnt)
 {
+  
   if(cnt >= 5)
   {
-    for(int i = 0; i < n; i++)
+    for(int i = 0;i < n; i++)
       for(int j = 0; j < n; j++)
-        res = std::max(board[i][j], res);
+        res = max(res, board[i][j]);
     return;
   }
-    
   Check(MoveRight(board), cnt+1);
   Check(MoveLeft(board), cnt+1);
   Check(MoveSouth(board), cnt+1);
