@@ -1,59 +1,43 @@
+//https://school.programmers.co.kr/learn/courses/30/lessons/133499
 #include <bits/stdc++.h>
-
 using namespace std;
-
 int solution(vector<string> babbling) 
 {
     int answer = 0;
-    for(auto& str : babbling)
+    for(std::string str : babbling)
     {
-        std::string word = "aya";
-        while(str.find(word) != std::string::npos)
+        auto iter = str.find("aya");
+        while(str.find("ayaaya") == std::string::npos && iter != std::string::npos)
         {
-            if(str[str.find(word)-1] == '1')
-                break;
-            str.replace(str.find(word), word.size(), "111");
+            str.replace(iter, 3, "...");
+            iter = str.find("aya");
         }
-        word = "ye";
-        while(str.find(word) != std::string::npos)
+        iter = str.find("ye");
+        while(str.find("yeye") == std::string::npos && iter != std::string::npos)
         {
-            if(str[str.find(word)-1] == '2')
-                break;
-            str.replace(str.find(word), word.size(), "22");
+            str.replace(iter, 2, "..");
+            iter = str.find("ye");
         }
-        word = "woo";
-        while(str.find(word) != std::string::npos)
+        iter = str.find("woo");
+        while(str.find("woowoo") == std::string::npos && iter != std::string::npos)
         {
-            if(str[str.find(word)-1] == '3')
-                break;
-            str.replace(str.find(word), word.size(), "333");
+            str.replace(iter, 3, "...");
+            iter = str.find("woo");
         }
-        word = "ma";
-        while(str.find(word) != std::string::npos)
+        iter = str.find("ma");
+        while(str.find("mama") == std::string::npos && iter != std::string::npos)
         {
-            if(str[str.find(word)-1] == '4')
-                break;
-            str.replace(str.find(word), word.size(), "44");
+            str.replace(iter, 3, "..");
+            iter = str.find("ma");
         }
-        while(str.find('1') != std::string::npos)
+        bool chk = true;
+        for(const auto& ch : str)
         {
-            str.erase(str.find('1'), 1);
+            if(ch != '.')
+                chk = false;
         }
-        while(str.find('2') != std::string::npos)
-        {
-            str.erase(str.find('2'), 1);
-        }
-        while(str.find('3') != std::string::npos)
-        {
-            str.erase(str.find('3'), 1);
-        }
-        while(str.find('4') != std::string::npos)
-        {
-            str.erase(str.find('4'), 1);
-        }
-        std::cout << str << '\n';
-        if(str.empty())
-            answer++;
+        //std::cout << str << '\n';
+        answer += chk ? 1 : 0;
     }
     return answer;
 }
