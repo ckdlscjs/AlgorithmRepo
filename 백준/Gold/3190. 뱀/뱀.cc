@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-int n, k, l, y, x, dir;
+int n, k, l, y, x, dir, res;
 char d;
 int arr[105][105];
 const int dy[] = {0, 1, 0, -1};
@@ -14,7 +14,6 @@ int main()
   std::cin >> n >> k;
   for(int i = 0; i < k; i++)
   {
-    int y, x;
     std::cin >> y >> x;
     arr[y][x] = 1;
   }
@@ -24,19 +23,16 @@ int main()
     std::cin >> y >> d;
     dirs[y] = d;
   }
-  int res = 0;
   std::vector<std::pair<int, int>> snakes;
   snakes.push_back({1, 1});
-  bool chk = true;
-  while(chk)
+  while(1)
   {
+    res++;
     int length = snakes.size();
     int ny = snakes[0].first + dy[dir];
     int nx = snakes[0].second + dx[dir];
     if(ny < 1 || nx < 1 || ny > n || nx > n || arr[ny][nx] == 2)
-    {
-      chk = false;
-    }
+      break;
     if(arr[ny][nx] == 1)
     {
       snakes.push_back({snakes[length-1].first, snakes[length-1].second});
@@ -54,13 +50,10 @@ int main()
       nx = tempx;
     }
     arr[snakes[snakes.size()-1].first][snakes[snakes.size()-1].second] = 2;
-    res++;
+    
     if(dirs.find(res) != dirs.end())
     {
-      if(dirs[res] == 'D')
-        dir++;
-      else
-        dir--;
+      dir += dirs[res] == 'D' ? 1 : -1;
       if(dir < 0)
         dir += 4;
       else if(dir >= 4)
