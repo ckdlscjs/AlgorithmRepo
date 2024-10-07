@@ -1,11 +1,10 @@
 #include <bits/stdc++.h>
-
 using namespace std;
+
 vector<int> solution(vector<int> prices) 
-{   
-    std::vector<int> answer;
-    answer.resize(prices.size());
+{
     std::stack<int> st;
+    vector<int> answer(prices.size(), 0);
     for(int i = 0; i < prices.size(); i++)
     {
         while(st.size() && prices[st.top()] > prices[i])
@@ -20,5 +19,6 @@ vector<int> solution(vector<int> prices)
         answer[st.top()] = prices.size() - 1 - st.top();
         st.pop();
     }
+        
     return answer;
 }
