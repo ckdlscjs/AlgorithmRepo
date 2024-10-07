@@ -1,8 +1,6 @@
-#include <string>
-#include <vector>
-
+//https://school.programmers.co.kr/learn/courses/30/lessons/131705
+#include <bits/stdc++.h>
 using namespace std;
-
 int solution(vector<int> number) 
 {
     int answer = 0;
