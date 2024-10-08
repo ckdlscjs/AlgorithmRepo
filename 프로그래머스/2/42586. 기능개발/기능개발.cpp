@@ -4,26 +4,27 @@ using namespace std;
 vector<int> solution(vector<int> progresses, vector<int> speeds) 
 {
     std::queue<int> q;
+    vector<int> answer;
     for(int i = 0; i < progresses.size(); i++)
     {
-        int day = (100 - progresses[i]) / speeds[i];
-        if((100 - progresses[i]) % speeds[i])
-            day++;
-        q.push(day);
-    }
-    vector<int> answer;
-    while(q.size())
-    {
-        int cnt = 1;
-        int day = q.front();
-        q.pop();
-        while(q.size() && q.front() <= day)
+        int open = ((100-progresses[i]) / speeds[i]) + ((100-progresses[i]) % speeds[i] ? 1 : 0);
+        //std::cout << open <<'\n';
+        if(q.empty() || q.front() > open)
         {
-            cnt++;
-            q.pop();
+            q.push(open);
+            continue;
         }
-        answer.push_back(cnt);
+        int cnt = 0;
+        while(q.size() && q.front() < open)
+        {
+            q.pop();
+            cnt++;
+        }
+        if(cnt)
+            answer.push_back(cnt);
+        q.push(open);
     }
-    
+    if(q.size())
+        answer.push_back(q.size());
     return answer;
 }
