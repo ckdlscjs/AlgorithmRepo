@@ -1,21 +1,21 @@
+//https://school.programmers.co.kr/learn/courses/30/lessons/118666
 #include <bits/stdc++.h>
 using namespace std;
-std::unordered_map<char, int> inputs;
+std::unordered_map<char, int> table;
 string solution(vector<string> survey, vector<int> choices) 
 {
+    table['R'] = table['T'] = table['C'] = table['F'] = table['J'] = table['M'] = table['A'] = table['N'] = 0;
     for(int i = 0; i < survey.size(); i++)
     {
-        if(choices[i] == 4)
-            continue;
-        if(choices[i] > 4)
-            inputs[survey[i][1]] += choices[i] - 4;
-        else
-            inputs[survey[i][0]] += 4 - choices[i];
+        if(choices[i] < 4)
+            table[survey[i][0]] += 4 - choices[i];
+        else if(choices[i] > 4)
+            table[survey[i][1]] += choices[i] - 4;
     }
-    std::string answer;
-    answer += inputs['R'] == inputs['T'] ? 'R' : inputs['R'] < inputs['T'] ? 'T' : 'R';
-    answer += inputs['C'] == inputs['F'] ? 'C' : inputs['C'] < inputs['F'] ? 'F' : 'C';
-    answer += inputs['J'] == inputs['M'] ? 'J' : inputs['J'] < inputs['M'] ? 'M' : 'J';
-    answer += inputs['A'] == inputs['N'] ? 'A' : inputs['A'] < inputs['N'] ? 'N' : 'A';
+    string answer = "";
+    answer += table['R'] == table['T'] ? 'R' : table['R'] > table['T'] ? 'R' : 'T';
+    answer += table['C'] == table['F'] ? 'C' : table['C'] > table['F'] ? 'C' : 'F';
+    answer += table['J'] == table['M'] ? 'J' : table['J'] > table['M'] ? 'J' : 'M';
+    answer += table['A'] == table['N'] ? 'A' : table['A'] > table['N'] ? 'A' : 'N';
     return answer;
 }
