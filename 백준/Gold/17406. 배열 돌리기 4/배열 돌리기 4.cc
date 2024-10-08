@@ -15,9 +15,7 @@ void Check(int arr[][55], int idx)
     {
       int sum = 0;
       for(int j = 1; j <= m; j++)
-      {
-        sum += arr[i][j];
-      }
+          sum += arr[i][j];
       res = std::min(res, sum);
     }
     return;
@@ -38,13 +36,11 @@ void Check(int arr[][55], int idx)
       int ny = ly, nx = lx, dir = 0;
       do
       {
-        int ty = ny + dy[dir];
-        int tx = nx + dx[dir];
+        int ty = ny + dy[dir];int tx = nx + dx[dir];
         temp[ty][tx] = arr[ny][nx];
         if((ty == ly && tx == rx) || (ty == ry && tx == rx) || (ty == ry && tx == lx))
           dir++;
-        ny = ty;
-        nx = tx;
+        ny = ty;nx = tx;
       }while(!(ny == ly && nx == lx));
       ly++;lx++;ry--;rx--;
     }
