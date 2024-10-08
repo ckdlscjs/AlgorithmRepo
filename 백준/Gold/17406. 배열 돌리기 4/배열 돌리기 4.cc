@@ -4,10 +4,10 @@ const int dy[] = {0, 1, 0, -1};
 const int dx[] = {1, 0, -1, 0};
 int n, m, k, r, c, s;
 std::vector<std::pair<std::pair<int, int>, std::pair<int, int>>> ks;
-int src[105][105];
+int src[55][55];
 bool used[10];
 int res = 987654321;
-void Check(int arr[][105], int idx)
+void Check(int arr[][55], int idx)
 {
   if(idx >= ks.size())
   {
@@ -27,7 +27,7 @@ void Check(int arr[][105], int idx)
     if(used[i])
       continue;
     used[i] = true;
-    int temp[105][105];
+    int temp[55][55];
     std::memcpy(temp, arr, sizeof(temp));
     int ly = ks[i].first.first;
     int lx = ks[i].first.second;
