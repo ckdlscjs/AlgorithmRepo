@@ -1,27 +1,27 @@
 #include <bits/stdc++.h>
-
 using namespace std;
-
+int cur, t, idx;
 int solution(int bridge_length, int weight, vector<int> truck_weights) 
 {
-    int answer = 1;
-    int idx = 0;
-    int cur_weight = 0;
     std::queue<std::pair<int, int>> q;
-    do
+    t = 1;
+    while(1)
     {
-        if(q.size() && answer >= q.front().first)
+        if(q.size() && t > q.front().first)
         {
-            cur_weight -= q.front().second;
-            std::cout << answer << ':' << q.front().second <<'\n';
+            cur -= q.front().second;
             q.pop();
+            if(idx >= truck_weights.size() && q.empty())
+                break;
         }
-        if(idx < truck_weights.size() && cur_weight + truck_weights[idx] <= weight)
+        if(idx < truck_weights.size() && cur + truck_weights[idx] <= weight)
         {
-            q.push({answer + bridge_length, truck_weights[idx]});
-            cur_weight += truck_weights[idx++];
+            cur += truck_weights[idx];
+            //std::cout << t << '\n';
+            q.push({t + bridge_length-1,truck_weights[idx++]});
         }
-        answer++;
-    }while(q.size());
-    return answer-1;
+        //std::cout << t << ":"<<(q.size() ? q.front().second : 0) <<'\n';
+        t++;
+    }
+    return t;
 }
