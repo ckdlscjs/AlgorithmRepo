@@ -8,7 +8,6 @@ vector<int> solution(vector<int> progresses, vector<int> speeds)
     for(int i = 0; i < progresses.size(); i++)
     {
         int open = ((100-progresses[i]) / speeds[i]) + ((100-progresses[i]) % speeds[i] ? 1 : 0);
-        //std::cout << open <<'\n';
         if(q.empty() || q.front() > open)
         {
             q.push(open);
