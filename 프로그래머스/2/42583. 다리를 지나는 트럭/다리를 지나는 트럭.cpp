@@ -1,11 +1,10 @@
 #include <bits/stdc++.h>
 using namespace std;
-int cur, t, idx;
+int cur, idx, t = 1;
 int solution(int bridge_length, int weight, vector<int> truck_weights) 
 {
     std::queue<std::pair<int, int>> q;
-    t = 1;
-    while(1)
+    while(t)
     {
         if(q.size() && t > q.front().first)
         {
