@@ -1,23 +1,22 @@
+//https://school.programmers.co.kr/learn/courses/30/lessons/77884
 #include <bits/stdc++.h>
-
 using namespace std;
-
+std::unordered_map<int, std::set<int>> nums;
 int solution(int left, int right) 
 {
-    int answer = 0;
-    for(left; left <= right; left++)
+    for(int i = 1; i <= 1000; i++)
     {
-        std::set<int> temp;
-        for(int i = 1; i <= std::sqrt(left); i++)
-        {   
-            if(left % i == 0)
+        for(int j = 1; j <= std::sqrt(i); j++)
+        {
+            if(i%j == 0)
             {
-                temp.insert(i);
-                temp.insert(left/i);
+                nums[i].insert(i/j);
+                nums[i].insert(j);
             }
         }
-        std::cout << temp.size() <<'\n';
-        answer += temp.size() % 2 == 0 ? left : -left;
     }
+    int answer = 0;
+    for(left; left <= right; left++)
+        answer += nums[left].size() % 2 ? -1*left : left;
     return answer;
 }
