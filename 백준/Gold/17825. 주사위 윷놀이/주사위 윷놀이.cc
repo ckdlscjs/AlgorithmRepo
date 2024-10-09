@@ -10,31 +10,33 @@ Map maps[33];  // 맵 배열
 int arr[10] = {0};
 int res = 0;
 
-void Check(int idx, int sum, long long int mask, vector<int>& players) {
-    if (idx >= 10) 
-    {  
-        res = max(res, sum);
-        return;
+void Check(int idx, int sum, long long int mask, vector<int>& players) 
+{
+  if (idx >= 10) 
+  {  
+    res = max(res, sum);
+    return;
+  }
+  for (int i = 0; i < players.size(); i++) 
+  {
+    if (players[i] >= 32)
+      continue;
+    int cur = players[i];
+    for (int j = 0; j < arr[idx]; j++) 
+    {
+      players[i] = (j == 0 && maps[players[i]].next[1] != -1) ? maps[players[i]].next[1] : maps[players[i]].next[0];
+      if (players[i] >= 32)
+        break;
     }
-    for (int i = 0; i < players.size(); i++) {
-        if (players[i] >= 32)  // 도착한 경우
-            continue;
-        int cur = players[i];
-        // 말 이동
-        for (int j = 0; j < arr[idx]; j++) {
-            players[i] = (j == 0 && maps[players[i]].next[1] != -1) ? maps[players[i]].next[1] : maps[players[i]].next[0];
-            if (players[i] >= 32)  // 도착한 경우
-                break;
-        }
-
-        if (players[i] >= 32 || !(mask & (1LL << players[i]))) {
-            mask ^= (1LL << cur);  // 현재 말의 위치 제거
-            Check(idx + 1, sum + maps[players[i]].point, mask | (1LL << players[i]), players);  // 새 위치에서 체크
-            mask ^= (1LL << cur);  // 상태 복구
-        }
-
-        players[i] = cur;  // 말 위치 복구
+    
+    if (players[i] >= 32 || !(mask & (1LL << players[i]))) 
+    {
+      mask ^= (1LL << cur);
+      Check(idx + 1, sum + maps[players[i]].point, mask | (1LL << players[i]), players); 
+      mask ^= (1LL << cur); 
     }
+    players[i] = cur;
+  }
 }
 
 int main() {
@@ -49,7 +51,7 @@ int main() {
     maps[20].point = 40;
     maps[20].next[0] = 32;
     
-    maps[5].next[1] = 21;  // 파란색 경로
+    maps[5].next[1] = 21;  
     maps[10].next[1] = 24;
     maps[15].next[1] = 26;
 
@@ -86,14 +88,13 @@ int main() {
     maps[31].point = 35;
     maps[31].next[0] = 20;
 
-
-    maps[32].point = 0;  // 도착지점
-    maps[32].next[0] = 32;  // 도착한 상태를 유지
-
+    maps[32].point = 0; 
+    maps[32].next[0] = 32;
+    
     for (int i = 0; i < 10; i++)
         cin >> arr[i];
-    vector<int> players(4, 0);  // 4개의 말 초기화
-    Check(0, 0, 0, players);  // 말 이동 체크
+    vector<int> players(4, 0);
+    Check(0, 0, 0, players);
     cout << res;
     return 0;
 }
