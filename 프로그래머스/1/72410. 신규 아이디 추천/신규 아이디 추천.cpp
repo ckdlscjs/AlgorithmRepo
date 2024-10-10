@@ -1,80 +1,43 @@
+//https://school.programmers.co.kr/learn/courses/30/lessons/72410
 #include <bits/stdc++.h>
-
 using namespace std;
-
 string solution(string new_id) 
 {
-    
-    for(auto& ch : new_id)
+    char chk3;
+    for(auto iter = new_id.begin(); iter != new_id.end();)
     {
-        if('A' <= ch && ch <= 'Z')
+        if('A' <= *iter && *iter <= 'Z')
         {
-            ch += 32;
+            *iter += 32;
         }
-    }
-    for(auto& ch : new_id)
-    {
-        if(
-            !('a' <= ch && ch <= 'z') &&
-            !('0' <= ch && ch <= '9') &&
-            !(ch == '-') &&
-            !(ch == '_') &&
-            !(ch == '.')
-        )
+        else if(!('a' <= *iter && *iter <= 'z') && !('0' <= *iter && *iter <= '9') && *iter != '-' && *iter != '_' && *iter != '.')
         {
-            ch = ' ';
+            iter = new_id.erase(iter);
+            continue;
         }
-    }
-    
-    while(new_id.find(' ') != std::string::npos)
-    {
-        new_id.erase(new_id.find(' '), 1);
-    }
-    bool prev_dot = false;
-    for(auto& ch : new_id)
-    {
-        if(ch == '.')
+        else if(chk3 == '.' && *iter == '.')
         {
-            if(prev_dot)
-            {
-                ch = ' ';
-            }
-            else
-            {
-                prev_dot = true;
-            }
+            iter = new_id.erase(iter);
+            continue;
         }
-        else
-        {
-           prev_dot = false; 
-        }    
+        chk3 = *iter;
+        iter++;
     }
-    while(new_id.find(' ') != std::string::npos)
-    {
-        new_id.erase(new_id.find(' '), 1);
-    }
-    if(new_id[0] == '.')
-        new_id[0] = ' ';
-    if(new_id[new_id.size()-1] == '.')
-        new_id[new_id.size()-1] = ' ';
-    while(new_id.find(' ') != std::string::npos)
-    {
-        new_id.erase(new_id.find(' '), 1);
-    }
+    if(*new_id.begin() == '.')
+        new_id.erase(0, 1);
+    if(*new_id.rbegin() == '.')
+        new_id.erase(new_id.size()-1, 1);
     if(new_id.empty())
-        new_id+='a';
+        new_id += "a";
     if(new_id.size() >= 16)
     {
-        new_id.erase(15);
-        if(new_id[14] == '.')
-            new_id.erase(14);
+        new_id = new_id.substr(0,15);
+        if(*new_id.rbegin() == '.')
+            new_id.erase(new_id.size()-1, 1);
     }
-    if(new_id.size() <= 2)
+    while(new_id.size() < 3)
     {
-        while(new_id.size() < 3)
-        {
-            new_id += new_id[new_id.size()-1];
-        }
+        new_id += *new_id.rbegin();
     }
     return new_id;
 }
