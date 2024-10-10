@@ -1,26 +1,24 @@
-#include <string>
-#include <vector>
-
+//https://school.programmers.co.kr/learn/courses/30/lessons/77484
+#include <bits/stdc++.h>
 using namespace std;
-int check[70];
-int rating[10];
-vector<int> solution(vector<int> lottos, vector<int> win_nums) 
+long long int lotto = 0;
+vector<int> solution(vector<int> lottos, vector<int> win_nums)
 {
-    rating[6] = 1;
-    rating[5] = 2;
-    rating[4] = 3;
-    rating[3] = 4;
-    rating[2] = 5;
-    rating[1] = 6;
-    rating[0] = 6;
-    for(const int& num : lottos)
-        check[num]++;
-    int count = 0;
-    for(const int& num : win_nums)
+    for(const auto& iter : win_nums)
+        lotto |= (1LL << iter);
+    int cnt = 0;
+    int zero_cnt = 0;
+    for(const auto& iter : lottos)
     {
-        if(check[num])
-            count++;
+        cnt += (lotto & 1LL << iter) ? 1 : 0;
+        zero_cnt += iter ? 0 : 1;
     }
-    
-    return {rating[count+check[0]], rating[count]};
+     int max_rank = 7 - (cnt + zero_cnt);  // 최대 순위
+    int min_rank = 7 - cnt;               // 최소 순위
+
+    // 순위는 6보다 클 수 없으므로 처리
+    max_rank = max_rank > 6 ? 6 : max_rank;
+    min_rank = min_rank > 6 ? 6 : min_rank;
+
+    return {max_rank, min_rank};
 }
