@@ -1,23 +1,26 @@
+//school.programmers.co.kr/learn/courses/30/lessons/12981
 #include <bits/stdc++.h>
 using namespace std;
-const int MaxN = 15;
-int peoples[MaxN];
-std::unordered_set<std::string> checks;
+std::unordered_set<std::string> chks;
 vector<int> solution(int n, vector<string> words) 
 {
-    int cur = 1;
-    char last_ch = words[0][0];
-    for(const std::string& word : words)
+    int cnt = 0;
+    char ch = '0';
+    for(int i = 0; i < words.size(); i++)
     {
-        peoples[cur]++;
-        if(word[0] != last_ch || checks.find(word) != checks.end())
-            return {cur, peoples[cur]};
-        checks.insert(word);
-        last_ch = word[word.size()-1];
-        cur++;
-        if(cur > n)
-            cur = 1;
+        if(chks.find(words[i]) != chks.end())
+            break;
+        if(i >= 1 && words[i][0] != ch)
+            break;
+        ch = *words[i].rbegin();
+        cnt++;
+        chks.insert(words[i]);
     }
-
-    return {0, 0};
+    std::vector<int> answer(2, 0);
+    if(cnt < words.size())
+    {
+        answer[0] = (cnt%n)+1;
+        answer[1] = cnt/n + 1;
+    }
+    return answer;
 }
