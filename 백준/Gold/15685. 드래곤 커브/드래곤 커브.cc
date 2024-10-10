@@ -21,8 +21,7 @@ int main()
     st.push_back((d+1)%4);
     for(int j = 1; j <= g; j++)
     {
-      int len = st.size()-1;
-      for(int idx = len; idx >= 0; idx--)
+      for(int idx = st.size()-1; idx >= 0; idx--)
       {
         y += dy[st[idx]];
         x += dx[st[idx]];
