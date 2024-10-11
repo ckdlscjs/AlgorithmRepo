@@ -7,13 +7,13 @@ int main()
   cin.tie(0);
   cout.tie(0);
   std::cin >> N >> m >> n;
-  for(int i = 0; i < m; i++)
+  for(int i = 1; i <= m; i++)
   {
     std::cin >> A[i];
     A[i+m] = A[i];
     totalA += A[i];
   }
-  for(int i = 0; i < n; i++)
+  for(int i = 1; i <= n; i++)
   {
     std::cin >> B[i];
     B[i+n] = B[i];
@@ -21,20 +21,20 @@ int main()
   }
   Sums[0]++;
   Sums[totalA]++;
-  for(int i = 0; i < m; i++)
+  for(int i = 1; i <= m; i++)
   {
     int sum = 0;
-    for(int j = 0; j < m-1; j++)
+    for(int j = 1; j < m; j++)
     {
       sum += A[i+j];
       Sums[sum]++;
     }
   }
   ret += Sums[N];
-  for(int i = 0; i < n; i++)
+  for(int i = 1; i <= n; i++)
   {
     int sum = 0;
-    for(int j = 0; j < n-1; j++)
+    for(int j = 1; j < n; j++)
     {
       sum += B[i+j];
       if(N >= sum) ret += Sums[N-sum];
