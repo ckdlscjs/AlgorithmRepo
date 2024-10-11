@@ -1,50 +1,46 @@
 #include <bits/stdc++.h>
 using namespace std;
-int N, m, n, A[1005], ASums[2005], B[1005], BSums[2005], ret;
-std::unordered_map<int, int> CntA, CntB;
+int N, m, n, A[2'005], totalA, B[2'005], totalB, Sums[1'000'005], ret;
 int main()
 {
   ios::sync_with_stdio(false);
   cin.tie(0);
   cout.tie(0);
   std::cin >> N >> m >> n;
-  for(int i = 1; i <= m; i++)
+  for(int i = 0; i < m; i++)
   {
     std::cin >> A[i];
-    ASums[i] = ASums[i-1] + A[i];
+    A[i+m] = A[i];
+    totalA += A[i];
   }
-  for(int i = m+1; i <= m*2; i++)
-    ASums[i] = ASums[i-1] + A[i-m];
-  for(int interval = 1; interval <= m; interval++)
-  {
-    for(int start = interval; start < m + interval; start++) //돌아서 시작지점 이전까지
-    {
-      int sum = ASums[start] - ASums[start - interval];
-      CntA[sum]++;
-      if(interval == m) break;
-    }
-  }
-  
-  for(int i = 1; i <= n; i++)
+  for(int i = 0; i < n; i++)
   {
     std::cin >> B[i];
-    BSums[i] = BSums[i-1] + B[i];
+    B[i+n] = B[i];
+    totalB += B[i];
   }
-  for(int i = n+1; i <= n*2; i++)
-    BSums[i] = BSums[i-1] + B[i-n];
-  for(int interval = 1; interval <= n; interval++)
+  Sums[0]++;
+  Sums[totalA]++;
+  for(int i = 0; i < m; i++)
   {
-    for(int start = interval; start < n + interval; start++)
+    int sum = 0;
+    for(int j = 0; j < m-1; j++)
     {
-      int sum = BSums[start] - BSums[start - interval];
-      CntB[sum]++;
-      if(interval == n) break;
+      sum += A[i+j];
+      Sums[sum]++;
     }
   }
-  
-  for(int i = 1; i < N; i++)
-    ret += CntA[i] * CntB[N-i];
-  ret += CntA[N] + CntB[N];
+  ret += Sums[N];
+  for(int i = 0; i < n; i++)
+  {
+    int sum = 0;
+    for(int j = 0; j < n-1; j++)
+    {
+      sum += B[i+j];
+      if(N >= sum) ret += Sums[N-sum];
+    }
+  }
+  if(N >= totalB) ret += Sums[N-totalB];
   std::cout << ret;
   return 0;
 }
