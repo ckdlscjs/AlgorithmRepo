@@ -51,8 +51,7 @@ int main()
         chk = true;
         visited[ny][nx] = true;
         q.push({value, {ny, nx}});
-        arr[ny][nx] = 0;
-        
+        arr[ny][nx] = arr[y][x] = 0;
       }
     }
     if(!chk)
@@ -80,14 +79,8 @@ int main()
     std::memset(visited, false, sizeof(visited));
   }
   for(int i = 1; i <= N; i++)
-  {
     for(int j = 0; j < M; j++)
-    {
       res += arr[i][j];
-      //std::cout << arr[i][j] << ' ';
-    }
-    //std::cout << '\n';
-  }
   std::cout << res;
   return 0;
 }
