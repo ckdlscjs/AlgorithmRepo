@@ -27,11 +27,20 @@ int main()
       for(int j = 0; j < M; j++) temp[(j+k*d) % M] = arr[xidx][j];
       for(int j = 0; j < M; j++) arr[xidx][j] = temp[j];
     }
-    for(int i = 1; i <= N; i++)
-      for(int j = 0; j < M; j++)
-        if(arr[i][j])
-          q.push({arr[i][j], {i, j}});
+    int sum = 0;
+    std::vector<std::pair<int, int>> nums;
     bool chk = false;
+    for(int i = 1; i <= N; i++)
+    {
+      for(int j = 0; j < M; j++)
+      {
+        if(!arr[i][j])
+          continue;
+        q.push({arr[i][j], {i, j}});
+        sum += arr[i][j];
+        nums.push_back({i, j});
+      }
+    }
     while(q.size())
     {
       int value = q.front().first;
@@ -56,18 +65,6 @@ int main()
     }
     if(!chk)
     {
-      int sum = 0;
-      std::vector<std::pair<int, int>> nums;
-      for(int i = 1; i <= N; i++)
-      {
-        for(int j = 0; j < M; j++)
-        {
-          if(!arr[i][j])
-            continue;
-          sum += arr[i][j];
-          nums.push_back({i, j});
-        }
-      }
       for(const auto& iter : nums)
       {
         if(arr[iter.first][iter.second] && arr[iter.first][iter.second] > sum / (float)nums.size())
