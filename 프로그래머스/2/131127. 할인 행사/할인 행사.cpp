@@ -1,34 +1,27 @@
 #include <bits/stdc++.h>
 using namespace std;
-
+std::unordered_map<std::string, int> wants;
+bool Check(const vector<string>& want, const vector<int>& number)
+{
+    for(int i = 0; i < want.size(); i++)
+    {
+        if(wants[want[i]] < number[i])
+            return false;
+    }
+    return true;
+}
 int solution(vector<string> want, vector<int> number, vector<string> discount) 
 {
-    
-    std::unordered_map<std::string, int> want_map;
-    for(int i = 0; i < want.size(); i++)
-        want_map[want[i]] = number[i];
-    
-    std::unordered_map<std::string, int> hash_map;
+    discount.insert(discount.begin(), "temp");
     for(int i = 0; i < 10; i++)
-        hash_map[discount[i]]++;
-    
+        wants[discount[i]]++;
     int answer = 0;
-    for(int i = 0; i <= discount.size() - 10; i++)
+    for(int i = 10; i < discount.size(); i++)
     {
-        bool valid = true;
-        for(const auto& iter : want_map)
-            if(hash_map[iter.first] != iter.second)
-                valid = false;
-        if(valid)
-        {
-            std::cout << i <<'\n';
+        wants[discount[i-10]]--;
+        wants[discount[i]]++;
+        if(Check(want, number))
             answer++;
-        }
-           
-        hash_map[discount[i]]--;
-        if(i < discount.size() - 10)
-            hash_map[discount[i + 10]]++;
     }
-    
     return answer;
 }
