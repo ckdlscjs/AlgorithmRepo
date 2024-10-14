@@ -1,10 +1,11 @@
+//https://school.programmers.co.kr/learn/courses/30/lessons/64061
 #include <bits/stdc++.h>
 using namespace std;
 
 int solution(vector<vector<int>> board, vector<int> moves) 
 {
     int answer = 0;
-    std::queue<int> q[board.size()];
+    std::queue<int> q[35];
     std::stack<int> st_result;
     for(int i = 0; i < board.size(); i++)
         for(int j = 0; j < board[0].size(); j++)
@@ -27,8 +28,6 @@ int solution(vector<vector<int>> board, vector<int> moves)
         {
             st_result.push(num);
         } 
-        
     }
-    
     return answer;
 }
