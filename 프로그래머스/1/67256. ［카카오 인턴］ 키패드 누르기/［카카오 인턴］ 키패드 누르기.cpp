@@ -1,61 +1,56 @@
+//https://school.programmers.co.kr/learn/courses/30/lessons/67256
 #include <bits/stdc++.h>
-
 using namespace std;
-std::vector<std::pair<int, int>> nums;
-std::pair<int, int> hand_left;
-std::pair<int, int> hand_right;
+std::unordered_map<int, std::pair<int, int>> btns;
 string solution(vector<int> numbers, string hand) 
 {
-    nums.push_back({3, 1}); //0
-    nums.push_back({0, 0}); //1
-    nums.push_back({0, 1}); //2
-    nums.push_back({0, 2}); //3
-    nums.push_back({1, 0}); //4
-    nums.push_back({1, 1}); //5
-    nums.push_back({1, 2}); //6
-    nums.push_back({2, 0}); //7
-    nums.push_back({2, 1}); //8
-    nums.push_back({2, 2}); //9
-    nums.push_back({3, 0}); //*
-    nums.push_back({3, 2}); //#
-    
+    int idx = 1;
+    for(int i = 0; i < 3; i++)
+        for(int j = 0; j < 3; j++)
+            btns[idx++] = {i, j};
+    btns[10] = {3, 0};
+    btns[0] = {3, 1};
+    btns[11] = {3, 2};
+            
+    std::pair<int, int> l = btns[10], r = btns[11];
     string answer = "";
-    hand_left = nums[10];
-    hand_right = nums[11];
-    
-    for(const int& num : numbers)
+    for(const auto& iter : numbers)
     {
-        switch(num)
+        if(iter == 1 || iter == 4 || iter == 7)
         {
-            case 1 : case 4 : case 7 :
-                {
-                    hand_left = nums[num];
-                    answer += 'L';
-                }break;
-            
-            case 2 : case 5 : case 8 : case 0:
-                {
-                    int dist_left = std::abs(hand_left.first - nums[num].first) + std::abs(hand_left.second - nums[num].second);
-                    int dist_right = std::abs(hand_right.first - nums[num].first) + std::abs(hand_right.second - nums[num].second);
-                    bool use_left = dist_left == dist_right ? (hand == "left" ? true : false) : dist_left < dist_right ? true : false;
-                    if(use_left)
-                    {
-                        hand_left = nums[num];
-                        answer += 'L';
-                    }
-                    else
-                    {
-                        hand_right = nums[num];
-                        answer += 'R';
-                    }
-                }break;
-            
-            case 3 : case 6 : case 9:
-                {
-                    hand_right = nums[num];
-                    answer += 'R';
-                }break;
+            l = btns[iter];
+            answer += 'L';
+        }
+        else if(iter == 3 || iter == 6 || iter == 9)
+        {
+            r = btns[iter];
+            answer += 'R';
+        }
+        else
+        {
+            int dist_l = std::abs(btns[iter].first - l.first) + std::abs(btns[iter].second - l.second);
+            int dist_r = std::abs(btns[iter].first - r.first) + std::abs(btns[iter].second - r.second);
+            if(dist_l == dist_r)
+            {
+                //std::cout <<iter<<"->"<< dist_l <<":"<<dist_r <<'\n';
+                answer += (hand[0] - 'a' + 'A');
+                if(hand[0] == 'l')
+                    l = btns[iter];
+                else
+                    r = btns[iter];
+            }
+            else if(dist_l < dist_r)
+            {
+                answer += 'L';
+                l = btns[iter];
+            }
+            else
+            {
+                answer += 'R';
+                r = btns[iter];
+            }
         }
     }
+    
     return answer;
 }
