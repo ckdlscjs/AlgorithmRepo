@@ -11,30 +11,23 @@ int main()
   for(int i = 0; i < N; i++)
     std::cin >> arr[i];
   std::sort(arr, arr+N, std::less<>());
-  int res = INT_MAX;
+  int l = 0, r = N-1, res = INT_MAX;
   std::pair<int, int> ans;
-  for(int i = 0; i < N; i++)
+  while(l < r)
   {
-    int l = i+1, r = N-1;
-    while(l <= r)
+    int sum = arr[l] + arr[r];
+    if(std::abs(sum) < res)
     {
-      int mid = (l+r) / 2;
-      int sum = arr[i] + arr[mid];
-      if(std::abs(sum) < res)
-      {
-        res = std::abs(sum);
-        ans.first = arr[i];
-        ans.second = arr[mid];
-        if(res == 0)
-        break;
-      }
-      if(sum > 0)
-        r = mid - 1;
-      else
-        l = mid + 1;
-    }
-    if(res == 0)
+      res = std::abs(sum);
+      ans.first = arr[l];
+      ans.second = arr[r];
+      if(res == 0)
       break;
+    }
+    if(sum > 0)
+      r--;
+    else
+      l++;
   }
   std::cout << ans.first << ' ' << ans.second;
   return 0;
