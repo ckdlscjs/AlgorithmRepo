@@ -1,17 +1,15 @@
+//https://school.programmers.co.kr/learn/courses/30/lessons/42576
 #include <bits/stdc++.h>
 using namespace std;
-
+std::unordered_map<std::string, int> chks;
 string solution(vector<string> participant, vector<string> completion) 
 {
-    string answer = "";
-    std::unordered_map<std::string, int> complet;
     for(const auto& iter : completion)
-        complet[iter]++;
+        chks[iter]--;
     for(const auto& iter : participant)
     {
-        complet[iter]--;
-        if(complet[iter] < 0)
-            answer = iter;
+        chks[iter]++;
+        if(chks[iter] > 0)
+            return iter;
     }
-    return answer;
 }
