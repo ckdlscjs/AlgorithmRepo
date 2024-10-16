@@ -1,34 +1,39 @@
+//school.programmers.co.kr/learn/courses/30/lessons/17684
 #include <bits/stdc++.h>
-
 using namespace std;
+std::unordered_map<std::string, int> words;
 vector<int> solution(string msg) 
 {
-    std::unordered_map<std::string, int> hash_map;
     int idx = 1;
-    int longest = 1;
-    for(int i = 0; i < 26; i++)
+    for(; idx <= 26; idx++)
     {
         std::string str = "A";
-        str[0] += i;
-        hash_map[str] = idx++;
+        str[0] += idx-1;
+        words[str] = idx;
     }
     vector<int> answer;
-    
+    int len = 1;
     while(msg.size())
     {
-        int length = longest;
-        std::string w = msg.substr(0,length);
-        while(hash_map.find(w) == hash_map.end() && length > 1)
+        std::string word = "";
+        for(int i = len; i >= 1; i--)
         {
-            length--;
-            w = msg.substr(0,length);
+            if(msg.size() < i)
+                continue;
+            word = msg.substr(0, i);
+            if(words.find(word) != words.end())
+            {
+                msg = msg.substr(i);
+                break;
+            }
         }
-        answer.push_back(hash_map[w]);
-        msg.erase(0, length);
-        w += msg[0];
-        if(hash_map.find(w) == hash_map.end())
-            hash_map[w] = idx++;
-        longest = std::max(longest, (int)w.size());  
+        answer.push_back(words[word]);
+        if(msg.size())
+        {
+            word += msg[0];
+            len = std::max(len, (int)word.size());
+            words[word] = idx++;
+        }
     }
     
     return answer;
