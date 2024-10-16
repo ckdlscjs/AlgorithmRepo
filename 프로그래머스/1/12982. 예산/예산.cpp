@@ -1,15 +1,14 @@
+//https://school.programmers.co.kr/learn/courses/30/lessons/12982
 #include <bits/stdc++.h>
 using namespace std;
 int solution(vector<int> d, int budget) 
 {
     std::sort(d.begin(), d.end(), std::less<>());
-    int answer = 0;
-    for(const auto& iter : d)
+    for(int i = 0; i < d.size(); i++)
     {
-        if(iter > budget)
-            break;
-        budget -= iter;
-        answer++;
+        budget -= d[i];
+        if(budget < 0)
+            return i;
     }
-    return answer;
+    return d.size();
 }
