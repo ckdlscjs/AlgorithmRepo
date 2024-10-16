@@ -1,46 +1,42 @@
+//https://school.programmers.co.kr/learn/courses/30/lessons/72411
 #include <bits/stdc++.h>
 using namespace std;
-/*
-코스요리메뉴는 최소 2가지이상의 메뉴, 최소2명이상의 손님으로부터 주문된 단품메뉴의조합
-*/
-std::unordered_map<std::string, int> combi;
-void check(int cur, int length, std::string str, std::string iter)
+std::vector<std::pair<std::string, int>> results[15];
+std::map<std::string, int> menus;
+void Check(const std::string& order, int length, std::string menu, int idx)
 {
-    if(str.size() >= length)
+    if(menu.size() >= length)
     {
-        //std::cout << str <<'\n';
-        combi[str]++;
+        menus[menu]++;
         return;
     }
-    for(int i = cur; i < iter.size(); i++)
-        check(i+1, length, str+iter[i], iter);
+    for(int i = idx; i < order.size(); i++)
+        Check(order, length, menu + order[i], i+1);
 }
 vector<string> solution(vector<string> orders, vector<int> course) 
 {
-    
-    for(auto iter : orders)
+    for(auto& iter : orders)
     {
         std::sort(iter.begin(), iter.end(), std::less<>());
-        for(int i = 1; i <= iter.size(); i++)
-            check(0, i, "", iter);
+        for(const auto& cnt : course)
+            Check(iter, cnt, {}, 0);
     }
-    std::unordered_map<int, std::priority_queue<std::pair<int, std::string>, std::vector<std::pair<int, std::string>>, std::less<std::pair<int, std::string>>>> course_map;
-    for(const auto& iter : combi)
-        course_map[iter.first.size()].push({iter.second, iter.first});
-    vector<string> answer;
-    
-    for(const auto& num : course)
+        
+    for(const auto& iter : menus)
     {
-        if(course_map.find(num) == course_map.end())
+        if(iter.second <= 1)
             continue;
-        int cnt = course_map[num].top().first;
-        if(cnt < 2)
-            continue;
-        while(course_map[num].size() && course_map[num].top().first >= cnt)
-        {
-            answer.push_back(course_map[num].top().second);
-            course_map[num].pop();
-        }
+        results[iter.first.size()].push_back(iter);
+    }
+    vector<string> answer;
+    for(const auto& iter : course)
+    {
+        std::sort(results[iter].begin(), results[iter].end(), [](const std::pair<std::string, int>& a, const std::pair<std::string, int>& b)
+                  {
+                      return a.second == b.second ? a.first < b.first : a.second > b.second;
+                  });
+        for(int i = 0; i < results[iter].size() && results[iter][i].second == results[iter][0].second; i++)
+            answer.push_back(results[iter][i].first);
     }
     std::sort(answer.begin(), answer.end(), std::less<>());
     return answer;
