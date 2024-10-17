@@ -1,25 +1,21 @@
+//https://school.programmers.co.kr/learn/courses/30/lessons/43238
 #include <bits/stdc++.h>
 using namespace std;
-
+bool Check(int n, const vector<int>& times, long long int t)
+{
+    long long int cnt = 0;
+    for(const auto& iter : times)
+        cnt += t / (long long int)iter;
+    return cnt >= n;
+}
 long long solution(int n, vector<int> times) 
 {
-    std::sort(times.begin(), times.end(), std::less<>());
-    long long int left = 1;
-    long long int right = 1000000000000000000;
-    long long int answer = 0;
-    while(left <= right)
+    long long int lo = 0, hi = 1'000'000'000'000'005;
+    while(lo + 1 < hi)
     {
-        long long int mid = (left + right) / 2;
-        long long int passed = 0;
-        for(int i = 0; i < times.size(); i++)
-            passed += mid / (long long int)times[i];
-        if(passed >= n)
-        {
-            right = mid - 1;
-            answer = mid;
-        }
-        else
-            left = mid+1;
+        long long int mid = (lo + hi) / 2;
+        if(Check(n, times, mid)) hi = mid;
+        else lo = mid;
     }
-    return answer;
+    return hi;
 }
