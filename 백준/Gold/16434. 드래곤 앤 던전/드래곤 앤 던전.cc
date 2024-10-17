@@ -16,13 +16,11 @@ bool Check(long long int maxHP)
   {
     if(dungeons[i].t == 1)
     {
-      long long int cntP = dungeons[i].h / curAtk + (long long int)(dungeons[i].h % curAtk ? 1 : 0);
-      long long int cntE = curHP / dungeons[i].a + (long long int)(curHP % dungeons[i].a ? 1 : 0);
+      long long int cntP = dungeons[i].h / curAtk + (dungeons[i].h % curAtk ? 1 : 0);
+      long long int cntE = curHP / dungeons[i].a + (curHP % dungeons[i].a ? 1 : 0);
       if(cntE < cntP)
         return false;
-      curHP -= dungeons[i].a * (long long int)(cntP - 1);
-      if(curHP <= 0)
-        return false;
+      curHP -= dungeons[i].a * (cntP - 1);
     }
     else
     {
