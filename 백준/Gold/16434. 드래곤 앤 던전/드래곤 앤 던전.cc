@@ -38,7 +38,7 @@ int main()
   std::cin >> N >> Hatk;
   for(int i = 0; i < N; i++)
     std::cin >> dungeons[i].t >> dungeons[i].a >> dungeons[i].h;
-  long long int lo = 0, hi = 1e18 + 5;
+  long long int lo = 0, hi = 123'460'000'000'000'005; //1e18 + 5
   while(lo + 1 < hi)
   {
     long long int mid = (lo + hi) / 2;
