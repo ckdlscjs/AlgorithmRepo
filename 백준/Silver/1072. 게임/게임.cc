@@ -8,7 +8,7 @@ int main()
   std::cin.tie(0);
   std::cout.tie(0);
   std::cin >> X >> Y;
-  long long int lo = -1, hi = maxHi;
+  long long int lo = 0, hi = maxHi;
   long long int Z = Y *100 / X;
   while(lo + 1 < hi)
   {
