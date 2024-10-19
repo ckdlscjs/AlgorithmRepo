@@ -33,16 +33,13 @@ int main()
     }
   }
   std::cout << lidx << '\n';
-  lidx--;
   std::stack<int> st;
   for(int i = N-1; i >= 0; i--)
   {
-    if(idxs[i] == lidx)
+    if(idxs[i] == lidx-1)
     {
       st.push(arr[i]);
       lidx--;
-      if(lidx < 0)
-        break;
     }
   }
   while(st.size())
