@@ -15,7 +15,6 @@ int main()
     multis[i] = std::max(multis[i-1] * arr[i], arr[i]);
     res = std::max(res, multis[i]);
   }
-  res = std::round(res*1000) / 1000;
-  std::cout << fixed << setprecision(3) << res;
+  std::cout << std::fixed << std::setprecision(3) << std::round(res*1000) / 1000;
   return 0;
 }
