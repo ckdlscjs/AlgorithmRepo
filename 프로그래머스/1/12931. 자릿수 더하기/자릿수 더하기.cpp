@@ -1,15 +1,13 @@
-#include <iostream>
-
+//https://school.programmers.co.kr/learn/courses/30/lessons/12931
+#include <bits/stdc++.h>
 using namespace std;
 int solution(int n)
 {
-    int answer = 0;
-
+    int sum = 0;
     while(n)
     {
-        answer += n%10;
-        n/=10;
+        sum += n%10;
+        n /= 10;
     }
-
-    return answer;
+    return sum;
 }
