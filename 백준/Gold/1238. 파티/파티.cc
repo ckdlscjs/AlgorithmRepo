@@ -2,14 +2,12 @@
 using namespace std;
 int N, M, X, u, v, w;
 const int INF = 987654321;
-int costs_xu[1'005];
-std::vector<std::pair<int, int>> graph_uv[1'005];
-int costs_xv[1'005];
-std::vector<std::pair<int, int>> graph_vu[1'005];
+std::vector<std::pair<int, int>> graph_uv[1'005], graph_vu[1'005];
+int costs_xv[1'005], costs_xu[1'005];
 void Dijkstra(const std::vector<std::pair<int, int>>* graph, int* costs)
 {
   std::fill(costs, costs+1'005, INF);
-  std::priority_queue<std::pair<int, int>, std::vector<std::pair<int, int>>, std::less<std::pair<int, int>>> pq;
+  std::priority_queue<std::pair<int, int>, std::vector<std::pair<int, int>>, std::greater<std::pair<int, int>>> pq;
   pq.push({0, X});
   costs[X] = 0;
   while(pq.size())
