@@ -1,18 +1,16 @@
-#include <string>
-#include <vector>
-
+//https://school.programmers.co.kr/learn/courses/30/lessons/12940
+#include <bits/stdc++.h>
 using namespace std;
 
 vector<int> solution(int n, int m) 
 {
-    vector<int> answer;
-    int val_max = std::max(n, m);
-    int val_min = std::min(n, m);
-    while(val_max % val_min)
+    int large = std::max(n, m);
+    int small = std::min(n, m);
+    while(large % small)
     {
-        int gcd = val_max % val_min;
-        val_max = val_min;
-        val_min = gcd;
+        int temp = large % small;
+        large = small;
+        small = temp;
     }
-    return {val_min, n*m/val_min};
+    return {small, n*m/small};
 }
