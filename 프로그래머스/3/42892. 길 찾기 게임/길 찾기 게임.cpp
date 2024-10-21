@@ -1,84 +1,63 @@
+//https://school.programmers.co.kr/learn/courses/30/lessons/42892
 #include <bits/stdc++.h>
 using namespace std;
-struct Node
+struct Tree
 {
-    int left = -1;
-    int right = -1; 
-    int value = -1;
-    int idx = -1;
+    int idx = 0;
+    int val = 0;
+    int left = 0;
+    int right = 0;
 };
-Node node[10005];
-void InsertNode(int parent, int idx, int value)
+Tree tree[10'005];
+std::vector<std::pair<std::pair<int, int>, int>> nodes;
+void InsertNode(int idx, const std::pair<std::pair<int, int>, int>& node)
 {
-    if(node[parent].value == -1)
+    if(tree[idx].idx == 0)
     {
-        node[parent].idx = idx;
-        node[parent].value = value;
+        tree[idx].idx = node.second;
+        tree[idx].val = node.first.second;
+        return;
     }
-    else if(value < node[parent].value)
+    if(node.first.second < tree[idx].val)
     {
-        if(node[parent].left == -1)
-        {
-            node[parent].left = idx;
-            node[idx].idx = idx;
-            node[idx].value = value;
-        }
-        else
-            InsertNode(node[parent].left, idx, value);
+        if(tree[idx].left == 0)
+            tree[idx].left = node.second;
+         InsertNode(tree[idx].left, node);
     }
     else
     {
-       if(node[parent].right == -1)
-        {
-            node[parent].right = idx;
-            node[idx].idx = idx;
-            node[idx].value = value;
-        }
-        else
-            InsertNode(node[parent].right, idx, value);
+        if(tree[idx].right == 0)
+            tree[idx].right = node.second;
+        InsertNode(tree[idx].right, node);
     }
 }
-void PreOrder(int idx, std::vector<int>& ans)
+void PreOrder(int idx, vector<int>& answer)
 {
-    ans.push_back(node[idx].idx);
-    if(node[idx].left != -1)
-        PreOrder(node[idx].left, ans);
-    if(node[idx].right != -1)
-        PreOrder(node[idx].right, ans);
+    answer.push_back(tree[idx].idx);
+    if(tree[idx].left) PreOrder(tree[idx].left, answer);
+    if(tree[idx].right) PreOrder(tree[idx].right, answer);
 }
-void PostOrder(int idx, std::vector<int>& ans)
+void PostOrder(int idx, vector<int>& answer)
 {
-    if(node[idx].left != -1)
-        PostOrder(node[idx].left, ans);
-    if(node[idx].right != -1)
-        PostOrder(node[idx].right, ans);
-    ans.push_back(node[idx].idx);
+    if(tree[idx].left) PostOrder(tree[idx].left, answer);
+    if(tree[idx].right) PostOrder(tree[idx].right, answer);
+    answer.push_back(tree[idx].idx);
 }
-std::priority_queue<std::pair<int, std::pair<int, int>>, std::vector<std::pair<int, std::pair<int, int>>>,
-std::less<std::pair<int, std::pair<int, int>>>> pq;
 vector<vector<int>> solution(vector<vector<int>> nodeinfo) 
 {
     for(int i = 0; i < nodeinfo.size(); i++)
-    {
-        int x = nodeinfo[i][0];
-        int y = nodeinfo[i][1];
-        pq.push({y,{i+1, x}});
-    }
-    int rootidx = pq.top().second.first;
-    while(pq.size())
-    {
-        auto iter = pq.top();
-        pq.pop();
-        InsertNode(rootidx, iter.second.first, iter.second.second);
-    }
+        nodes.push_back({{nodeinfo[i][1], nodeinfo[i][0]}, i+1});
+    std::sort(nodes.begin(), nodes.end(), [](const std::pair<std::pair<int, int>, int>& a, const std::pair<std::pair<int, int>, int>& b)
+              {
+                 return a.first.first == b.first.first ? a.first.second < b.first.second : a.first.first > b.first.first; 
+              });
+    for(const auto& iter : nodes)
+        InsertNode(nodes[0].second, iter);
+    std::vector<int> pre, post;
     vector<vector<int>> answer;
-    std::vector<int> ans;
-    PreOrder(rootidx, ans);
-    answer.push_back(ans);
-    ans.clear();
-    PostOrder(rootidx, ans);
-    answer.push_back(ans);
-    ans.clear();
-    
+    PreOrder(nodes[0].second, pre);
+    answer.push_back(pre);
+    PostOrder(nodes[0].second, post);
+    answer.push_back(post);
     return answer;
 }
