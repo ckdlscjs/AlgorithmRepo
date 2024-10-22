@@ -1,55 +1,46 @@
+//https://school.programmers.co.kr/learn/courses/30/lessons/60062
 #include <bits/stdc++.h>
 using namespace std;
-int result;
-int length;
-std::vector<int> weaks;
-std::vector<int> dists;
-bool friends[10];
-void check(std::vector<int> dist_per)
+int res;
+void Check(const std::vector<int>& weaks, const std::vector<int>& dists, std::vector<int> friends, int uses)
 {
-    if(dist_per.size() >= dists.size())
+    if(friends.size() >= dists.size())
     {
-        for(int i = 0; i < length; i++)
+        for(int i = 0; i < weaks.size()/2; i++)
         {
-            int cnt = 1;
-            int pos = weaks[i] + dist_per[cnt-1];
-            for(int j = i; j < i + length; j++)
+            int cnt = 0;
+            int pos = weaks[i] + friends[cnt];
+            for(int j = i; j < i + weaks.size()/2; j++)
             {
                 if(pos < weaks[j])
                 {
                     cnt++;
-                    if(cnt > dist_per.size())
+                    if(cnt >= friends.size())
                         break;
-                    pos = weaks[j] + dist_per[cnt-1];
-                }  
+                    pos = weaks[j] + friends[cnt];
+                }
             }
-            result = std::min(result, cnt);
+            res = std::min(res, cnt+1);
         }
     }
     else
     {
         for(int i = 0; i < dists.size(); i++)
         {
-            if(friends[i])
+            if(uses & 1 << i)
                 continue;
-            friends[i] = true;
-            dist_per.push_back(dists[i]);
-            check(dist_per);
-            friends[i] = false;
-            dist_per.pop_back();
+            friends.push_back(dists[i]);
+            Check(weaks, dists, friends, uses | 1 << i);
+            friends.pop_back();
         }
     }
 }
-
 int solution(int n, vector<int> weak, vector<int> dist) 
 {
-    std::sort(dist.begin(), dist.end(), std::greater<>());
-    result = dist.size() + 1;
-    length = weak.size();
-    for(int i = 0; i < length; i++)
-        weak.push_back(weak[i] + n);
-    weaks = weak;
-    dists = dist;
-    check({});
-    return result >= dists.size()+1 ? -1 : result;
+    std::vector<int> weaks = weak;
+    for(const auto& iter : weak)
+        weaks.push_back(iter + n);
+    res = dist.size() + 1;
+    Check(weaks, dist, {}, 0);
+    return res >= dist.size() + 1? -1 : res;
 }
