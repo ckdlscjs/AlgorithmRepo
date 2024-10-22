@@ -18,17 +18,14 @@ string solution(string p)
     }
     v = p.substr(cnt_l + cnt_r);
     v = solution(v);
-    if(!chk)
-    {
-        std::string temp = "";
-        temp += '(';
-        temp += v;
-        temp += ')';
-        for(int i = 1; i < u.size() - 1; i++)
-            u[i] = (u[i] == '(' ? ')' : '(');
-        temp += u.substr(1, u.size()-2);
-        return temp;
-    }
-    else
+    if(chk) 
         return u+v;
+    std::string temp = "";
+    temp += '(';
+    temp += v;
+    temp += ')';
+    for(int i = 1; i < u.size() - 1; i++)
+        u[i] = (u[i] == '(' ? ')' : '(');
+    temp += u.substr(1, u.size()-2);
+    return temp;
 }
