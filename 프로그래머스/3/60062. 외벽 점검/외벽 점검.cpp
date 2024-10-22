@@ -10,14 +10,18 @@ void Check(const std::vector<int>& weaks, const std::vector<int>& dists, std::ve
         {
             int cnt = 0;
             int pos = weaks[i] + friends[cnt];
-            for(int j = i; j < i + weaks.size()/2; j++)
+            int end = weaks[(i + weaks.size()/2)-1];
+            if(pos < end)
             {
-                if(pos < weaks[j])
+                for(int j = i+1; j < i + weaks.size()/2; j++)
                 {
-                    cnt++;
-                    if(cnt >= friends.size())
-                        break;
-                    pos = weaks[j] + friends[cnt];
+                    if(pos < weaks[j])
+                    {
+                        cnt++;
+                        if(cnt >= friends.size())
+                            break;
+                        pos = weaks[j] + friends[cnt];
+                    }
                 }
             }
             res = std::min(res, cnt+1);
@@ -41,6 +45,29 @@ int solution(int n, vector<int> weak, vector<int> dist)
     for(const auto& iter : weak)
         weaks.push_back(iter + n);
     res = dist.size() + 1;
-    Check(weaks, dist, {}, 0);
-    return res >= dist.size() + 1? -1 : res;
+    //Check(weaks, dist, {}, 0);
+    do
+    {
+        for(int i = 0; i < weaks.size()/2; i++)
+        {
+            int cnt = 0;
+            int pos = weaks[i] + dist[cnt];
+            int end = weaks[(i + weaks.size()/2)-1];
+            if(pos < end)
+            {
+                for(int j = i+1; j < i + weaks.size()/2; j++)
+                {
+                    if(pos < weaks[j])
+                    {
+                        cnt++;
+                        if(cnt >= dist.size())
+                            break;
+                        pos = weaks[j] + dist[cnt];
+                    }
+                }
+            }
+            res = std::min(res, cnt+1);
+        }
+    }while(next_permutation(dist.begin(), dist.end()));
+    return res > dist.size()? -1 : res;
 }
