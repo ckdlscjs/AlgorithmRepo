@@ -41,11 +41,10 @@ int main()
     {
       std::cin >> w;
       graph[u].push_back({v, w});
-      graph[v].push_back({u, w});
     }
   }
   std::pair<int, int> ret1 = BFS(1);
   std::pair<int, int> ret2 = BFS(ret1.first);
-  std::cout <<ret2.second-1;
+  std::cout << ret2.second-1;
   return 0;
 }
