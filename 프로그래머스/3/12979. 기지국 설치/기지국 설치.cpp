@@ -5,7 +5,6 @@ std::queue<std::pair<int, int>> q;
 int solution(int n, vector<int> stations, int w)
 {
     int answer = 0;
-    std::sort(stations.begin(), stations.end(), std::less<>());
     for(const auto& iter : stations)
         q.push({iter-w, std::min(iter+w, n)});
     q.push({n+1, n+1});
