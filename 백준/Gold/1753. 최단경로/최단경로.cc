@@ -23,8 +23,6 @@ int main()
       int w = pq.top().first;
       int u = pq.top().second;
       pq.pop();
-      if(w > costs[u])
-        continue;
       for(const auto& iter : graph[u])
       {
         int v = iter.first;
