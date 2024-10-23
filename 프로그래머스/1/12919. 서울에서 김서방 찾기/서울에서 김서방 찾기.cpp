@@ -1,9 +1,8 @@
-#include <string>
-#include <vector>
-
+//https://school.programmers.co.kr/learn/courses/30/lessons/12919
+#include <bits/stdc++.h>
 using namespace std;
-
-string solution(vector<string> seoul) {
+string solution(vector<string> seoul) 
+{
     for(int i = 0; i < seoul.size(); i++)
     {
         if(seoul[i] == "Kim")
