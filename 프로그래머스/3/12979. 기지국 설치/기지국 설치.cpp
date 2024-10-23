@@ -9,13 +9,13 @@ int solution(int n, vector<int> stations, int w)
     for(const auto& iter : stations)
         q.push({iter-w, std::min(iter+w, n)});
     q.push({n+1, n+1});
-    int l = 0, r = 0;
+    w = w*2+1;
+    int r = 0;
     if(q.front().first > 1)
     {
-        int cnt = (q.front().first - r - 1) / (w*2+1) + ((q.front().first - r - 1) % (w*2+1) ? 1 : 0);
+        int cnt = std::ceil((q.front().first - r - 1) / (double)w);
         answer += cnt;
-        l = 1;
-        r = (w*2 + 1) * cnt;
+        r = w * cnt;
     }
     
     while(q.size())
@@ -23,13 +23,8 @@ int solution(int n, vector<int> stations, int w)
         std::pair<int, int> cur = q.front();
         q.pop();
         if(cur.first > r)
-        {
-            answer += (cur.first - r - 1) / (w*2+1) + ((cur.first-r-1) % (w*2+1) ? 1 :0);
-            l = cur.first;
-            r = cur.second;
-        }
-        else
-            r = cur.second;
+            answer += std::ceil((cur.first - r - 1) / (double)w);
+        r = cur.second;
     }
     return answer;
 }
