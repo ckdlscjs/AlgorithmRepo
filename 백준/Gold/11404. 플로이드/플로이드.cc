@@ -1,7 +1,6 @@
 #include <bits/stdc++.h>
 const int INF = 987654321;
 int costs[105][105];
-//std::vector<std::pair<int, int>> graph[105];
 int n, m, a, b, c;
 int main()
 {
