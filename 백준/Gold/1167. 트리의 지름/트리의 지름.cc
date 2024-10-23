@@ -1,9 +1,9 @@
 #include <bits/stdc++.h>
 int V, u, v, w;
 std::vector<std::pair<int, int>> graph[100'005];
-std::vector<std::pair<int, int>> BFS(int idx)
+std::pair<int, int> BFS(int idx)
 {
-  int maxdist = 0;
+  std::pair<int, int> ret;
   int dist[100'005];
   std::memset(dist, 0, sizeof(dist));
   std::queue<int> q;
@@ -13,7 +13,11 @@ std::vector<std::pair<int, int>> BFS(int idx)
   {
     int cur = q.front();
     q.pop();
-    maxdist = std::max(maxdist, dist[cur]);
+    if(ret.second < dist[cur])
+    {
+      ret.second = dist[cur];
+      ret.first = cur;
+    }
     for(const auto& iter : graph[cur])
     {
       if(dist[iter.first])
@@ -21,12 +25,6 @@ std::vector<std::pair<int, int>> BFS(int idx)
       dist[iter.first] = dist[cur] + iter.second;
       q.push(iter.first);
     }
-  }
-  std::vector<std::pair<int, int>> ret;
-  for(int i = 1; i <= V; i++)
-  {
-    if(maxdist == dist[i])
-      ret.push_back({i, maxdist});
   }
   return ret;
 }
@@ -46,8 +44,8 @@ int main()
       graph[v].push_back({u, w});
     }
   }
-  std::vector<std::pair<int, int>> ret1 = BFS(1);
-  std::vector<std::pair<int, int>> ret2 = BFS(ret1[0].first);
-  std::cout <<ret2[0].second-1;
+  std::pair<int, int> ret1 = BFS(1);
+  std::pair<int, int> ret2 = BFS(ret1.first);
+  std::cout <<ret2.second-1;
   return 0;
 }
