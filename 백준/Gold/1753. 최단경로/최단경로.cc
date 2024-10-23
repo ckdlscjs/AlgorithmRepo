@@ -20,16 +20,15 @@ int main()
     costs[K] = 0;
     while(pq.size())
     {
-      int w = pq.top().first;
       int u = pq.top().second;
       pq.pop();
       for(const auto& iter : graph[u])
       {
         int v = iter.first;
-        int nw = iter.second;
-        if(costs[u] + nw < costs[v])
+        int w = iter.second;
+        if(costs[u] + w < costs[v])
         {
-          costs[v] = costs[u] + nw;
+          costs[v] = costs[u] + w;
           pq.push({costs[v], v});
         }
       }
