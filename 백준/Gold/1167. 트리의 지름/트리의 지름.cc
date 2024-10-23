@@ -43,8 +43,6 @@ int main()
       graph[u].push_back({v, w});
     }
   }
-  std::pair<int, int> ret1 = BFS(1);
-  std::pair<int, int> ret2 = BFS(ret1.first);
-  std::cout << ret2.second-1;
+  std::cout << BFS(BFS(1).first).second-1;
   return 0;
 }
