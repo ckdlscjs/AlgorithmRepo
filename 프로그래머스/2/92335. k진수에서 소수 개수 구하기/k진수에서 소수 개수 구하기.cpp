@@ -28,10 +28,10 @@ int solution(int n, int k)
         if(temp.empty() && iter == '0')
             continue;
         temp += iter;
-        if(temp.size() >= 2 && temp[temp.size()-1] == '0')
+        if(temp[temp.size()-1] == '0')
         {
             std::string numstr = temp.substr(0, temp.size() - 1);
-            if(numstr.find('0') == std::string::npos && IsPrime(std::stoll(numstr)))
+            if(IsPrime(std::stoll(numstr)))
                 answer++;
             temp.clear();
         }
