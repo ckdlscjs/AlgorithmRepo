@@ -21,6 +21,7 @@ int solution(int n, int k)
     }
     int answer = 0;
     std::reverse(num.begin(), num.end());
+    num += '0';
     std::string temp = "";
     for(const auto& iter : num)
     {
@@ -34,11 +35,6 @@ int solution(int n, int k)
                 answer++;
             temp.clear();
         }
-    }
-    if(temp.size())
-    {
-        if(temp.find('0') == std::string::npos && IsPrime(std::stoll(temp)))
-            answer++;
     }
     return answer;
 }
