@@ -26,9 +26,7 @@ int solution(string begin, string target, vector<string> words)
             {
                 std::string temp = cur;
                 temp[idx] = iter;
-                if(chks.find(temp) == chks.end())
-                    continue;
-                if(chks[temp])
+                if(chks.find(temp) == chks.end() || chks[temp])
                     continue;
                 chks[temp] = chks[cur] + 1;
                 q.push(temp);
