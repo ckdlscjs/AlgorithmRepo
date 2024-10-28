@@ -1,31 +1,12 @@
+//https://school.programmers.co.kr/learn/courses/30/lessons/12906
 #include <bits/stdc++.h>
 using namespace std;
-
 vector<int> solution(vector<int> arr) 
 {
     std::vector<int> answer;
-    std::stack<int> st;
-    for(int i = 0; i < arr.size(); i++)
-    {
-        if(st.empty())
-        {
-            st.push(arr[i]);
-        }
-        else
-        {
-            if(st.top() == arr[i])
-            {
-                 continue;
-            }
-            else
-            {
-                int num = st.top();
-                st.pop();
-                st.push(arr[i]);
-                answer.push_back(num);
-            }
-        }
-    }
-    answer.push_back(st.top());
+    int input = -1;
+    for(const auto& iter : arr)
+        if(iter != input)
+            input = iter, answer.push_back(input);
     return answer;
 }
