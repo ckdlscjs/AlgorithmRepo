@@ -4,25 +4,13 @@ using namespace std;
 vector<int> solution(vector<int> numbers) 
 {
     std::stack<int> st;
-    vector<int> answer;
-    for(int i = numbers.size() - 1; i >= 0; i--)
+    vector<int> answer(numbers.size(), -1);
+    for(int i = 0; i < numbers.size(); i++)
     {
-        if(st.empty())
-        {
-            answer.push_back(-1);
-            st.push(numbers[i]);
-        }
-        else
-        {
-            while(st.size() && st.top() <= numbers[i])
-                st.pop();
-            if(st.size())
-                answer.push_back(st.top());
-            else
-                answer.push_back(-1);
-            st.push(numbers[i]);
-        }
+        while(st.size() && numbers[st.top()] < numbers[i])
+            answer[st.top()] = numbers[i], st.pop();
+        st.push(i);
     }
-    std::reverse(answer.begin(), answer.end());
+   
     return answer;
 }
