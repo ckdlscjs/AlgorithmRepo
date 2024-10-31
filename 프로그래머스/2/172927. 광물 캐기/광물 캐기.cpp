@@ -6,7 +6,7 @@ int arr[5][5];
 int res = INT_MAX;
 void Check(std::vector<int>& picks, const std::vector<std::string>& minerals, int idx, int sum)
 {
-    if(idx >= minerals.size() || ((picks[0] | picks[1]) | picks[2]) == 0)
+    if(idx >= minerals.size() || (picks[0] | picks[1] | picks[2]) == 0)
     {
         res = std::min(res, sum);
         return;
