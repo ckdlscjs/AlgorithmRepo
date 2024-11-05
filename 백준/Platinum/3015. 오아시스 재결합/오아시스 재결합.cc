@@ -1,27 +1,25 @@
 #include <bits/stdc++.h>
-long long int n, ret;
-std::stack<std::pair<int, long long int>> st;
-int main() 
+long long int N, sum, val;
+int main(void)
 {
   std::ios::sync_with_stdio(false);
-  std::cin.tie(0); 
+  std::cin.tie(0);
   std::cout.tie(0);
-  std::cin >> n;
-  for(int i = 0; i < n; i++)
+  std::cin >> N;
+  std::stack<std::pair<int, long long int>> st;
+  for(int i = 0; i < N; i++)
   {
-    int height;
-    std::cin >> height;
-    long long cnt = 1;
-    while(st.size() && st.top().first <= height)
+    std::cin >> val;
+    long long int cnt = 1;
+    while(st.size() && st.top().first <= val)
     {
-      ret += st.top().second; //스택에서 자신보다 사이즈가 작거나 같은 갯수의 합
-      if(st.top().first == height) cnt = st.top().second + 1; //사이즈가 같다면 압축
-      else cnt = 1; //사이즈가 다르다면 이전값들은 이제 볼 필요가 없음
+      sum += st.top().second;
+      if(st.top().first == val) cnt = st.top().second + 1;
       st.pop();
     }
-    if(st.size()) ret++; //자신보다 높은 값이 스택에 남아있다
-    st.push({height, cnt});
+    if(st.size()) sum++;
+    st.push({val, cnt});
   }
-  std::cout << ret;
+  std::cout << sum;
   return 0;
 }
