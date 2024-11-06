@@ -1,38 +1,28 @@
+//https://school.programmers.co.kr/learn/courses/30/lessons/86971
 #include <bits/stdc++.h>
 using namespace std;
-const int MaxN = 105;
-std::vector<int> graph[MaxN];
-int dfs (int skip, int idx, bool* visited, int sum)
+std::vector<int> graph[105];
+int nodes[105];
+void dfs(int idx)
 {
-    if(skip == idx)
-        return sum;
-    visited[idx] = true;
-    for(int i = 0; i < graph[idx].size(); i++)
+    nodes[idx] = 1;
+    for(const auto& next : graph[idx])
     {
-        if(graph[idx][i] == skip)
-            continue;
-        if(visited[graph[idx][i]])
-            continue;
-        sum = dfs(skip, graph[idx][i], visited, sum+1);
+        if(nodes[next]) continue;
+        dfs(next);
+        nodes[idx] += nodes[next];
     }
-    return sum;
 }
-int solution(int n, vector<vector<int>> wires) 
+int solution(int n, vector<vector<int>> wires)
 {
     for(const auto& iter : wires)
     {
         graph[iter[0]].push_back(iter[1]);
         graph[iter[1]].push_back(iter[0]);
     }
-    int answer = n;
+    dfs(1);
+    int answer = INT_MAX;
     for(int i = 1; i <= n; i++)
-    {
-        bool visited[MaxN];
-        std::memset(visited, false, sizeof(visited));
-        int result = dfs(i, 1, visited, 1);
-        //std::cout << result <<'\n';
-        answer = std::min(answer, std::abs(result*2 - n));
-    }
-    
+        answer = std::min(answer, std::abs(nodes[i]*2 - n));
     return answer;
 }
