@@ -1,42 +1,30 @@
+//https://school.programmers.co.kr/learn/courses/30/lessons/92343
 #include <bits/stdc++.h>
-const int MaxN = 20;
 using namespace std;
-struct state
+std::vector<int> graph[20];
+int Check(const std::vector<int>& infos, int sheep, int wolf, std::unordered_set<int> paths)
 {
-    int idx;
-    int sheep;
-    int wolf;
-    std::unordered_set<int> way;
-};
-int solution(vector<int> info, vector<vector<int>> edges) 
-{
-    std::vector<int> graph[MaxN];
-    for(const auto& iter : edges)
-        graph[iter[0]].push_back(iter[1]);
-    std::queue<state> q;
-    q.push({0, 1, 0, {0}});
-    int answer = 0;
-    while(q.size())
+    if(sheep <= wolf)
+        return sheep;
+    int ret = sheep;
+    for(const auto& iter : paths)
     {
-        state s = q.front();
-        q.pop();
-        answer = std::max(answer, s.sheep);
-        if(s.wolf >= s.sheep)
-            continue;
-        for(const auto& iter : s.way)
+        for(const auto& next : graph[iter])
         {
-            for(int i = 0; i < graph[iter].size(); i++)
-            {
-                if(s.way.find(graph[iter][i]) != s.way.end())
-                    continue;
-                int newsheep = s.sheep + (!info[graph[iter][i]] ? 1 : 0);
-                int newwolf = s.wolf + (!info[graph[iter][i]] ? 0 : 1);
-                std::unordered_set<int> newway = s.way;
-                newway.insert(graph[iter][i]);
-                q.push({info[graph[iter][i]], newsheep, newwolf, newway});
-            }
+            if(paths.find(next) != paths.end()) continue;
+            std::unordered_set<int> newpath = paths;
+            newpath.insert(next);
+            ret = std::max(ret, Check(infos, sheep + (infos[next] ? 0 : 1), wolf + (infos[next] ? 1 : 0), newpath));
         }
     }
-    
-    return answer;
+    return ret;
+}
+int solution(vector<int> info, vector<vector<int>> edges) 
+{
+    for(const auto& iter : edges)
+    {
+        graph[iter[0]].push_back(iter[1]);
+        graph[iter[1]].push_back(iter[0]);
+    }  
+    return Check(info, 1, 0, {0});
 }
