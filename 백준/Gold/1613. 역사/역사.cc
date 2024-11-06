@@ -16,8 +16,6 @@ int main(void)
     costs[u][v] = 1;
   }
   std::cin >> s;
-  for(int i = 1; i <= n; i++)
-    costs[i][i] = 0;
   for(int m = 1; m <= n; m++)
   {
     for(int i = 1; i <= n; i++)
