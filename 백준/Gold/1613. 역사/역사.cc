@@ -2,7 +2,6 @@
 int n, k, u, v, s;
 const int INF = 987654321;
 int costs[405][405];
-std::vector<int> graph[405];
 int main(void)
 {
   std::ios::sync_with_stdio(false);
