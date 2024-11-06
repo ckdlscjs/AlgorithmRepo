@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
-const int INF = 987654321;
-int N, M, a, b, c;
+const int INF = 98765421;
+int N, M, u, v, w;
 std::vector<std::pair<std::pair<int, int>, int>> edges;
 long long int costs[505];
 bool Bellmanford(int s)
@@ -8,11 +8,11 @@ bool Bellmanford(int s)
   costs[s] = 0;
   for(int i = 0; i < N; i++)
   {
-    for(int j = 0; j < edges.size(); j++)
+    for(const auto& iter : edges)
     {
-      int u = edges[j].first.first;
-      int v = edges[j].first.second;
-      int w = edges[j].second;
+      int u = iter.first.first;
+      int v = iter.first.second;
+      int w = iter.second;
       if(costs[u] != INF && costs[u] + w < costs[v])
       {
         costs[v] = costs[u] + w;
@@ -23,24 +23,24 @@ bool Bellmanford(int s)
   }
   return true;
 }
-int main()
+int main(void)
 {
   std::ios::sync_with_stdio(false);
   std::cin.tie(0);
   std::cout.tie(0);
+  std::fill_n(costs, 505, INF);
   std::cin >> N >> M;
-  std::fill(costs, costs+505, INF);
   for(int i = 0; i < M; i++)
   {
-    std::cin >> a >> b >> c;
-    edges.push_back({{a, b}, c});
+    std::cin >> u >> v >> w;
+    edges.push_back({{u, v}, w});
   }
   if(Bellmanford(1))
   {
     for(int i = 2; i <= N; i++)
       std::cout << (costs[i] == INF ? -1 : costs[i]) << '\n';
-    return 0;
   }
-  std::cout << -1;
+  else
+    std::cout << -1;
   return 0;
 }
