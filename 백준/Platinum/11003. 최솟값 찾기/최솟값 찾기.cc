@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 int N, L, val;
-std::priority_queue<std::pair<int, int>, std::vector<std::pair<int, int>>, std::greater<std::pair<int, int>>> pq;
+std::deque<std::pair<int, int>> dq;
 int main(void)
 {
   std::ios::sync_with_stdio(false);
@@ -10,10 +10,12 @@ int main(void)
   for(int i = 0; i < N; i++)
   {
     std::cin >> val;
-    pq.push({val, i});
-    while(pq.top().second < i - L + 1)
-      pq.pop();
-    std::cout << pq.top().first << ' ';
+    if(dq.size() && dq.front().second + L <= i)
+      dq.pop_front();
+    while(dq.size() && dq.back().first > val)
+      dq.pop_back();
+    dq.push_back({val, i});
+    std::cout << dq.front().first << ' ';
   }
   return 0;
 }
