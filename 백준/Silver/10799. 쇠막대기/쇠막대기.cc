@@ -11,17 +11,12 @@ int main(void)
   char ch;
   for(const auto& iter : str)
   {
-    if(iter == '(')
-    {
-      st.push('(');
-    }
+    if(iter == '(') st.push('(');
     else
     {
       st.pop();
-      if(ch == '(' && st.size())
-        ans += st.size();
-      else if(ch == ')')
-        ans += 1;
+      if(ch == '(' && st.size()) ans += st.size();
+      else if(ch == ')') ans += 1;
     }
     ch = iter;
   }
