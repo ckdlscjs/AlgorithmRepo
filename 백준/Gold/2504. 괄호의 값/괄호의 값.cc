@@ -6,48 +6,36 @@ int main(void)
   std::cout.tie(0);
   std::string str;
   std::cin >> str;
-  std::stack<std::string> st;
-  int ans = 0;
-  bool chk = true;
-  if(str.size() % 2)
+  std::stack<char> st;
+  int answer = 0, temp = 1;
+  for(int i = 0; i < str.size(); i++)
   {
-    std::cout << ans;
-    return 0;
-  }
-  for(const auto& iter : str)
-  {
-    if(iter == '(' || iter == '[')
+    if(str[i] == '(' || str[i] == '[')
     {
-      st.push(std::string(1, iter));
+      temp *= (str[i] == '(' ? 2 : 3);
+      st.push(str[i]);
     }
     else
     {
-      int amount = (iter == ']' ? 3 : 2);
-      int cur = 0;
-      while(st.size() && !(st.top() == "(" || st.top() == "["))
+      if(st.empty() || (st.top() == '(' && str[i] == ']') || (st.top() == '[' && str[i] == ')'))
       {
-        cur += std::stoi(st.top());
-        st.pop();
-      }
-      if(st.empty() || (st.top() == "[" && iter == ')') ||(st.top()== "(" && iter == ']'))
-      {
-        chk = false;
+        answer = 0;
         break;
       }
-      st.pop();
-      st.push(std::to_string(cur ? amount*cur : amount));
+      else if((str[i-1] == '(' && str[i] == ')') || (str[i-1] == '[' && str[i] == ']'))
+      {
+        answer += temp;
+        temp /= (str[i-1] == '(' ? 2 : 3);
+        st.pop();
+      }
+      else
+      {
+        temp /= (str[i] == ')' ? 2 : 3);
+        st.pop();
+      }
     }
   }
-  while(st.size())
-  {
-    if(st.top() == "(" || st.top() == "[")
-    {
-      chk = false;
-      break;
-    }
-    ans += std::stoi(st.top()), st.pop();
-  }
-  if(!chk) ans = 0;
-  std::cout << ans;
+  if(st.size()) answer = 0;
+  std::cout << answer;
   return 0;
 }
