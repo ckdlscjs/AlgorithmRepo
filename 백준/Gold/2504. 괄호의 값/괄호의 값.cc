@@ -1,84 +1,57 @@
 #include <bits/stdc++.h>
-using namespace std;
-std::stack<int> st;
-int main() {
+int main(void)
+{
+  std::ios::sync_with_stdio(false);
+  std::cin.tie(0);
+  std::cout.tie(0);
   std::string str;
   std::cin >> str;
+  std::stack<std::string> st;
+  int ans = 0;
+  bool chk = true;
   if(str.size() % 2)
   {
-    std::cout << 0;
+    std::cout << ans;
     return 0;
   }
-  for(const auto iter : str)
+  for(const auto& iter : str)
   {
-    if(st.empty() && (iter == ')' || iter ==']'))
-    {
-      std::cout << 0;
-      return 0;
-    }
-    if(st.size() && st.top() == '(' && iter == ']')
-    {
-      std::cout << 0;
-      return 0;
-    }
-    if(st.size() && st.top() == '[' && iter == ')')
-    {
-      std::cout << 0;
-      return 0;
-    }
     if(iter == '(' || iter == '[')
     {
-      st.push(iter);
-      continue;
-    }
-    int num = 0;
-    if(st.size() && st.top() == '(' && iter == ')')
-    {
-      num = 2;
-      st.pop();
-      while(st.size() && st.top() != '(' && st.top() != '[')
-      {
-        num += st.top();
-        st.pop();
-      }
-      st.push(num);
-    }
-    else if(st.size() && st.top() == '[' && iter == ']')
-    {
-      num = 3;
-      st.pop();
-      while(st.size() && st.top() != '(' && st.top() != '[')
-      {
-        num += st.top();
-        st.pop();
-      }
-      st.push(num);
+      st.push(std::string(1, iter));
     }
     else
     {
-      num = st.top();
+      int amount = (iter == ']' ? 3 : 2);
+      int cur = 0;
+      while(st.size() && !(st.top() == "(" || st.top() == "["))
+      {
+        cur += std::stoi(st.top());
+        st.pop();
+      }
+      if(st.empty() || (st.top() == "[" && iter == ')') ||(st.top()== "(" && iter == ']'))
+      {
+        chk = false;
+        break;
+      }
       st.pop();
-      if(st.size() &&  st.top() == '(' && iter == ')')
-      {
-        num *= 2;
-        st.pop();
-      }
-      else if(st.size() &&  st.top() == '[' && iter == ']')
-      {
-        num *= 3;
-        st.pop();
-      }
-      while(st.size() && st.top() != '(' && st.top() != '[')
-      {
-        num += st.top();
-        st.pop();
-      }
-      st.push(num);
+      st.push(std::to_string(cur ? amount*cur : amount));
     }
   }
-  if(st.size() != 1)
-    std::cout << 0;
-  else
-    std::cout << st.top();
+  if(!chk)
+  {
+    std::cout << ans;
+    return 0;
+  }
+  while(st.size())
+  {
+    if(st.top() == "(" || st.top() == "[")
+    {
+      ans = 0;
+      break;
+    }
+    ans += std::stoi(st.top()), st.pop();
+  }
+  std::cout << ans;
   return 0;
 }
