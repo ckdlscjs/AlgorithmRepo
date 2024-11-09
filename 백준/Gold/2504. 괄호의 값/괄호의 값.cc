@@ -38,20 +38,16 @@ int main(void)
       st.push(std::to_string(cur ? amount*cur : amount));
     }
   }
-  if(!chk)
-  {
-    std::cout << ans;
-    return 0;
-  }
   while(st.size())
   {
     if(st.top() == "(" || st.top() == "[")
     {
-      ans = 0;
+      chk = false;
       break;
     }
     ans += std::stoi(st.top()), st.pop();
   }
+  if(!chk) ans = 0;
   std::cout << ans;
   return 0;
 }
