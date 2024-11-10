@@ -22,11 +22,11 @@ int main(void)
   std::cin.tie(0);
   std::cout.tie(0);
   std::cin >> T;
+  Fibo(40);
   for(int t = 0; t < T; t++)
   {
     std::cin >> N;
-    std::pair<int, int> ret = Fibo(N);
-    std::cout << ret.first << ' ' << ret.second << '\n';
+    std::cout << Fibo(N).first << ' ' << Fibo(N).second<< '\n';
   }
  
   return 0;
