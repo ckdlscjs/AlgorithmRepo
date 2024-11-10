@@ -3,8 +3,7 @@ int N, M, u, v, cnt;
 struct DisjointSet
 {
   std::vector<int> parents;
-  std::vector<int> ranks;
-  DisjointSet(int _size) : parents(_size+1, -1), ranks(_size+1, 0) {}
+  DisjointSet(int _size) : parents(_size+1, -1) {}
   int Find(int node)
   {
     if(parents[node] == -1) return node;
@@ -15,12 +14,7 @@ struct DisjointSet
     int root1 = Find(node1);
     int root2 = Find(node2);
     if(root1 == root2) return;
-    if(ranks[root1] == ranks[root2])
-      ranks[root1]++, parents[root2] = root1;
-    else if(ranks[root1] < ranks[root2])
-      parents[root1] = root2;
-    else
-      parents[root2] = root1;
+    parents[root2] = root1;
   }
 };
 int main(void)
