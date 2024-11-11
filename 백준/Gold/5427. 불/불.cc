@@ -74,10 +74,7 @@ int main(void)
       }
       ext++;
     }
-    if(escape)
-      std::cout << ext << '\n';
-    else
-      std::cout << "IMPOSSIBLE" << '\n';
+    std::cout << (escape ? std::to_string(ext) : "IMPOSSIBLE") << '\n';
   }
   return 0;
 }
