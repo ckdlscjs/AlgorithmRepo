@@ -15,9 +15,7 @@ int main(void)
     std::memset(dist, 0, sizeof(dist));
     std::cin >> w >> h;
     std::deque<std::pair<int, int>> fires;
-    std::deque<std::pair<int, int>> fires_next;
     std::deque<std::pair<int, int>> player;
-    std::deque<std::pair<int, int>> player_next;
     for(int i = 0; i < h; i++)
     {
       std::cin >> str;
@@ -39,7 +37,8 @@ int main(void)
     int ext = 0;
     while(!escape && (fires.size() || player.size()))
     {
-      while(fires.size())
+      int len = fires.size();
+      for(int i = 0; i < len; i++)
       {
         int y = fires.front().first;
         int x = fires.front().second;
@@ -50,12 +49,11 @@ int main(void)
           int nx = x + dx[dir];
           if(ny < 0 || nx < 0 || ny >= h || nx >= w || arr[ny][nx] == '#' || arr[ny][nx] == '*') continue;
           arr[ny][nx] = '*';
-          fires_next.push_back({ny, nx});
+          fires.push_back({ny, nx});
         }
       }
-      fires = fires_next;
-      fires_next.clear();
-      while(player.size())
+      len = player.size();
+       for(int i = 0; i < len; i++)
       {
         int y = player.front().first;
         int x = player.front().second;
@@ -71,11 +69,9 @@ int main(void)
           }
           if(arr[ny][nx] != '.' || dist[ny][nx]) continue;
           dist[ny][nx] = dist[y][x];
-          player_next.push_back({ny, nx});
+          player.push_back({ny, nx});
         }
       }
-      player = player_next;
-      player_next.clear();
       ext++;
     }
     if(escape)
