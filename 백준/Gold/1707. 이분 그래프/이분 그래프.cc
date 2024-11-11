@@ -7,11 +7,8 @@ bool DFS(std::unordered_map<int, std::vector<int>>& graph, int cur, std::vector<
   for(const auto& iter : graph[cur])
   {
     if(colors[iter] && colors[iter] == color) return false;
-    if(colors[iter] == 0)
-    {
-      ret = DFS(graph, iter, colors, color*-1);
-      if(!ret) return ret;
-    }
+    if(colors[iter] == 0) 
+      if(!DFS(graph, iter, colors, color*-1)) return false;
   }
   return ret;
 }
