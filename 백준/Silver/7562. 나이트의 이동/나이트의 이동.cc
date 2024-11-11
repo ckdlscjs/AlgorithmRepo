@@ -19,6 +19,8 @@ int main(void)
     std::cin >> y >> x;
     while(q.size())
     {
+      if(dist[y][x])
+        break;
       std::pair<int, int> cur = q.front();
       q.pop();
       for(int dir = 0; dir < 8; dir++)
