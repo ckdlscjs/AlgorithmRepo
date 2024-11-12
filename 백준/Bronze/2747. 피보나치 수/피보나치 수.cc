@@ -34,7 +34,7 @@ int main()
   std::cin >> N;
   if(N <= 0)
   {
-    std::cout << 0;
+    std::cout << 1;
     return 0;
   }
   std::vector<std::vector<long long int>> ans = Fibo(arr, N-1);
