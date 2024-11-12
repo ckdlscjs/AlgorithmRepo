@@ -33,7 +33,7 @@ int main()
   std::cin.tie(0);
   std::cout.tie(0);
   std::cin >> N;
-  std::vector<std::vector<long long int>> ans = Fibo(arr, N - 1);
-  std::cout << ans[0][0];
+  std::vector<std::vector<long long int>> ans = Fibo(arr, N);
+  std::cout << ans[1][0];
   return 0;
 }
