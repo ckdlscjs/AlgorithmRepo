@@ -12,7 +12,17 @@ int main()
   std::ios::sync_with_stdio(false);
   std::cin.tie(0);
   std::cout.tie(0);
+  for(int i = 0; i <= 1000; i++)
+  {
+    for(int k = 0; k <= i; k++)
+    {
+      if(k == 0 || i == k)
+        dp[i][k] = 1;
+      else
+        dp[i][k] = (dp[i-1][k-1] + dp[i-1][k])%10'007;
+    }
+  }
   std::cin >> N >> K;
-  std::cout << binomial(N, K);
+  std::cout << dp[N][K];
   return 0;
 }
