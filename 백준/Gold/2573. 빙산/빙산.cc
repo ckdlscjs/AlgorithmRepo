@@ -2,7 +2,7 @@
 using namespace std;
 const int dy[] = {0, 0, 1, -1};
 const int dx[] = {1, -1, 0, 0};
-int N, M, cnt, arr[305][305];
+int N, M, bfscnt, cnt, arr[305][305];
 bool visited[305][305];
 int main() 
 {
@@ -16,18 +16,14 @@ int main()
     for(int j = 0; j < M; j++)
     {
       std::cin >> arr[i][j];
-      if(arr[i][j])
-      {
-        dq.push_back({i, j});
-      }
+      if(arr[i][j]) dq.push_back({i, j});
     }
   }
-  bool split = false;
-  while(dq.size())
+  while(dq.size() && bfscnt <= 1)
   {
     cnt++;
     std::memset(visited, false, sizeof(visited));
-    int bfscnt = 0;
+    bfscnt = 0;
     int len = dq.size();
     std::vector<std::pair<int, std::pair<int, int>>> amounts;
     for(int i = 0; i < len; i++)
@@ -47,7 +43,8 @@ int main()
       if(amount < arr[cur.first][cur.second])
         dq.push_back(cur);
     }
-    for(const auto& iter : amounts) arr[iter.second.first][iter.second.second] = std::max(0, arr[iter.second.first][iter.second.second] - iter.first);
+    for(const auto& iter : amounts) 
+      arr[iter.second.first][iter.second.second] = std::max(0, arr[iter.second.first][iter.second.second] - iter.first);
     for(int i = 0; i < dq.size(); i++)
     {
       if(visited[dq[i].first][dq[i].second]) continue;
@@ -70,12 +67,7 @@ int main()
         }
       }
     }
-    if(bfscnt > 1)
-    {
-      split = true;
-      break;
-    }
   }
-  std::cout << (split ? cnt : 0);
+  std::cout << (bfscnt >= 2 ? cnt : 0);
   return 0;
 }
