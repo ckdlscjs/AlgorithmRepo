@@ -10,22 +10,22 @@ int main()
   std::cout.tie(0);
   std::cin >> F >> S >> G >> U >> D;
   std::fill_n(dist, 1'000'005, INF);
-  dist[S] = 1;
+  dist[G] = 1;
   std::queue<int> q;
-  q.push(S);
+  q.push(G);
   while(q.size())
   {
     int cur = q.front();
     q.pop();
-    for(const auto& iter : {cur+U, cur-D})
+    for(const auto& iter : {cur+D, cur-U})
     {
       if(iter < 1 || iter > F || dist[iter] <= dist[cur] + 1 ) continue;
       q.push(iter);
       dist[iter] = dist[cur]+1;
     }
   }
-  if(dist[G] < INF)
-    std::cout << dist[G]-1;
+  if(dist[S] < INF)
+    std::cout << dist[S]-1;
   else
     std::cout <<"use the stairs";
   return 0;
