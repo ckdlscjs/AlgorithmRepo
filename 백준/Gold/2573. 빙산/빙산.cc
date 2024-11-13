@@ -47,10 +47,7 @@ int main()
       if(amount < arr[cur.first][cur.second])
         dq.push_back(cur);
     }
-    for(const auto& iter : amounts)
-    {
-      arr[iter.second.first][iter.second.second] = std::max(0, arr[iter.second.first][iter.second.second] - iter.first);
-    }
+    for(const auto& iter : amounts) arr[iter.second.first][iter.second.second] = std::max(0, arr[iter.second.first][iter.second.second] - iter.first);
     for(int i = 0; i < dq.size(); i++)
     {
       if(visited[dq[i].first][dq[i].second]) continue;
@@ -79,9 +76,6 @@ int main()
       break;
     }
   }
-  if(split)
-    std::cout << cnt;
-  else
-    std::cout << 0;
+  std::cout << (split ? cnt : 0);
   return 0;
 }
