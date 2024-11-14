@@ -25,8 +25,13 @@ int main()
   for(int t = 0; t < T; t++)
   {
     std::cin >> N;
-    for(int i = 1; i <= N; i++) 
+    for(int i = 1; i <= N; i++)
+    {
       std::cin >> arr[i];
+      visited[i] = false;
+      finished[i] = false;
+    }
+      
     for(int i = 1; i <= N; i++)
     {
       if(visited[i]) continue;
@@ -34,8 +39,6 @@ int main()
     }
     std::cout << N - sum << '\n';
     sum = 0;
-    std::memset(visited, false, sizeof(visited));
-    std::memset(finished, false, sizeof(finished));
   }
   return 0;
 }
