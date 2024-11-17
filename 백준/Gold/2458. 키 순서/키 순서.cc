@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-int N, M, u, v, in[505], out[505];
+int N, M, u, v, in[505], out[505], ans;
 bool visited[505][505];
 std::vector<int> graph[505];
 int DFS(int start, int cur)
@@ -23,14 +23,10 @@ int main()
     std::cin >> u >> v;
     graph[u].push_back(v);
   }
-  for(int i = 1; i <= N; i++)
+  for(int i = 1; i <= N; i++) 
     out[i] += DFS(i, i);
-  int ans = 0;
-  for(int i = 1; i <= N; i++)
-  {
-    //std::cout << in[i] << ' ' <<out[i] << '\n';
+  for(int i = 1; i <= N; i++) 
     if(in[i] + out[i] == N) ans++;
-  }
   std::cout << ans;
   return 0;
 }
