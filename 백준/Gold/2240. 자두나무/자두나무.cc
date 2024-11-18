@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-int T, W, pos, res, inputs[1005][2], dp[1005][35][2];
+int T, W, pos, res, dp[1005][35][2];
 int main() 
 {
   std::ios::sync_with_stdio(false);
@@ -10,16 +10,17 @@ int main()
   for(int i = 1; i <= T; i++)
   {
     std::cin >> pos;
-    inputs[i][pos-1] = 1;
-    dp[i][0][0] += dp[i-1][0][0] + inputs[i][0];
-    res = std::max(res, dp[i][0][0]);
-  }
-  for(int i = 1; i <= T; i++)
-  {
-    for(int w = 1; w <= W; w++)
+    for(int w = 0; w <= W; w++)
     {
-      dp[i][w][0] = std::max(dp[i-1][w][0], dp[i-1][w-1][1]) + inputs[i][0];
-      dp[i][w][1] = std::max(dp[i-1][w-1][0], dp[i-1][w][1]) + inputs[i][1];
+      if(w <= 0)
+      {
+        dp[i][w][0] = dp[i-1][w][0] + (pos == 1 ? 1 : 0);
+      }
+      else
+      {
+        dp[i][w][0] = std::max(dp[i-1][w][0], dp[i-1][w-1][1]) + (pos == 1 ? 1 : 0);
+        dp[i][w][1] = std::max(dp[i-1][w-1][0], dp[i-1][w][1]) + (pos == 2 ? 1 : 0);
+      }
       res = std::max({res, dp[i][w][0], dp[i][w][1]});
     }
   }
