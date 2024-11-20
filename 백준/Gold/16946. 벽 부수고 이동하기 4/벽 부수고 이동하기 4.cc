@@ -27,40 +27,41 @@ int main()
   for(int i = 0; i < N; i++)
     std::cin >> arr[i];
   int idx = 1;
+  std::queue<std::pair<int, int>> walls;
   for(int i = 0; i < N; i++)
   {
     for(int j = 0; j < M; j++)
     {
-      if(arr[i][j] == '1' || areas[i][j]) continue;
-      int sum = DFS(i, j, idx);
-      areas_width[idx++] = sum;
+      if(arr[i][j] == '1')
+      {
+        walls.push({i, j});
+      }
+      else if(arr[i][j] == '0' && areas[i][j] == 0)
+      {
+        int sum = DFS(i, j, idx);
+        areas_width[idx++] = sum;
+      }
     }
+  }
+  while(walls.size())
+  {
+    int y = walls.front().first;
+    int x = walls.front().second;
+    walls.pop();
+    std::set<int> sums;
+    for(int dir = 0; dir < 4; dir++)
+    {
+      int ny = y + dy[dir];
+      int nx = x + dx[dir];
+      if(ny < 0 || nx < 0 || ny >= N || nx >= M || !areas[ny][nx]) continue;
+      sums.insert(areas[ny][nx]);
+    }
+    int sum = 0;
+    for(const auto& iter : sums)
+      sum += areas_width[iter];
+    arr[y][x] = ((sum+1) % 10) + '0';
   }
   for(int i = 0; i < N; i++)
-  {
-    for(int j = 0; j < M; j++)
-    {
-      if(arr[i][j] == '0')
-      {
-        std::cout << 0;
-      }
-      else
-      {
-        std::set<int> sums;
-        for(int dir = 0; dir < 4; dir++)
-        {
-          int ni = i + dy[dir];
-          int nj = j + dx[dir];
-          if(ni < 0 || nj < 0 || ni >= N || nj >= M || !areas[ni][nj]) continue;
-          sums.insert(areas[ni][nj]);
-        }
-        int sum = 0;
-        for(const auto& iter : sums)
-          sum += areas_width[iter];
-        std::cout << (sum + 1)%10;
-      }
-    }
-    std::cout << '\n';
-  }
+    std::cout << arr[i] << '\n';
   return 0;
 }
