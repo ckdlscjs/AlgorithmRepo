@@ -1,92 +1,40 @@
+//https://school.programmers.co.kr/learn/courses/30/lessons/17686
 #include <bits/stdc++.h>
 using namespace std;
+void split(const std::string& str, std::string& head, std::string& num)
+{
+    std::string temp;
+    for(const auto& iter : str)
+    {
+        if(head.empty() && temp.size() && std::isdigit(iter))
+        {
+            std::transform(temp.begin(), temp.end(), temp.begin(), ::tolower);
+            head = temp;
+            temp.clear();
+        }
+        else if(num.empty() && head.size() && temp.size() && !std::isdigit(iter))
+        {
+            num = temp;
+            temp.clear();
+        }
+        temp += iter;
+    }
+    if(num.empty())
+    {
+        num = temp;
+        return;
+    }
+}
 bool compare(const std::string& a, const std::string& b)
 {
-    int idx = 0;
-    std::string temp = "";
-    std::string file1[3] = {"", "", ""};
-    std::string file2[3] = {"", "", ""};
-    for(const auto& iter : a)
+    std::string str[2][2];
+    split(a, str[0][0], str[0][1]);
+    split(b, str[1][0], str[1][1]);
+    if(str[0][0] == str[1][0])
     {
-        if(idx == 0 && '0' <= iter &&  iter <= '9')
-        {
-            file1[idx++] = temp;
-            temp.clear();
-        }
-        else if(idx == 1 && !('0' <= iter && iter <= '9'))
-        {
-            file1[idx++] = temp;
-            temp.clear();
-        }
-        temp += iter;
+        return std::stoi(str[0][1]) < std::stoi(str[1][1]);
     }
-    if(idx < 2)
-    {
-        file1[idx++] = temp;
-        temp.clear();
-    }
-    file1[idx] = temp;
-    temp.clear();
-    idx = 0;
-
-    
-    for(const auto& iter : b)
-    {
-        if(idx == 0 && '0' <= iter && iter <= '9')
-        {
-            file2[idx++] = temp;
-            temp.clear();
-        }
-        else if(idx == 1 && !('0' <= iter && iter <= '9'))
-        {
-            file2[idx++] = temp;
-            temp.clear();
-        }
-        temp += iter;
-    }
-    if(idx < 2)
-    {
-        file2[idx++] = temp;
-        temp.clear();
-    }
-    file2[idx] = temp;
-    
-    /*
-    for(const auto& iter : file1)
-    {
-        std::cout << iter << ' ';
-    }
-    std::cout << ":";
-    for(const auto& iter : file2)
-    {
-        std::cout << iter << ' ';
-    }
-    std::cout <<'\n';
-    */
-    int len = std::min(file1[0].size(), file2[0].size());
-    for(int i = 0; i < len; i++)
-    {
-        int f_ch1 = 0, f_ch2 = 0;
-        if(('A' <= file1[0][i] && file1[0][i]<='Z') || ('a' <= file1[0][i] && file1[0][i] <= 'z'))
-            f_ch1 = file1[0][i] >= 'a' ? file1[0][i] -'a' : file1[0][i] -'A';
-        else
-            f_ch1 = file1[0][i];
-            
-        if(('A' <= file2[0][i] && file2[0][i]<='Z') || ('a' <= file2[0][i] && file2[0][i] <= 'z'))
-            f_ch2 = file2[0][i] >= 'a' ? file2[0][i] -'a' : file2[0][i] -'A';
-        else
-            f_ch2 = file2[0][i];
-    
-        if(f_ch1 == f_ch2)
-            continue;
-        return f_ch1 < f_ch2;    
-    }
-    if(file1[0].size() != file2[0].size())
-        return file1[0].size() < file2[0].size();
-    
-    //std::cout << std::stoi(file1[1]) << ":" << std::stoi(file2[1]) <<'\n';
-    if(std::stoi(file1[1]) != std::stoi(file2[1]))
-        return std::stoi(file1[1]) < std::stoi(file2[1]);
+    return str[0][0] < str[1][0];
 }
 vector<string> solution(vector<string> files) 
 {
