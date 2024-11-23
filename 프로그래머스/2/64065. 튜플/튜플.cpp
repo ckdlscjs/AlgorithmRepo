@@ -1,36 +1,28 @@
+//https://school.programmers.co.kr/learn/courses/30/lessons/64065
 #include <bits/stdc++.h>
-
 using namespace std;
-
+std::unordered_map<int, int> cnts;
+std::priority_queue<std::pair<int, int>, std::vector<std::pair<int, int>>, std::less<std::pair<int, int>>> pq;
 vector<int> solution(string s) 
 {
     std::string num;
-    int counts[100005];
-    std::memset(counts, 0, sizeof(counts));
-    std::unordered_set<int> chks;
-    vector<int> answer;
     for(const auto& iter : s)
     {
-        if('0' <= iter && iter <= '9')
+        if(num.size() && !std::isdigit(iter))
+        {
+            cnts[std::stoi(num)]++;
+            num.clear();
+        }
+        else if(std::isdigit(iter))
         {
             num += iter;
         }
-        else
-        {
-            if(num.size())
-            {
-                int val = std::stoi(num);
-                counts[val]++;
-                chks.insert(val);
-                num.clear();
-            }
-        }
     }
-    for(const auto& iter : chks)
-        answer.push_back(iter);
-    std::sort(answer.begin(), answer.end(), [=](const int& a, const int& b)
-              {
-                  return counts[a] > counts[b];
-              });
+    
+    for(const auto& iter : cnts)
+        pq.push({iter.second, iter.first});
+    vector<int> answer;
+    while(pq.size())
+        answer.push_back(pq.top().second), pq.pop();
     return answer;
 }
