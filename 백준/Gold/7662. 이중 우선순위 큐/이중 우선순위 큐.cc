@@ -11,56 +11,35 @@ int main()
   {
     char Q;
     std::cin >> k;
-    int size = 0, val = 0;
-    std::priority_queue<int, std::vector<int>, std::greater<int>> mins;
-    std::priority_queue<int, std::vector<int>, std::less<int>> maxs;
-    std::unordered_map<int, int> cnts;
+    int val = 0;
+    std::multiset<int> q;
     for(int i = 0; i < k; i++)
     {
       std::cin >> Q >> val;
       if(Q == 'I')
       {
-        mins.push(val);
-        maxs.push(val);
-        cnts[val]++;
-        size++;
+        q.insert(val);
       }
       else
       {
-        if(size <= 0) continue;
-        size--;
+        if(q.size() <= 0) continue;
         if(val == 1)
         {
-          while(cnts[maxs.top()] == 0)
-            maxs.pop();
-          cnts[maxs.top()]--;
-          maxs.pop();
+          q.erase(--q.end());
         }
         else
         {
-          while(cnts[mins.top()] == 0)
-            mins.pop();
-          cnts[mins.top()]--;
-          mins.pop();
+          q.erase(q.begin());
         }
-        while(size <= 0 && maxs.size())
-          maxs.pop();
-        while(size <= 0 && mins.size())
-          mins.pop();
       }
     }
-    if(size <= 0)
+    if(q.size() <= 0)
     {
       std::cout << "EMPTY" << '\n';
     }
     else
     {
-      while(cnts[maxs.top()] == 0)
-        maxs.pop();
-      std::cout << maxs.top() << ' ';
-      while(cnts[mins.top()] == 0)
-        mins.pop();
-      std::cout << mins.top() << '\n';
+      std::cout << *q.rbegin() << ' ' << *q.begin() << '\n';
     }
   }
   
