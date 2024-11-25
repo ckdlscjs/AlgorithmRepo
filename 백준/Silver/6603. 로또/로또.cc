@@ -3,7 +3,7 @@ using namespace std;
 int k, arr[15];
 void Check(int idx, int cnt, int* selects)
 {
-  if(idx >= k + 1)
+  if(idx > k)
     return;
   if(cnt >= 6)
   {
