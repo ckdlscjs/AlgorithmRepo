@@ -1,13 +1,13 @@
 #include <bits/stdc++.h>
 using namespace std;
 long long int N, S, val, arr[25];
-long long int Check(int idx, int mask, long long int sum)
+long long int Check(int idx, int cnt, long long int sum)
 {
   long long ret = 0;
   if(idx >= N)
-    return (sum == S && mask) ? 1 : 0;
-  ret += Check(idx+1, mask, sum);
-  ret += Check(idx+1, mask | (1 << idx), sum + arr[idx]);
+    return (sum == S && cnt) ? 1 : 0;
+  ret += Check(idx+1, cnt, sum);
+  ret += Check(idx+1, cnt+1, sum + arr[idx]);
   return ret;
 }
 int main() 
