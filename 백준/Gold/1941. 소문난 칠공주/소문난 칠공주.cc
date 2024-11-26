@@ -25,7 +25,7 @@ void Check(int cnt, int scnt, int mask)
       int nx = x + dx[dir];
       int num = ny * 5 + nx;
       if(ny < 0 || nx < 0 || ny >= 5 || nx >= 5) continue;
-      if(chks[mask | (1 << num)] || mask & (1 << num)) continue;
+      if(chks[mask | (1 << num)]) continue;
       Check(cnt + 1, scnt + (arr[ny][nx] == 'S' ? 1 : 0), mask | (1 << num)); 
     }
   }
