@@ -14,44 +14,43 @@ int main()
     for(int j = 0; j < M; j++)
       std::cin >> arr[i][j];
   int res = 0;
-  int cnt = 0;
-  while(cnt < N * M)
+  std::queue<std::pair<int, int>> q;
+  std::queue<std::pair<int, int>> dels;
+  q.push({0, 0});
+  visited[0][0] = true;
+  while(q.size())
   {
-    cnt = 0;
-    std::memset(visited, false, sizeof(visited));
-    std::memset(cnts, 0, sizeof(cnts));
-    std::queue<std::pair<int, int>> q;
-    std::set<std::pair<int, int>> dels;
-    q.push({0, 0});
-    visited[0][0] = true;
-    cnt++;
-    while(q.size())
+    int cy = q.front().first;
+    int cx = q.front().second;
+    q.pop();
+    for(int dir = 0; dir < 4; dir++)
     {
-      int cy = q.front().first;
-      int cx = q.front().second;
-      q.pop();
-      for(int dir = 0; dir < 4; dir++)
+      int ny = cy + dy[dir];
+      int nx = cx + dx[dir];
+      if(ny < 0 || nx < 0 || ny >= N || nx >= M || visited[ny][nx]) continue;
+      if(arr[ny][nx] == 1)
       {
-        int ny = cy + dy[dir];
-        int nx = cx + dx[dir];
-        if(ny < 0 || nx < 0 || ny >= N || nx >= M || visited[ny][nx]) continue;
-        if(arr[ny][nx] == 1)
-        {
-          cnts[ny][nx]++;
-          if(cnts[ny][nx] >= 2)
-            dels.insert({ny, nx});
-        }
-        else
-        {
-          cnt++;
-          visited[ny][nx] = true;
-          q.push({ny, nx});
-        }
+        cnts[ny][nx]++;
+        if(cnts[ny][nx] >= 2)
+          dels.push({ny, nx});
+      }
+      else
+      {
+        visited[ny][nx] = true;
+        q.push({ny, nx});
       }
     }
-    for(const auto& iter : dels)
-      arr[iter.first][iter.second] = 0, cnt++;
-    res++;
+    if(q.empty() && dels.size())
+    {
+      res++;
+      while(dels.size())
+      {
+        visited[dels.front().first][dels.front().second] = true;
+        arr[dels.front().first][dels.front().second] = 0;
+        q.push(dels.front());
+        dels.pop();
+      }
+    }
   }
   std::cout << res;
   return 0;
