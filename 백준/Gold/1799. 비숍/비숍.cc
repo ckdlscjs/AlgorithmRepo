@@ -7,10 +7,7 @@ int Check(const std::vector<std::pair<int, int>>& board, int idx, int cnt)
 {
   int res = 0;
   if(idx >= board.size())
-  {
-    res = std::max(res, cnt);
-    return res;
-  }
+    return cnt;
   int y = board[idx].first, x = board[idx].second;
   if(!lr[y-x+N] && !rl[y+x])
   {
