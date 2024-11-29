@@ -1,7 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 int N;
-char arr[(3* 1 << 10) + 1][(6*1<<10) + 1];
+char arr[(3* 1 << 10)][(6*1<<10)];
 void Check(int n, int y, int x)
 {
   if(n <= 3)
@@ -21,7 +21,7 @@ int main()
   std::cin.tie(0);
   std::cout.tie(0);
   std::cin >> N;
-  std::fill_n(&arr[0][0], ((3* 1 << 10) + 1) * ((6*1<<10) + 1), ' ');
+  std::fill_n(&arr[0][0], (3* 1 << 10) * (6*1<<10), ' ');
   Check(N, 0, N-1);
   for(int i = 0; i < N; i++)
   {
