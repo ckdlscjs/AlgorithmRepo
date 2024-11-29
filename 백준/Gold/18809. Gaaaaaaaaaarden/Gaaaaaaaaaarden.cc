@@ -9,48 +9,59 @@ void CheckR(int idx, int cnt)
   if(cnt >= R)
   {
     int sum = 0;
-    std::queue<std::pair<int, int>> q;
-    std::queue<std::pair<int, std::pair<int, int>>> nq;
+    std::queue<std::pair<int, int>> q_green;
+    std::queue<std::pair<int, int>> q_red;
     for(int i = 0; i < inputs.size(); i++)
     {
       if(!arr_chk[i]) continue;
       int y = inputs[i].first;
       int x = inputs[i].second;
       field[y][x] = arr_chk[i];
-      q.push({y, x});
+      if(field[y][x] == 3)
+        q_green.push({y, x});
+      else
+        q_red.push({y, x});
     }
-    while(q.size())
+    while(q_green.size() || q_red.size())
     {
-      int cy = q.front().first;
-      int cx = q.front().second;
-      q.pop();
-      for(int dir = 0; dir < 4; dir++)
+      int size_green = q_green.size();
+      int size_red = q_red.size();
+      for(int i = 0; i < size_green; i++)
       {
-        int ny = cy + dy[dir];
-        int nx = cx + dx[dir];
-        if(ny < 0 || nx < 0 || ny >= N || nx >= M || field[ny][nx] || arr[ny][nx] == 0) continue;
-        nq.push({field[cy][cx], {ny, nx}});
-      }
-      if(q.empty() && nq.size())
-      {
-        std::set<std::pair<int, int>> chks;
-        while(nq.size())
+        int cy = q_green.front().first;
+        int cx = q_green.front().second;
+        int cc = field[cy][cx];
+        q_green.pop();
+        if(field[cy][cx] >= 7) continue;
+        field[cy][cx] = 7;
+        for(int dir = 0; dir < 4; dir++)
         {
-          int cc = nq.front().first;
-          int cy = nq.front().second.first;
-          int cx = nq.front().second.second;
-          nq.pop();
-          field[cy][cx] += (field[cy][cx] != cc ? cc : 0);
-          chks.insert({cy, cx});
+          int ny = cy + dy[dir];
+          int nx = cx + dx[dir];
+          if(ny < 0 || nx < 0 || ny >= N || nx >= M || field[ny][nx] || arr[ny][nx] == 0) continue;
+          q_green.push({ny, nx});
+          field[ny][nx] = cc;
         }
-        for(const auto& iter : chks)
+      }
+      for(int i = 0; i < size_red; i++)
+      {
+        int cy = q_red.front().first;
+        int cx = q_red.front().second;
+        q_red.pop();
+        for(int dir = 0; dir < 4; dir++)
         {
-          if(field[iter.first][iter.second] < 7)
+          int ny = cy + dy[dir];
+          int nx = cx + dx[dir];
+          if(ny < 0 || nx < 0 || ny >= N || nx >= M || arr[ny][nx] == 0) continue;
+          if(field[ny][nx] == 3)
           {
-            q.push({iter.first, iter.second});
+            sum++;
+            field[ny][nx] = 7;
             continue;
           }
-          sum++;
+          if(field[ny][nx]) continue;
+          q_red.push({ny, nx});
+          field[ny][nx] = 4;
         }
       }
     }
