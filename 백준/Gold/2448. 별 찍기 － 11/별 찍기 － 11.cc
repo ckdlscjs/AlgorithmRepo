@@ -11,9 +11,12 @@ void Check(int n, int y, int x)
     arr[y+2][x-2] = arr[y+2][x-1] = arr[y+2][x] = arr[y+2][x+1] = arr[y+2][x+2] = '*';
     return;
   }
-  Check(n/2, y, x);
-  Check(n/2, y+n/2, x-n/2);
-  Check(n/2, y+n/2, x+n/2);
+  else
+  {
+      Check(n/2, y, x);
+      Check(n/2, y+n/2, x-n/2);
+      Check(n/2, y+n/2, x+n/2);
+  }
 }
 int main() 
 {
