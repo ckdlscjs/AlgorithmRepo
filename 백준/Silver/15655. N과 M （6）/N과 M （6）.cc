@@ -1,7 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 int N, M, arr[10];
-void Check(int mask, int idx, int cnt, int* res)
+void Check(int idx, int cnt, int* res)
 {
   if(cnt >= M)
   {
@@ -12,9 +12,8 @@ void Check(int mask, int idx, int cnt, int* res)
   }
   for(int i = idx; i < N; i++)
   {
-    if(mask & (1 << i)) continue;
     res[cnt] = arr[i];
-    Check(mask | (1 << i), i+1, cnt+1, res);
+    Check(i+1, cnt+1, res);
   }
 }
 int main() 
@@ -27,6 +26,6 @@ int main()
     std::cin >> arr[i];
   std::sort(arr, arr+N, std::less<>());
   int res[10];
-  Check(0, 0, 0, res);
+  Check(0, 0, res);
   return 0;
 }
