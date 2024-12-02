@@ -1,28 +1,5 @@
 #include <bits/stdc++.h>
 int N, arr[1'000'005];
-void QuickSort(int start, int end)
-{
-    if(start >= end) return;
-    int pivot = arr[start];
-    int left = start + 1;
-    int right = end;
-    while(left <= right)
-    {
-        while(left <= right && arr[left] > pivot) left++;
-        while(left <= right && pivot >= arr[right]) right--;
-        if(left <= right)
-        {
-            int temp = arr[right];
-            arr[right] = arr[left];
-            arr[left] = temp;
-        }
-    }
-    int temp = arr[start];
-    arr[start] = arr[right];
-    arr[right] = temp;
-    QuickSort(start, right-1);
-    QuickSort(right+1, end);
-}
 void MergeSort(int start, int end)
 {
     if(start >= end) return;
@@ -37,9 +14,8 @@ void MergeSort(int start, int end)
         temp.push_back(arr[lidx++]);
     while(ridx <= end)
         temp.push_back(arr[ridx++]);
-    lidx = 0;
-    for(int i = start; i <= end; i++)
-        arr[i] = temp[lidx++];
+    for(const auto& iter : temp)
+        arr[start++] = iter;
 }
 int main()
 {
