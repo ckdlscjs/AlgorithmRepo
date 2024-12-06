@@ -16,12 +16,8 @@ void Rot90(int k, int r, int c)
 bool CheckBoard(int sy, int sx, int k, int r, int c)
 {
   for(int i = 0; i < r; i++)
-  {
     for(int j = 0; j < c; j++)
-    {
       if(arr[k][i][j] == 1 && board[sy+i][sx+j]) return false;
-    }
-  }
   return true;
 }
 void Check(int idx, int sum)
