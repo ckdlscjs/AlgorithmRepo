@@ -31,7 +31,6 @@ void Check(int idx, int sum)
     res = std::max(res, sum);
     return;
   }
-  bool flag = false;
   for(int rot = 0; rot < 4; rot++)
   {
     int r = (rot%2 == 0 ? idxs[idx].first : idxs[idx].second);
@@ -45,13 +44,9 @@ void Check(int idx, int sum)
         if(CheckBoard(i, j, idx, r, c))
         {
           for(int y = 0; y < r; y++)
-          {
             for(int x = 0; x < c; x++)
-            {
               if(arr[idx][y][x])
                 board[y+i][x+j] = true;
-            }
-          }
           Check(idx+1, sum + cnts[idx]);
           return;
         }
@@ -81,24 +76,6 @@ int main()
       }
     }
     cnts[k] = cnt;
-    /*
-    for(int rot = 0; rot < 4; rot++)
-    {
-      int r = (rot%2 == 0 ? idxs[k].first : idxs[k].second);
-      int c = (rot%2 == 0 ? idxs[k].second : idxs[k].first);
-      if(rot != 0)
-        Rot90(k, r, c);
-      for(int i = 0; i < r; i++)
-      {
-        for(int j = 0; j < c; j++)
-        {
-          std::cout << arr[k][i][j];
-        }
-        std::cout << '\n';
-      }
-      std::cout << '\n';
-    }
-    */
   }
   Check(0, 0);
   std::cout << res;
