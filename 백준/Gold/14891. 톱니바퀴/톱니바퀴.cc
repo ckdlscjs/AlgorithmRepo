@@ -17,7 +17,7 @@ void Rotate(int mask, int cur, int rot)
   }
   else
   {
-    gear[cur].insert(gear[cur].begin() + 8, *gear[cur].begin());
+    gear[cur].insert(gear[cur].end(), *gear[cur].begin());
     gear[cur].erase(gear[cur].begin());
   }
 }
