@@ -16,6 +16,8 @@ void Rotate90(int idx, int k)
 
 void Check(int mask, int idx, std::pair<int, int>* order)
 {
+  if(res <= 13)
+    return;
   if(idx >= 5)
   {
     std::queue<std::pair<int, std::pair<int, int>>> q;
