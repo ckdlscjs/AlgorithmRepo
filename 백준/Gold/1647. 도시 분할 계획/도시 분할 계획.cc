@@ -1,13 +1,11 @@
 #include <bits/stdc++.h>
 int N, M, cnt;
+std::vector<std::pair<int, std::pair<int, int>>> inputs;
 long long int u, v, c, res;
 struct DisjointSet
 {
   std::vector<int> parents;
-  DisjointSet(int _size) : parents(_size+1, -1)
-  {
-    
-  }
+  DisjointSet(int _size) : parents(_size+1, -1) {}
   int Find(int node)
   {
     if(parents[node] == -1)
@@ -22,7 +20,6 @@ struct DisjointSet
     parents[root2] = root1;
   }
 };
-std::priority_queue<std::pair<int ,std::pair<int, int>>, std::vector<std::pair<int ,std::pair<int, int>>>, std::greater<std::pair<int ,std::pair<int, int>>>> pq;
 int main()
 {
   std::ios::sync_with_stdio(false);
@@ -32,15 +29,15 @@ int main()
   for(int i = 0; i < M; i++)
   {
     std::cin >> u >> v >> c;
-    pq.push({c, {std::min(u, v), std::max(u, v)}});
+    inputs.push_back({c, {std::min(u, v), std::max(u, v)}});
   }
+  std::sort(inputs.begin(), inputs.end());
   DisjointSet ds(N);
-  while(pq.size() && cnt < N-1)
+  for(int i = 0; i < inputs.size() && cnt < N-1; i++)
   {
-    u = pq.top().second.first;
-    v = pq.top().second.second;
-    c = pq.top().first;
-    pq.pop();
+    c = inputs[i].first;
+    u = inputs[i].second.first;
+    v = inputs[i].second.second;
     if(ds.Find(u) == ds.Find(v)) continue;
     //std::cout << u << ' ' << v << ' ' << c << '\n';
     ds.Union(u, v);
