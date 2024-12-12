@@ -29,7 +29,7 @@ int main()
   for(int i = 0; i < M; i++)
   {
     std::cin >> u >> v >> c;
-    inputs.push_back({c, {std::min(u, v), std::max(u, v)}});
+    inputs.push_back({c, {u, v}});
   }
   std::sort(inputs.begin(), inputs.end());
   DisjointSet ds(N);
