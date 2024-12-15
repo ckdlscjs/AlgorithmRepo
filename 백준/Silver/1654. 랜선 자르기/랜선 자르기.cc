@@ -14,7 +14,7 @@ int main()
   std::cout.tie(0);
   std::cin >> K >> N;
   for(int i = 0; i < K; i++) std::cin >> arr[i];
-  long long int lo = -1, hi = (long long int)(1LL<<32) - 1LL;
+  long long int lo = -1, hi = (long long int)(1LL<<32);
   while(lo + 1 < hi)
   {
     long long int mid = (lo + hi) / 2;
