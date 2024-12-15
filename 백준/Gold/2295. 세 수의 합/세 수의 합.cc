@@ -10,7 +10,7 @@ int main()
   for(int i = 0; i < N; i++)
     std::cin >> arr[i];
   for(int i = 0; i < N; i++)
-    for(int j = 0; j < N; j++)
+    for(int j = i; j < N; j++)
       sums.push_back(arr[i] + arr[j]);
   std::sort(arr, arr+N);
   std::sort(sums.begin(), sums.end());
