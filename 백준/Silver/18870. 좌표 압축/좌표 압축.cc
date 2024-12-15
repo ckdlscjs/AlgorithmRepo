@@ -1,27 +1,21 @@
 #include <bits/stdc++.h>
-std::map<int, int> nums;
-const int MaxN = 1000005;
-int arr[MaxN];
-int n = 0;
-int main(void)
+long long int N, arr[1'000'005];
+std::set<int> inputs;
+std::unordered_map<int, int> outputs;
+int main()
 {
-    std::ios::sync_with_stdio(false);
-    std::cin.tie(0);
-    std::cout.tie(0);
-    std::cin >> n;
-    for(int i = 0; i < n; i++)
-    {
-        std::cin >> arr[i];
-        nums[arr[i]] = 0;
-    }
-    int cnt = 0;
-    for(auto& iter : nums)
-    {
-        nums[iter.first] = cnt++;
-    }
-    for(int i = 0; i < n; i++)
-    {
-        std::cout << nums[arr[i]] << ' ';
-    }
-    return 0;
+  std::ios::sync_with_stdio(false);
+  std::cin.tie(0);
+  std::cout.tie(0);
+  std::cin >> N;
+  for(int i = 0; i < N; i++)
+  {
+    std::cin >> arr[i];
+    inputs.insert(arr[i]);
+  }
+  int cnt = 0;
+  for(const auto& iter : inputs)
+    outputs[iter] = cnt++;
+  for(int i = 0; i < N; i++)
+    std::cout << outputs[arr[i]] << ' ';
 }
