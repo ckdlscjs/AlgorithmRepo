@@ -1,7 +1,6 @@
 #include <bits/stdc++.h>
-long long int N, arr[1'000'005];
-std::set<int> inputs;
-std::unordered_map<int, int> outputs;
+long long int N, arr[1'000'005], sorted[1'000'005];
+std::unordered_map<int, int> inputs;
 int main()
 {
   std::ios::sync_with_stdio(false);
@@ -11,11 +10,19 @@ int main()
   for(int i = 0; i < N; i++)
   {
     std::cin >> arr[i];
-    inputs.insert(arr[i]);
+    sorted[i] = arr[i];
+    inputs[arr[i]] = -1;
   }
+  std::sort(sorted, sorted+N);
   int cnt = 0;
-  for(const auto& iter : inputs)
-    outputs[iter] = cnt++;
   for(int i = 0; i < N; i++)
-    std::cout << outputs[arr[i]] << ' ';
+  {
+    if(inputs[sorted[i]] != -1) continue;
+    inputs[sorted[i]] = cnt++;
+  }
+  
+  for(int i = 0; i < N; i++)
+  {
+    std::cout << inputs[arr[i]] << ' ';
+  }
 }
