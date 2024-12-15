@@ -9,10 +9,11 @@ int main()
   std::cin >> N;
   for(int i = 0; i < N; i++)
     std::cin >> arr[i];
+  std::sort(arr, arr+N);
   for(int i = 0; i < N; i++)
     for(int j = i; j < N; j++)
       sums.push_back(arr[i] + arr[j]);
-  std::sort(arr, arr+N);
+  
   std::sort(sums.begin(), sums.end());
   for(int i = N-1; i >= 0; i--)
   {
