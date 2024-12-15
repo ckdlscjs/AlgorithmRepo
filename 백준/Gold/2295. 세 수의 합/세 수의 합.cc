@@ -16,7 +16,7 @@ int main()
   std::sort(sums.begin(), sums.end());
   for(int i = N-1; i >= 0; i--)
   {
-    for(int j = 0; j <= i; j++)
+    for(int j = 0; j < i; j++)
     {
       int lo = -1, hi = sums.size();
       while(lo + 1 < hi)
