@@ -11,10 +11,10 @@ int main() {
    point pt;
    int N, M;
    string map1D;
-   int map[105][105];
-   int dist[105][105];
-   for (int i = 0; i < 105; i++) {
-      for (int j = 0; j < 105; j++) {
+   int map[100][100];
+   int dist[100][100];
+   for (int i = 0; i < 100; i++) {
+      for (int j = 0; j < 100; j++) {
          dist[i][j] = 999999;
       }
    }
@@ -55,7 +55,6 @@ int main() {
          
          if (dist[newy][newx] <= dist[top_y][top_x] + 1) continue; // 이미 확인한 지점
 
-         
          newd = top_d + map[newy][newx];
          dist[newy][newx] = newd;
          pt.x = newx;
