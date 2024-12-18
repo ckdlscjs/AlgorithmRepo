@@ -8,17 +8,15 @@ int main()
   std::cin >> N >> M;
   for(int i = 0; i < N; i++) std::cin >> arr[i];
   std::sort(arr, arr+N);
-  for(int i = 0; i < N; i++)
+  int l = 0, r = 0;
+  while(l < N && r < N)
   {
-    int lo = i, hi = N;
-    while(lo + 1 < hi)
+    int temp = arr[r] - arr[l];
+    if(temp < M) r++;
+    else
     {
-      int mid = (lo + hi) / 2;
-      int temp = arr[mid] - arr[i];
-      if(M <= std::abs(temp) && std::abs(temp) < ans)
-        ans = std::abs(temp);
-      if(temp > M) hi = mid;
-      else lo = mid;
+        ans = std::min(ans, std::abs(temp));
+        l++;
     }
   }
   std::cout << ans;
