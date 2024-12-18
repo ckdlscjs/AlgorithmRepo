@@ -8,25 +8,21 @@ int main()
   std::cin >> N;
   for(int i = 0; i < N; i++) std::cin >> arr[i];
   std::sort(arr, arr+N);
-  for(int i = 0; i < N; i++)
+  for(int i = 0; i < N-2; i++)
   {
-    for(int j = i+1; j < N; j++)
+    int l = i+1, r = N-1;
+    while(l < r)
     {
-      int lo = j, hi = N;
-      while(lo + 1 < hi)
+      long long int temp = arr[i] + arr[l] + arr[r];
+      if(std::abs(temp) < sum)
       {
-        int mid = (lo + hi) / 2;
-        long long int temp = arr[i] + arr[j] + arr[mid];
-        if(std::abs(temp) < sum)
-        {
-          sum = std::abs(temp);
-          a = arr[i];
-          b = arr[j];
-          c = arr[mid];
-        }
-        if(temp > 0) hi = mid;
-        else lo = mid;
+        sum = std::abs(temp);
+        a = arr[i];
+        b = arr[l];
+        c = arr[r];
       }
+      if(temp > 0) r--;
+      else l++;
     }
   }
   std::cout << a << ' ' << b << ' ' << c;
