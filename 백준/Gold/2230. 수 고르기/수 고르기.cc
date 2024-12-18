@@ -15,7 +15,7 @@ int main()
     if(temp < M) r++;
     else
     {
-        ans = std::min(ans, std::abs(temp));
+        ans = std::min(ans, temp);
         l++;
     }
   }
