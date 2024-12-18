@@ -1,40 +1,30 @@
 #include <bits/stdc++.h>
-using namespace std;
-const int MaxN = 1'000'005;
-int arr[MaxN];
-int previdx[MaxN];
-int lis[MaxN];
-int N, lidx;
-int main() 
+int N, val, len, lis[1'000'005];
+int main()
 {
   std::ios::sync_with_stdio(false);
   std::cin.tie(0);
   std::cout.tie(0);
-  std::fill(previdx, previdx+MaxN, -1);
   std::cin >> N;
   for(int i = 0; i < N; i++)
   {
-    std::cin >> arr[i];
-    if(i == 0 || lis[lidx-1] < arr[i])
+    std::cin >> val;
+    if(i == 0 || lis[len-1] < val)
     {
-      previdx[lidx] = i;
-      lis[lidx++] = arr[i];
+      lis[len++] = val;
     }
     else
     {
-      int lo = -1, hi = lidx;
+      int lo = -1, hi = len;
       while(lo + 1 < hi)
       {
         int mid = (lo + hi) / 2;
-        if(lis[mid] >= arr[i]) hi = mid;
+        if(val <= lis[mid]) hi = mid;
         else lo = mid;
       }
-      previdx[hi] = i;
-      lis[hi] = arr[i];
+      lis[hi] = val;
     }
   }
-  //for(int i = 0; i < lidx; i++)
-    //std::cout << previdx[i] << ' ';
-  std::cout << lidx;
+  std::cout << len;
   return 0;
 }
