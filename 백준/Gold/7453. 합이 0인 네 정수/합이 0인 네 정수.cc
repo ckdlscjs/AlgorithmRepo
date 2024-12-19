@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-long long int N, arr[4'005][4], lo, hi, ub, lb, cnt;
+long long int N, arr[4'005][4], lo, hi, cnt;
 std::vector<long long int> A, B;
 int main()
 {
@@ -19,25 +19,36 @@ int main()
     for(int j = 0; j < N; j++)
       B.push_back(arr[i][2] + arr[j][3]);
   std::sort(B.begin(), B.end());
-  for(int i = 0; i < A.size(); i++)
+  long long int l = 0, r = B.size()-1;
+  while(l < A.size() && r >= 0)
   {
-    lo = -1, hi = B.size();
-    while(lo + 1 < hi)
+    long long int temp = A[l] + B[r];
+    if(temp > 0) r--;
+    else if(temp < 0) l++;
+    else
     {
-      int mid = (lo + hi) / 2;
-      if(A[i] + B[mid] > 0) hi = mid;
-      else lo = mid;
+      long long int cntl = 0, cntr = 0;
+      lo = -1, hi = A.size();
+      while(lo + 1 < hi)
+      {
+        long long int mid = (lo + hi) / 2;
+        if(A[mid] > A[l]) hi = mid;
+        else lo = mid;
+      }
+      cntl = hi - l;
+      l = hi;
+      
+      lo = -1, hi = B.size();
+      while(lo + 1 < hi)
+      {
+        long long int mid = (lo + hi) / 2;
+        if(B[mid] >= B[r]) hi = mid;
+        else lo = mid;
+      }
+      cntr = r - hi + 1;
+      r = hi - 1;
+      cnt += cntl * cntr;
     }
-    ub = hi;
-    lo = -1, hi = B.size();
-    while(lo + 1 < hi)
-    {
-      int mid = (lo + hi) / 2;
-      if(A[i] + B[mid] >= 0) hi = mid;
-      else lo = mid;
-    }
-    lb = hi;
-    cnt += ub - lb;
   }
   std::cout << cnt;
   return 0;
