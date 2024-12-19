@@ -32,25 +32,18 @@ int main()
     else
     {
       long long int cntl = 0, cntr = 0;
-      lo = -1, hi = A.size();
-      while(lo + 1 < hi)
+      long long int lval = A[l];
+      while(l < A.size() && A[l] == lval)
       {
-        long long int mid = (lo + hi) / 2;
-        if(A[mid] > A[l]) hi = mid;
-        else lo = mid;
+        cntl++;
+        l++;
       }
-      cntl = hi - l;
-      l = hi;
-      
-      lo = -1, hi = B.size();
-      while(lo + 1 < hi)
+      long long int rval = B[r];
+      while(0 <= r && B[r] == rval)
       {
-        long long int mid = (lo + hi) / 2;
-        if(B[mid] >= B[r]) hi = mid;
-        else lo = mid;
+        cntr++;
+        r--;
       }
-      cntr = r - hi + 1;
-      r = hi - 1;
       cnt += cntl * cntr;
     }
   }
