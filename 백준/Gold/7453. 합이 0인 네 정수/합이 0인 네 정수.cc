@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-long long int N, arr[4'005][4], lo, hi, cnt;
+long long int N, arr[4][4'005], lo, hi, cnt;
 std::vector<long long int> A, B;
 int main()
 {
@@ -10,14 +10,18 @@ int main()
   std::cin >> N;
   for(int i = 0; i < N; i++)
     for(int j = 0; j < 4; j++)
-      std::cin >> arr[i][j];
+      std::cin >> arr[j][i];
+  std::sort(&arr[0][0], &arr[0][0] + N);
+  std::sort(&arr[1][0], &arr[1][0] + N);
+  std::sort(&arr[2][0], &arr[2][0] + N);
+  std::sort(&arr[3][0], &arr[3][0] + N);
   for(int i = 0; i < N; i++)
     for(int j = 0; j < N; j++)
-      A.push_back(arr[i][0] + arr[j][1]);
+      A.push_back(arr[0][i] + arr[1][j]);
   std::sort(A.begin(), A.end());
   for(int i = 0; i < N; i++)
     for(int j = 0; j < N; j++)
-      B.push_back(arr[i][2] + arr[j][3]);
+      B.push_back(arr[2][i] + arr[3][j]);
   std::sort(B.begin(), B.end());
   long long int l = 0, r = B.size()-1;
   while(l < A.size() && r >= 0)
