@@ -18,16 +18,13 @@ int main()
     if(chk[i]) continue;
     arr.push_back(i%K);
   }
-  std::sort(arr.rbegin(), arr.rend());
-  /*
-  for(const auto& iter : arr)
-    std::cout << iter << ' ';
-  */
+    
+  std::sort(arr.begin(), arr.end());
   K = std::abs(val1%K - val2%K);
   int l = 0, r = arr.size()/2;
   while(r < arr.size())
   {
-    if(arr[l] - arr[r] > K)
+    if(arr[r] - arr[l] > K)
     {
       l++;
       r++;
