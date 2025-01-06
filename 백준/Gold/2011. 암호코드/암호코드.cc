@@ -18,11 +18,7 @@ int main()
   {
     int num1 = (str[i-2]-48) * 10;
     int num2 = str[i-1]-48;
-    if(num1 + num2 == 0)
-    {
-      std::cout << 0;
-      return 0;
-    }
+  
     if(num1 && num1 + num2 <= 26)
       dp[i] = (dp[i] + dp[i-2])%Mod;
     if(num2)
