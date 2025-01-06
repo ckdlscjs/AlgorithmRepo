@@ -7,7 +7,6 @@ int main()
   std::cin.tie(0);
   std::cout.tie(0);
   std::fill_n(dp, 10'005, INF);
-  dp[0] = 1;
   std::cin >> N >> K;
   for(int i = 0; i < N; i++)
   {
