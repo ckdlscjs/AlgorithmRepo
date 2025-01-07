@@ -18,16 +18,12 @@ int main()
     for(int i = 0; i < N; i++)
     {
       int out = 0;
-      bool chks[10];
-      std::memset(chks, true, sizeof(chks));
-      std::queue<std::pair<int, int>> q;
+      std::queue<int> q;
       while(out < 3)
       {
-        int player = order[idx++];
-        idx %= 9;
-        int cur = arr[i][player];
-        if(!chks[player]) 
-          continue;
+        int cur = arr[i][order[idx++]];
+        if(idx >= 9)
+          idx = 0;
         if(cur == 0)
         {
           out++;
@@ -35,26 +31,20 @@ int main()
         else
         {
           int len = q.size();
-          if(cur <= 3)
-          {
-            q.push({cur, player});
-            chks[player] = false;
-          }
-          else
-            temp++;
           for(int j = 0; j < len; j++)
           {
-            auto iter = q.front();
+            int p = q.front();
             q.pop();
-            iter.first += cur;
-            if(iter.first >= 4)
-            {
+            p += cur;
+            if(p >= 4)
               temp++;
-              chks[iter.second] = true;
-            }
             else
-              q.push(iter);
+              q.push(p);
           }
+          if(cur <= 3)
+            q.push(cur);
+          else
+            temp++;
         }
       }
     }
