@@ -1,94 +1,92 @@
 #include <bits/stdc++.h>
-using namespace std;
-const int dy[] = {0, 0, 1, -1};
-const int dx[] = {1, -1, 0, 0};
-const int MaxN = 1505;
-char arr[MaxN][MaxN];
-bool visit_swan[MaxN][MaxN];
-bool visit_water[MaxN][MaxN];
-int r, c, LIdx;
-std::pair<int, int> L[2];
-std::queue<std::pair<int, int>> move_swan, next_swan;
-std::queue<std::pair<int, int>> expand_water, next_water;
-int main() 
+const int dy[] = {0, 0, -1, 1};
+const int dx[] = {-1, 1, 0, 0};
+char arr[1505][1505];
+int R, C, day;
+bool visited[1505][1505], swans[1505][1505];
+std::vector<std::pair<int, int>> L;
+std::queue<std::pair<int, int>> water;
+std::queue<std::pair<int, int>> swan;
+int main()
 {
   std::ios::sync_with_stdio(false);
   std::cin.tie(0);
   std::cout.tie(0);
-  std::cin >> r >> c;
-  for(int i = 0; i < r; i++)
+  std::cin >> R >> C;
+  for(int r = 0; r < R; r++)
   {
     std::string str;
     std::cin >> str;
-    for(int j = 0; j < c; j++)
+    for(int c = 0; c < C; c++)
     {
-      arr[i][j] = str[j];
-      if(arr[i][j] == 'L')
+      arr[r][c] = str[c];
+      if(arr[r][c] == '.' || arr[r][c] == 'L')
       {
-        L[LIdx++] = std::make_pair(i, j);
+        water.push({r, c});
+        visited[r][c] = true;
       }
-      if(arr[i][j] == '.' || arr[i][j] == 'L') //백조가있는공간도 Water
-      {
-        expand_water.push({i, j});
-        visit_water[i][j] = true;
-      }
+      if(arr[r][c] == 'L')
+        L.push_back({r, c});
     }
   }
-  move_swan.push(L[0]);
-  visit_swan[L[0].first][L[0].second] = true;
-  int cnt = 0;
-  while(!visit_swan[L[1].first][L[1].second])
+  swan.push(L[0]);
+  swans[L[0].first][L[0].second] = true;
+  while(water.size())
   {
-    while(move_swan.size())
+    std::queue<std::pair<int, int>> nxt_swan;
+    while(swan.size())
     {
-      int y = move_swan.front().first;
-      int x = move_swan.front().second;
-      move_swan.pop();
+      auto iter = swan.front();
+      swan.pop();
       for(int dir = 0; dir < 4; dir++)
       {
-        int ny = y + dy[dir];
-        int nx = x + dx[dir];
-        if(ny < 0 || nx < 0 || ny >= r || nx >= c || visit_swan[ny][nx])
-          continue;
-        visit_swan[ny][nx] = true;
+        int ny = iter.first + dy[dir];
+        int nx = iter.second + dx[dir];
+        if(ny < 0 || nx < 0 || ny >= R || nx >= C || swans[ny][nx]) continue;
+        swans[ny][nx] = true;
         if(arr[ny][nx] == '.')
-          move_swan.push({ny, nx});
-        else
-          next_swan.push({ny, nx});
+          swan.push({ny, nx});
+        else if(arr[ny][nx] == 'X')
+          nxt_swan.push({ny, nx});
       }
     }
-    if(visit_swan[L[1].first][L[1].second])
-      continue;
-    
-    while(expand_water.size())
+    swan = nxt_swan;
+    if(swans[L[1].first][L[1].second])
     {
-      int y = expand_water.front().first;
-      int x = expand_water.front().second;
-      expand_water.pop();
+      std::cout << day;
+      return 0;
+    }
+    int len = water.size();
+    for(int i = 0; i < len; i++)
+    {
+      auto iter = water.front();
+      water.pop();
       for(int dir = 0; dir < 4; dir++)
       {
-        int ny = y + dy[dir];
-        int nx = x + dx[dir];
-        if(ny < 0 || nx < 0 || ny >= r || nx >= c || visit_water[ny][nx] || arr[ny][nx] != 'X')
-          continue;
-        visit_water[ny][nx] = true;
-        next_water.push({ny, nx});
-        arr[ny][nx] = '.';
+        int ny = iter.first + dy[dir];
+        int nx = iter.second + dx[dir];
+        if(ny < 0 || nx < 0 || ny >= R || nx >= C || visited[ny][nx]) continue;
+        if(arr[ny][nx] == 'X')
+        {
+          arr[ny][nx] = '.';
+          water.push({ny, nx});
+          visited[ny][nx] = true;
+        }
       }
     }
-    while(next_swan.size())
+    /*
+    for(int r = 0; r < R; r++)
     {
-      move_swan.push(next_swan.front());
-      next_swan.pop();
+      for(int c = 0; c < C; c++)
+      {
+        std::cout << arr[r][c];
+      }
+      std::cout <<'\n';
     }
-    while(next_water.size())
-    {
-      expand_water.push(next_water.front());
-      next_water.pop();
-    }
-    cnt++;
+    std::cout <<'\n';
+    */
+    day++;
   }
-  
-  std::cout << cnt;
+  std::cout << day;
   return 0;
 }
