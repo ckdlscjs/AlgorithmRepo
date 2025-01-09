@@ -31,7 +31,7 @@ int main()
   }
   swan.push(L[0]);
   swans[L[0].first][L[0].second] = true;
-  while(water.size())
+  while(!swans[L[1].first][L[1].second])
   {
     std::queue<std::pair<int, int>> nxt_swan;
     while(swan.size())
@@ -50,12 +50,8 @@ int main()
           nxt_swan.push({ny, nx});
       }
     }
+    if(swans[L[1].first][L[1].second]) break;
     swan = nxt_swan;
-    if(swans[L[1].first][L[1].second])
-    {
-      std::cout << day;
-      return 0;
-    }
     int len = water.size();
     for(int i = 0; i < len; i++)
     {
