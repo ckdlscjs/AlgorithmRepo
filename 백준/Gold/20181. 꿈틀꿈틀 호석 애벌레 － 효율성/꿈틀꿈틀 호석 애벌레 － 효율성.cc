@@ -15,11 +15,18 @@ int main()
   while(r <= N)
   {
     long long int sum = psum[r] - psum[l];
-    dp[r] = std::max(dp[r], dp[l] + std::max(sum - K, (long long int)0));
+    
+    //std::cout << r << ", "<<l <<":" << dp[r] << '\n';
     if(sum < K)
+    {
+      dp[r] = std::max(dp[r], dp[r-1]);
       r++;
+    }
     else
+    {
+      dp[r] = std::max(dp[r], dp[l] + std::max(sum - K, (long long int)0));
       l++;
+    }
   }
   std::cout << dp[N];
   return 0;
