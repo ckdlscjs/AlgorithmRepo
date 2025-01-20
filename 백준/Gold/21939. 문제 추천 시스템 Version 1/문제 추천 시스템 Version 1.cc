@@ -24,16 +24,7 @@ int main()
     if(order == "recommend")
     {
       std::cin >> P;
-      if(P == 1)
-      {
-        while(!nums[pq_large.top().second]) pq_large.pop();
-        std::cout << pq_large.top().second << '\n';
-      }
-      else
-      {
-        while(!nums[pq_small.top().second]) pq_small.pop();
-        std::cout << pq_small.top().second << '\n';
-      }
+      std::cout << (P == 1 ? pq_large.top().second : pq_small.top().second) << '\n';
     }
     else if(order == "solved")
     {
