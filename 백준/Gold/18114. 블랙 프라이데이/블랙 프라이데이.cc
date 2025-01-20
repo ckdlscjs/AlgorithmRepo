@@ -19,6 +19,7 @@ int main()
   int left = 0, right = N-1;
   while(left < right)
   {
+    
     if(W[left] + W[right] > C)
     {
       right--;
@@ -29,14 +30,14 @@ int main()
       std::cout << 1;
       return 0;
     }
-    int lo = 0, hi = N;
+    int lo = left, hi = right;
     while(lo + 1 < hi)
     {
       int mid = (lo + hi) / 2;
       if(W[left] + W[right] + W[mid] >= C) hi = mid;
       else lo = mid;
     }
-    if(W[left] + W[right] + W[hi] == C && hi != left && hi != right)
+    if(W[left] + W[right] + W[hi] == C && hi != right)
     {
       std::cout << 1;
       return 0;
