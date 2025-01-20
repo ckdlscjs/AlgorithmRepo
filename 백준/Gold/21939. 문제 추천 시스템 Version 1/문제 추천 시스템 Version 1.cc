@@ -1,7 +1,8 @@
 #include <bits/stdc++.h>
 int N, M, P, L;
-std::set<std::pair<int, int>> trees;
-std::unordered_map<int, int> inputs;
+std::priority_queue<std::pair<int, int>, std::vector<std::pair<int, int>>, std::less<std::pair<int, int>>> pq_large;
+std::priority_queue<std::pair<int, int>, std::vector<std::pair<int, int>>, std::greater<std::pair<int, int>>> pq_small;
+bool nums[100'005];
 std::string order;
 int main()
 {
@@ -12,8 +13,9 @@ int main()
   for(int n = 0; n < N; n++)
   {
     std::cin >> P >> L;
-    trees.insert({L, P});
-    inputs[P] = L;
+    pq_large.push({L, P});
+    pq_small.push({L, P});
+    nums[P] = true;
   }
   std::cin >> M;
   for(int m = 0; m < M; m++)
@@ -22,19 +24,30 @@ int main()
     if(order == "recommend")
     {
       std::cin >> P;
-      std::cout << (P == 1 ? (*trees.rbegin()).second : (*trees.begin()).second) << '\n';
+      if(P == 1)
+      {
+        while(!nums[pq_large.top().second]) pq_large.pop();
+        std::cout << pq_large.top().second << '\n';
+      }
+      else
+      {
+        while(!nums[pq_small.top().second]) pq_small.pop();
+        std::cout << pq_small.top().second << '\n';
+      }
     }
     else if(order == "solved")
     {
       std::cin >> P;
-      trees.erase({inputs[P], P});
-      inputs.erase(P);
+      nums[P] = false;
+      while(!nums[pq_large.top().second]) pq_large.pop();
+      while(!nums[pq_small.top().second]) pq_small.pop();
     }
     else
     {
       std::cin >> P >> L;
-      trees.insert({L, P});
-      inputs[P] = L;
+      pq_large.push({L, P});
+      pq_small.push({L, P});
+      nums[P] = true;
     }
   }
   return 0;
