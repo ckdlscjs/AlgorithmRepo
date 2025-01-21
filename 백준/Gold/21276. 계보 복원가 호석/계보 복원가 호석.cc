@@ -1,8 +1,8 @@
 #include <bits/stdc++.h>
 int N, M;
 std::string str, A, B;
-std::unordered_map<std::string, int> cnts;
-std::unordered_map<std::string, std::vector<std::string>> inputs;
+std::map<std::string, int> cnts;
+std::map<std::string, std::vector<std::string>> inputs;
 void TPSort()
 {
   std::queue<std::string> q;
@@ -16,7 +16,6 @@ void TPSort()
       ancestors.push_back(iter.first);
     }
     childs[iter.first] = std::vector<std::string>();
-    std::sort(inputs[iter.first].begin(), inputs[iter.first].end(), std::less<>());
   }
   std::cout << ancestors.size() << '\n';
   for(const auto& iter : ancestors) std::cout << iter << ' ';
@@ -35,9 +34,10 @@ void TPSort()
       }
     }
   }
-  for(const auto& iter : childs)
+  for(auto& iter : childs)
   {
     std::cout << iter.first << ' '  << iter.second.size() << ' ';
+    std::sort(iter.second.begin(), iter.second.end(), std::less<>());
     for(const auto& it : iter.second) std::cout << it << ' ';
     std::cout << '\n';
   }
