@@ -1,31 +1,27 @@
 #include <bits/stdc++.h>
 using namespace std;
-int N, M;
-const int MaxN = 32005;
-int enter_degree[MaxN];
-std::vector<int> graph[MaxN];
-bool TopologicalSort()
+int N, M, u, v;
+int degree[32'005];
+std::priority_queue<int, std::vector<int>, std::greater<int>> pq;
+std::vector<int> graph[32'005];
+void TopologySort()
 {
-  std::queue<int> q;
   for(int i = 1; i <= N; i++)
-    if(enter_degree[i] == 0)
-      q.push(i);
-  
+    if(degree[i] == 0)
+      pq.push(i);
   for(int i = 1; i <= N; i++)
   {
-    if(q.empty())
-      return false;
-    int cur = q.front();
-    q.pop();
+    if(pq.empty()) return;
+    int cur = pq.top();
+    pq.pop();
     std::cout << cur << ' ';
     for(const auto& iter : graph[cur])
     {
-      enter_degree[iter]--;
-      if(enter_degree[iter] == 0)
-        q.push(iter);
+      degree[iter]--;
+      if(degree[iter] <= 0)
+      pq.push(iter);
     }
   }
-  return true;
 }
 int main() 
 {
@@ -35,11 +31,10 @@ int main()
   std::cin >> N >> M;
   for(int i = 0; i < M; i++)
   {
-    int a, b;
-    std::cin >> a >> b;
-    graph[a].push_back(b);
-    enter_degree[b]++;
+    std::cin >> u >> v;
+    graph[u].push_back(v);
+    degree[v]++;
   }
-  TopologicalSort();
+  TopologySort();
   return 0;
 }
