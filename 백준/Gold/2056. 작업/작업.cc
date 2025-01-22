@@ -35,9 +35,8 @@ int main()
     res = std::max(res, dp[cur]);
     for(const auto& iter : graph[cur])
     {
-      cnts[iter]--;
       dp[iter] = std::max(dp[iter], dp[cur] + arr[iter]);
-      if(cnts[iter] <= 0)
+      if(--cnts[iter] <= 0)
         q.push(iter);
     }
   }
