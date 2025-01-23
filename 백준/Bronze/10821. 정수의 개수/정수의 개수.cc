@@ -7,13 +7,8 @@ int main()
   std::cout.tie(0);
   std::cin >> str;
   int cnt = 1;
-  auto iter = str.find(',');
-  while(iter != std::string::npos)
-  {
-    str = str.substr(iter+1);
-    iter = str.find(',');
-    cnt++;
-  }
+  for(int i = 0; i < str.size(); i++)
+    if(str[i] == ',') cnt++;
   std::cout << cnt;
   return 0;
 }
