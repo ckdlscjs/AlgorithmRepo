@@ -3,7 +3,7 @@
 const int INF = 987654321;
 int N, E, a, b, c, u, v, costs[805];
 std::vector<pii> graph[805];
-int dijkstra(int start, int end)
+void dijkstra(int start)
 {
   std::priority_queue<pii, std::vector<pii>, std::greater<pii>> pq;
   std::fill_n(costs, 805, INF);
@@ -26,7 +26,6 @@ int dijkstra(int start, int end)
       }
     }
   }
-  return costs[end];
 }
 int main()
 {
@@ -41,22 +40,25 @@ int main()
     graph[b].push_back({a, c});
   }
   std::cin >> u >> v;
-  int ret1u = dijkstra(1, u);
-  int retvn = dijkstra(v, N);
-  int ret1v = dijkstra(1, v);
-  int retun = dijkstra(u, N);
-  int retmin = std::min(ret1u + retvn, ret1v + retun);
-  if(retmin >= INF)
+  dijkstra(u);
+  int duv = costs[v];
+  if(duv == INF)
   {
     std::cout << -1;
     return 0;
   }
-  int retuv = dijkstra(u, v);
-  if(retuv == INF)
+  dijkstra(1);
+  int d1u = costs[u];
+  int d1v = costs[v];
+  dijkstra(N);
+  int dnv = costs[v];
+  int dnu = costs[u];
+  int dmin = std::min(d1u + dnv, d1v + dnu);
+  if(dmin >= INF)
   {
     std::cout << -1;
     return 0;
   }
-  std::cout << retmin + retuv;
+  std::cout << dmin + duv;
   return 0;
 }
