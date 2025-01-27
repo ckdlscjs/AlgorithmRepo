@@ -51,7 +51,7 @@ int main()
     std::cin >> inputs[n].first >> inputs[n].second;
   for(int i = 1; i <= N; i++)
   {
-    for(int j = 1; j <= N; j++)
+    for(int j = i + 1; j <= N; j++)
     {
       double dist = std::sqrt(std::pow(inputs[i].first - inputs[j].first, 2) + std::pow(inputs[i].second - inputs[j].second, 2));
       edges.push_back({dist, {i, j}});
@@ -62,7 +62,6 @@ int main()
     std::cin >> A >> B;
     if(ds.Find(A) != ds.Find(B))
       ds.Union(A, B);
-    
   }
   std::sort(edges.begin(), edges.end(), std::less<>());
   for(int i = 0; i < edges.size(); i++)
