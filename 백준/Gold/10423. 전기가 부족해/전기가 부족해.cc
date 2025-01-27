@@ -1,5 +1,5 @@
 #include <bits/stdc++.h>
-int N, M, K, u, v, w, sum;
+int N, M, K, u, v, w, cnt, sum;
 std::vector<std::pair<int, std::pair<int, int>>> edges;
 struct DisjointSet
 {
@@ -43,6 +43,7 @@ int main()
     std::cin >> u;
     ds.ranks[u] = 1005;
   }
+  cnt += K;
   for(int m = 0; m < M; m++)
   {
     std::cin >> u >> v >> w;
@@ -51,6 +52,7 @@ int main()
   std::sort(edges.begin(), edges.end(), std::less<>());
   for(int i = 0; i < edges.size(); i++)
   {
+    if(cnt >= N) break;
     w = edges[i].first;
     u = edges[i].second.first;
     v = edges[i].second.second;
@@ -59,12 +61,9 @@ int main()
     {
       ds.Union(u, v);
       sum += w;
+      cnt++;
     }
   }
-  /*
-  for(int i = 1; i <= N; i++)
-    std::cout << ds.Find(i) << ' ';
-  */
   std::cout << sum;
   return 0;
 }
