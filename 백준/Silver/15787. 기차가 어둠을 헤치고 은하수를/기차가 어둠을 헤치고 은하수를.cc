@@ -37,9 +37,8 @@ int main()
   std::unordered_set<int> chks;
   for(int i = 1; i <= N; i++)
   {
-    int cur = t[i] & ((1 << 20)-1);
-    if(chks.find(cur) != chks.end()) continue;
-    chks.insert(cur);
+    if(chks.find(t[i]) != chks.end()) continue;
+    chks.insert(t[i]);
   }
   std::cout << chks.size();
   return 0;
