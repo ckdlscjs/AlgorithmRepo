@@ -1,9 +1,9 @@
 #include <bits/stdc++.h>
+const int MaxD = 20;
 using namespace std;
-const int MAXD = 20;
-int N, M, A, B, d[50'005], parents[50'005][MAXD];
-bool visited[50'005];
+int N, M, A, B, d[50'005], parents[MaxD][50'005];
 std::vector<int> trees[50'005];
+bool visited[50'005];
 void DFS(int cur, int depth)
 {
   visited[cur] = true;
@@ -11,7 +11,7 @@ void DFS(int cur, int depth)
   for(const auto& iter : trees[cur])
   {
     if(visited[iter]) continue;
-    parents[iter][0] = cur;
+    parents[0][iter] = cur;
     DFS(iter, depth+1);
   }
 }
@@ -23,21 +23,21 @@ int LCA(int a, int b)
     a = b;
     b = temp;
   }
-  for(int p = MAXD-1; p >= 0; p--)
+  for(int p = MaxD-1; p >= 0; p--)
   {
     if(d[b] - d[a] >= (1 << p))
-      b = parents[b][p];
+      b = parents[p][b];
   }
   if(a == b) return a;
-  for(int p = MAXD-1; p >= 0; p--)
+  for(int p = MaxD-1; p >= 0; p--)
   {
-    if(parents[a][p] != parents[b][p])
+    if(parents[p][a] != parents[p][b])
     {
-      a = parents[a][p];
-      b = parents[b][p];
+      a = parents[p][a];
+      b = parents[p][b];
     }
   }
-  return parents[a][0];
+  return parents[0][a];
 }
 int main()
 {
@@ -52,11 +52,11 @@ int main()
     trees[B].push_back(A);
   }
   DFS(1, 0);
-  for(int p = 1; p < MAXD; p++)
+  for(int p = 1; p < MaxD; p++)
   {
     for(int node = 1; node <= N; node++)
     {
-      parents[node][p] = parents[parents[node][p-1]][p-1];
+      parents[p][node] = parents[p-1][parents[p-1][node]];
     }
   }
   std::cin >> M;
