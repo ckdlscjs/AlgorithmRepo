@@ -18,13 +18,7 @@ void DFS(int cur, int depth)
 int LCA(int a, int b)
 {
   int ret = 0;
-  if(a == b) return ret;
-  if(d[a] > d[b])
-  {
-    int temp = a;
-    a = b;
-    b = temp;
-  }
+  if(d[a] > d[b]) std::swap(a, b);
   for(int p = 19; p >= 0; p--)
   {
     if(d[b] - d[a] >= (1 << p))
