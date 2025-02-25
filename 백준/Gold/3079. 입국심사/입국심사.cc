@@ -8,7 +8,7 @@ int main()
   std::cout.tie(0);
   std::cin >> N >> M;
   for(int n = 0; n < N; n++) std::cin >> arr[n];
-  ulli lo = 0, hi = 1e19 + 5;
+  ulli lo = 0, hi = 1e19;
   while(lo + 1 < hi)
   {
     ulli mid = (lo + hi) / 2;
