@@ -1,5 +1,5 @@
 #include <bits/stdc++.h>
-int N, M, a, b, c, lo = 0, hi = 0;
+int N, M, a, b, c;
 std::vector<std::pair<int, int>> graph[10'005];
 bool visited[10'005];
 void dfs(int cur, int mid)
@@ -22,10 +22,9 @@ int main()
     std::cin >> a >> b >> c;
     graph[a].push_back({b, c});
     graph[b].push_back({a, c});
-    hi = std::max(c, hi);
   }
   std::cin >> a >> b;
-  hi++;
+  int lo = 0, hi = 1'000'000'005;
   while(lo + 1 < hi)
   {
     int mid = (lo + hi) / 2;
