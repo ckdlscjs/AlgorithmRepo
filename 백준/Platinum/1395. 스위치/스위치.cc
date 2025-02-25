@@ -1,5 +1,5 @@
 #include <bits/stdc++.h>
-int N, M, psums[100'005], tree[4*100'005], cache[4*100'005], O, S, T;
+int N, M, tree[4*100'005], cache[4*100'005], O, S, T;
 void update_cache(int s, int e, int cur)
 {
   if(cache[cur] % 2 == 0) return;
