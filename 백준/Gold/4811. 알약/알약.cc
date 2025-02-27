@@ -11,8 +11,8 @@ int main()
     dp[w][0] = 1;
     for(int h = 1; h <= w; h++)
     {
-      if(w > h) dp[w][h] += dp[w-1][h] + dp[w][h-1];
-      else dp[w][h] += dp[w][h-1];
+      if(w > h) dp[w][h] = dp[w-1][h] + dp[w][h-1];
+      else dp[w][h] = dp[w][h-1];
     }
   }
   while(std::cin >> N && N) std::cout << dp[N][N] << '\n';
