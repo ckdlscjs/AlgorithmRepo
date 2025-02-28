@@ -1,25 +1,22 @@
 #include <bits/stdc++.h>
-const int INF = 987654321;
-int N, K, dp[10'005];
-int main()
+int N, K, val, dp[10'005];
+int main() 
 {
   std::ios::sync_with_stdio(false);
   std::cin.tie(0);
   std::cout.tie(0);
-  std::fill_n(dp, 10'005, INF);
   std::cin >> N >> K;
-  for(int i = 0; i < N; i++)
+  std::fill_n(dp, 10'005, 10'005);
+  for(int n = 0; n < N; n++)
   {
-    int val;
     std::cin >> val;
-    if(val > K)
-      continue;
+    if(val > K) continue;
     dp[val] = 1;
-    for(int j = val+1; j <= K; j++)
+    for(int j = val + 1; j <= K; j++)
     {
       dp[j] = std::min(dp[j], dp[j-val] + 1);
     }
   }
-  std::cout << (dp[K] == INF ? -1 : dp[K]);
+  std::cout << (dp[K] >= 10'005 ? -1 : dp[K]);
   return 0;
 }
