@@ -30,6 +30,6 @@ int main()
     arr[y][x] = c;
   }
   std::fill_n(&dp[0][0][0][0], 52*52*52*52, -1);
-  for(int c = 0; c <= C; c++) std::cout << Check(1, 1, c, 0) << '\n';
+  for(int c = 0; c <= C; c++) std::cout << Check(1, 1, c, 0) << ' ';
   return 0;
 }
