@@ -1,9 +1,7 @@
 #include <bits/stdc++.h>
-int arr[110][105];
+int arr[105][105], cy, cx, y, x, dir = 1;
 int solution(int n, int w, int num) 
 {
-    int cy, cx;
-    int y = 0, x = 0, dir = 1;
     for(int i = 1; i <= n; i++)
     {
         arr[y][x] = i;
