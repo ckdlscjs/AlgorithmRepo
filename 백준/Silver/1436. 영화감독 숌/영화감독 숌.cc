@@ -13,10 +13,7 @@ bool Check666(int num)
     int cnt = 0;
     while(num)
     {
-        if(num % 10 == 6)
-            cnt++;
-        else
-            cnt = 0;
+        cnt = num % 10 == 6 ? cnt + 1 : 0;
         if(cnt >= 3) break;
         num /= 10;
     }
