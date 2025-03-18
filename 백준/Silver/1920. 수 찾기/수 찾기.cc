@@ -1,25 +1,28 @@
-#pragma once
 #include <bits/stdc++.h>
-#include "unordered_map"
-int N, M;
-std::unordered_map<int, int> inputs;
-int main(void)
+int N, M, arr[100'005], input;
+int main()
 {
-	std::ios::sync_with_stdio(false);
-	std::cin.tie(0);
-	std::cout.tie(0);
-	std::cin >> N;
-	int input;
-	for (int i = 0; i < N; i++)
-	{
-		std::cin >> input;
-		inputs[input] = 1;
-	}
-	std::cin >> M;
-	for (int i = 0; i < M; i++)
-	{
-		std::cin >> input;
-		std::cout << inputs[input] << '\n';
-	}
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(NULL);
+    std::cin >> N;
+    for(int n = 0; n < N; n++) std::cin >> arr[n];
+    std::sort(arr, arr+N);
+    std::cin >> M;
+    for(int m = 0; m < M; m++)
+    {
+        std::cin >> input;
+        int lo = -1, hi = N;
+        while(lo + 1 < hi)
+        {
+            int mid = (lo + hi) / 2;
+            if(arr[mid] >= input) hi = mid;
+            else lo = mid;
+        }
+        if(hi >= N || arr[hi] != input)
+            std::cout << 0 <<'\n';
+        else
+            std::cout << 1 << '\n';
+    }
+   
 	return 0;
 }
