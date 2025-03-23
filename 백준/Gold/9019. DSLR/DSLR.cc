@@ -23,7 +23,8 @@ int main()
             if(!dp[D])
             {
                 dp[D] = dp[cur] + 1;
-                dp_str[D] = dp_str[cur] + "D";
+                dp_str[D] = dp_str[cur];
+                dp_str[D].append("D");
                 q.push(D);
             }
             
@@ -32,7 +33,8 @@ int main()
             if(!dp[S])
             {
                 dp[S] = dp[cur] + 1;
-                dp_str[S] = dp_str[cur] + "S";
+                dp_str[S] = dp_str[cur];
+                dp_str[S].append("S");
                 q.push(S);
             }
             
@@ -40,7 +42,8 @@ int main()
             if(!dp[L])
             {
                 dp[L] = dp[cur] + 1;
-                dp_str[L] = dp_str[cur] + "L";
+                dp_str[L] = dp_str[cur];
+                dp_str[L].append("L");
                 q.push(L);
             }
             
@@ -48,7 +51,8 @@ int main()
             if (!dp[R])
             {
                 dp[R] = dp[cur] + 1;
-                dp_str[R] = dp_str[cur] + "R";
+                dp_str[R] = dp_str[cur];
+                dp_str[R].append("R");
                 q.push(R);
             }
         }
