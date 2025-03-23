@@ -18,17 +18,16 @@ int main()
         }
         int LCM = M * N / B;
         int cur = -1;
-        for(int nx = x; nx <= LCM; nx += M)
+        for(int ny = y; ny <= LCM; ny += N)
         {
-            int ny = nx % N;
-            if(ny == 0) ny = N;
-            if(ny == y)
+            int nx = ny % M;
+            if(nx == 0) nx = M;
+            if(nx == x)
             {
-                cur = nx;
+                cur = ny;
                 break;
             }
         }
-        
         std::cout << cur << '\n';
     }
 	return 0;
