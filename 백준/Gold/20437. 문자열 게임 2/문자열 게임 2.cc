@@ -19,16 +19,16 @@ int main()
             int st = 0, en = K-1;
             while(en < alp[i].size())
             {
-                min_max[0] = std::min(min_max[0], alp[i][en] - alp[i][st] + 1);
-                min_max[1] = std::max(min_max[1], alp[i][en] - alp[i][st] + 1);
+                int len = alp[i][en] - alp[i][st] + 1;
+                min_max[0] = std::min(min_max[0], len);
+                min_max[1] = std::max(min_max[1], len);
                 st++;
                 en++;
             }
         }
-        if(min_max[0] == W.size() && min_max[1] == 0)
-            std::cout << -1 << '\n';
-        else
-            std::cout << min_max[0] << ' ' << min_max[1] << '\n';
+        if(min_max[0] == W.size() && min_max[1] == 0) std::cout << -1;
+        else std::cout << min_max[0] << ' ' << min_max[1];
+        std::cout << '\n';
     }
 	return 0;
 }
