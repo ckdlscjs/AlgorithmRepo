@@ -1,29 +1,20 @@
 #include <bits/stdc++.h>
-int n, k;
-const int MaxN = 105;
-std::pair<int, int> goods[MaxN];
-int dp[105][100005];
+using namespace std;
+int N, K, W, V, dp[105][100'005];
 int main() 
 {
-  std::ios::sync_with_stdio(false);
-  std::cin.tie(0); 
-  std::cout.tie(0);
-  std::cin >> n >> k;
-  for(int i = 1; i <= n; i++)
-  {
-    int w, v;
-    std::cin >> w >> v;
-    goods[i].first = w;
-    goods[i].second = v;
-  }
-  for(int i = 1; i <= n; i++)
-  {
-    for(int j = 1; j <= k; j++)
+    ios::sync_with_stdio(false);
+    cin.tie(NULL);
+    std::cin >> N >> K;
+    for(int n = 1; n <= N; n++)
     {
-      if(j < goods[i].first) dp[i][j] = dp[i-1][j];
-      else dp[i][j] = std::max(dp[i-1][j], dp[i-1][j-goods[i].first] + goods[i].second);
+        std::cin >> W >> V;
+        for(int k = K; k >= 0; k--)
+        {
+            if(k-W < 0) dp[n][k] = dp[n-1][k];
+            else dp[n][k] = std::max(dp[n-1][k], dp[n-1][k-W] + V);
+        }
     }
-  }
-  std::cout << dp[n][k];
-  return 0;
+    std::cout << dp[N][K];
+    return 0;
 }
