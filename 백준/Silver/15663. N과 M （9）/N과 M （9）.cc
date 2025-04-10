@@ -1,34 +1,33 @@
 #include <bits/stdc++.h>
 using namespace std;
-int N, M, arr[10];
-void Check(int mask, int cnt, int* res)
-{
-  if(cnt >= M)
-  {
-    for(int i = 0; i < cnt; i++)
-      std::cout << *(res+i) << ' ';
-    std::cout << '\n';
-    return;
-  }
-  int temp = 0;
-  for(int i = 0; i < N; i++)
-  {
-    if(temp == arr[i] || mask & (1 << i)) continue;
-    temp = arr[i];
-    res[cnt] = arr[i];
-    Check(mask | (1 << i), cnt+1, res);
-  }
-}
+int N, M, nums[10], ans[10];
+bool chk[10];
 int main() 
 {
-  std::ios::sync_with_stdio(false);
-  std::cin.tie(0);
-  std::cout.tie(0);
-  std::cin >> N >> M;
-  for(int i = 0; i < N; i++)
-    std::cin >> arr[i];
-  std::sort(arr, arr+N, std::less<>());
-  int res[10];
-  Check(0, 0, res);
-  return 0;
+    ios::sync_with_stdio(false);
+    cin.tie(NULL);
+    std::cin >> N >> M;
+    for(int n = 0; n < N; n++) std::cin >> nums[n];
+    std::sort(nums, nums + N);
+    std::function<void(int, int)> func = [&](int cnt, int idx) -> void 
+    {
+        if(cnt >= M)
+        {
+            for(int i = 0; i < M; i++) std::cout << ans[i] << ' ';
+            std::cout << '\n';
+            return;
+        }
+        int cur = -1;
+        for(int i = 0; i < N; i++)
+        {
+            if(nums[i] == cur || chk[i]) continue;
+            chk[i] = true;
+            cur = nums[i];
+            ans[cnt] = nums[i];
+            func(cnt + 1, i + 1);
+            chk[i] = false;
+        }
+    };
+    func(0, 0);
+    return 0;
 }
