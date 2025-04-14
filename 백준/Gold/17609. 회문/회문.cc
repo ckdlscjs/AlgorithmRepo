@@ -20,13 +20,10 @@ int main()
                     r--;
                     continue;
                 }
-                if(cnt <= 0)
-                {
-                    if(isPalindrome(l+1, r, cnt+1) == 0 || isPalindrome(l, r-1, cnt+1) == 0)
-                        return 1;
-                    else
-                        return 2;
-                }
+                if(cnt >= 1)
+                    return 2;
+                if(isPalindrome(l+1, r, cnt+1) == 0 || isPalindrome(l, r-1, cnt+1) == 0)
+                    return 1;
                 else
                     return 2;
             }
