@@ -24,21 +24,21 @@ int main()
     std::stack<char> st;
     while(dp[y][x])
     {
-        int nd = -1;
+        int same = -1;
         for(int dir = 0; dir < 2; dir++)
         {
             int ny = y + dy[dir];
             int nx = x + dx[dir];
             if(dp[ny][nx] == dp[y][x])
             {
-                nd = dir;
+                same = dir;
                 break;
             }
         }
-        if(nd != -1)
+        if(same != -1)
         {
-            y += dy[nd];
-            x += dx[nd];
+            y += dy[same];
+            x += dx[same];
         }
         else
         {
@@ -47,10 +47,6 @@ int main()
             x--;
         }
     }
-    while(st.size())
-    {
-        std::cout << st.top();
-        st.pop();
-    }
+    while(st.size()) std::cout << st.top(), st.pop();
     return 0;
 }
