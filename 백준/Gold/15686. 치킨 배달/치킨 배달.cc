@@ -1,54 +1,46 @@
 #include <bits/stdc++.h>
 using namespace std;
-const int MaxN = 55;
-int n, m;
-int arr[MaxN][MaxN];
-std::vector<std::pair<int, int>> house;
-std::vector<std::pair<int, int>> chicken;
-int result = 987654321;
-void Check(std::vector<std::pair<int, int>> chics, int idx)
-{
-  if(chics.size() >= m)
-  {
-    int temp = 0;
-    for(const auto& iter : house)
-    {
-      int mindist = 987654321;
-      for(const auto& chi : chics)
-      {
-        int dist = std::abs(iter.first - chi.first) + std::abs(iter.second - chi.second);
-        mindist = std::min(mindist, dist);
-      }
-      temp += mindist;
-    }
-    result = std::min(result, temp);
-    return;
-  }
-  for(int i = idx; i < chicken.size(); i++)
-  {
-    chics.push_back(chicken[i]);
-    Check(chics, i+1);
-    chics.pop_back();
-  }
-}
+int N, M, arr[52][52], chk[15], res = 2500*2501;
+std::vector<std::pair<int, int>> homes;
+std::vector<std::pair<int, int>> chickens;
 int main() 
 {
-  std::ios::sync_with_stdio(false);
-  std::cin.tie(0);
-  std::cout.tie(0);
-  std::cin >> n >> m;
-  for(int i = 0; i < n; i++)
-  {
-    for(int j = 0; j < n; j++)
+    ios::sync_with_stdio(false);
+    cin.tie(NULL);
+    std::cin >> N >> M;
+    for(int i = 0; i < N; i++)
     {
-      std::cin >> arr[i][j];
-      if(arr[i][j] == 1)
-        house.push_back({i, j});
-      else if(arr[i][j] == 2)
-        chicken.push_back({i, j});
+        for(int j = 0; j < N; j++)
+        {
+            std::cin >> arr[i][j];
+            if(arr[i][j] == 1)
+                homes.push_back({i, j});
+            else if(arr[i][j] == 2)
+                chickens.push_back({i, j});
+        }
     }
-  }
-  Check({}, 0);
-  std::cout << result;
-  return 0;
+    
+    std::function<void(int, int)> func = [&](int idx, int cur) -> void 
+    {
+        if(idx > chickens.size()) return;
+        if(cur >= M)
+        {
+            int sum = 0;
+            for(const auto& iter : homes)
+            {
+                int dist = 2501;
+                for(int i = 0; i < M; i++)
+                    dist = std::min(std::abs(iter.first - chickens[chk[i]].first) + std::abs(iter.second - chickens[chk[i]].second), dist);
+                sum += dist;
+            }
+            res = std::min(res, sum);
+            return;
+        }
+        chk[cur] = idx;
+        func(idx+1, cur+1);
+        func(idx+1, cur);
+    };
+    func(0, 0);
+    std::cout << res;
+    return 0;
 }
