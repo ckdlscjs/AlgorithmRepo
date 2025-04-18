@@ -1,56 +1,51 @@
 #include <bits/stdc++.h>
-const int INF = 987654321;
-int N, M, u, v, w, costs[2005], parents[2005];
-std::vector<std::pair<int, int>> graph[1'005];
-std::priority_queue<std::pair<int, int>, std::vector<std::pair<int, int>>, std::greater<std::pair<int, int>>> pq;
-int main()
+using namespace std;
+#define pll std::pair<long long, long long>
+const long long INF = (long long)100'000*100'000+5;
+long long N, M, u, v, w, costs[1'005], s, e, prv[1'005];
+std::vector<int> route;
+std::vector<pll> graph[1'005];
+std::priority_queue<pll, std::vector<pll>, std::greater<pll>> pq;
+int main() 
 {
-  std::ios::sync_with_stdio(false);
-  std::cin.tie(0);
-  std::cout.tie(0);
-  
-  std::cin >> N >> M;
-  for(int m = 0; m < M; m++)
-  {
-    std::cin >> u >> v >> w;
-    graph[u].push_back({v, w});
-    //graph[v].push_back({u, w});
-  }
-  std::fill_n(costs, 2005, INF);
-  std::cin >> u >> v;
-  costs[u] = 0;
-  pq.push({0, u});
-  while(pq.size())
-  {
-    int cost = pq.top().first;
-    int from = pq.top().second;
-    pq.pop();
-    if(costs[from] < cost) continue;
-    for(const auto& iter : graph[from])
+    ios::sync_with_stdio(false);
+    cin.tie(NULL);
+    std::cin >> N >> M;
+    for(int m = 0; m < M; m++)
     {
-      int to = iter.first;
-      int weight = iter.second;
-      if(costs[from] + weight >= costs[to]) continue;
-      costs[to] = costs[from] + weight;
-      parents[to] = from;
-      pq.push({costs[to], to});
+        std::cin >> u >> v >> w;
+        graph[u].push_back({v, w});
     }
-  }
-  std::cout << costs[v] << '\n';
-  std::stack<int> routes;
-  int cur = v;
-  routes.push(cur);
-  while(cur != 0)
-  {
-    cur = parents[routes.top()];
-    if(cur == 0) break;
-    routes.push(cur);
-  }
-  std::cout << routes.size() << '\n';
-  while(routes.size())
-  {
-    std::cout << routes.top() << ' ';
-    routes.pop();
-  }
-  return 0;
+    std::cin >> s >> e;
+    std::fill_n(&costs[0], 1'005, INF);
+    costs[s] = 0;
+    pq.push({0, s});
+    while(pq.size())
+    {
+        pll cur = pq.top();
+        pq.pop();
+        if(costs[cur.second] < cur.first) continue;
+        for(const auto& iter : graph[cur.second])
+        {
+            v = iter.first;
+            w = iter.second;
+            if(costs[cur.second] + w < costs[v])
+            {
+                prv[v] = cur.second;
+                costs[v] = costs[cur.second] + w;
+                pq.push({costs[v], v});
+            }
+        }
+    }
+    std::cout << costs[e] << '\n';
+    route.push_back(e);
+    while(prv[e])
+    {
+        route.push_back(prv[e]);
+        e = prv[e];
+    }
+    std::cout << route.size() << '\n';
+    for(int i = route.size()-1; i >= 0; i--)
+        std::cout << route[i] << ' ';
+    return 0;
 }
