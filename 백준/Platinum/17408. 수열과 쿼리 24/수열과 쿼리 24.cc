@@ -1,8 +1,20 @@
 #include <bits/stdc++.h>
 using namespace std;
 using pll = std::pair<long long, long long>;
-long long N, M, order, a, b;
+long long N, M, arr[100'005], order, a, b;
 pll tree[4*100'005];
+pll Init(int s, int e, int cur)
+{
+    if(s >= e) return tree[cur] = std::make_pair(arr[s], 0);
+    int mid = (s + e) / 2;
+    std::vector<long long> ret;
+    auto ll = Init(s, mid, cur*2);
+    auto rr = Init(mid+1, e, cur*2+1);
+    ret.push_back(ll.first); ret.push_back(ll.second);
+    ret.push_back(rr.first); ret.push_back(rr.second);
+    std::sort(ret.begin(), ret.end(), std::greater<>());
+    return tree[cur] = std::make_pair(ret[0], ret[1]);
+}
 pll Update(int idx, long long val, int s, int e, int cur)
 {
     if(idx < s || e < idx) return tree[cur];
@@ -35,11 +47,8 @@ int main()
     ios::sync_with_stdio(false);
     cin.tie(NULL);
     std::cin >> N;
-    for(int n = 1; n <= N; n++)
-    {
-        std::cin >> b;
-        Update(n, b, 1, N, 1);
-    }
+    for(int n = 1; n <= N; n++) std::cin >> arr[n];
+    Init(1, N, 1);
     std::cin >> M;
     for(int m = 0; m < M; m++)
     {
