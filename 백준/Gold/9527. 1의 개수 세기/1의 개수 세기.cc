@@ -3,8 +3,8 @@ using namespace std;
 long long A, B, dp[64];
 long long Check(long long num)
 {
-    long long ret = num & 1;
-    for(int i = 60; i > 0; i--)
+    long long ret = 0;
+    for(int i = 60; i >= 0; i--)
     {
         if(num & (1LL << i))
         {
