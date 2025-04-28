@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-int N, dist[100'005], fee, minFee = 1'000'000'005, res;
+long long N, dist[100'005], fee, minFee = 1'000'000'005, res;
 int main() 
 {
     ios::sync_with_stdio(false);
