@@ -1,49 +1,62 @@
 #include <bits/stdc++.h>
-int N, M, cnt;
-std::vector<std::pair<int, std::pair<int, int>>> inputs;
-long long int u, v, c, res;
+using namespace std;
+int N, M, u, v, w, res, cnt = 1;
+std::vector<std::tuple<int, int, int>> edges;
 struct DisjointSet
 {
-  std::vector<int> parents;
-  DisjointSet(int _size) : parents(_size+1, -1) {}
-  int Find(int node)
-  {
-    if(parents[node] == -1)
-      return node;
-    return parents[node] = Find(parents[node]);
-  }
-  void Union(int node1, int node2)
-  {
-    int root1 = Find(node1);
-    int root2 = Find(node2);
-    if(root1 == root2) return;
-    parents[root2] = root1;
-  }
+    std::vector<int> parents;
+    std::vector<int> ranks;
+    DisjointSet(int _size) : parents(_size+1, -1), ranks(_size+1, 0) {}
+    int Find(int cur)
+    {
+        if(parents[cur] == -1)
+            return cur;
+        return parents[cur] = Find(parents[cur]);
+    }
+    void Union(int node1, int node2)
+    {
+        int root1 = Find(node1);
+        int root2 = Find(node2);
+        if(root1 == root2) return;
+        if(ranks[root1] == ranks[root2])
+        {
+            ranks[root1]++;
+            parents[root2] = root1;
+        }
+        else if(ranks[root1] > ranks[root2])
+        {
+            parents[root2] = root1;
+        }
+        else
+        {
+            parents[root1] = root2;
+        }
+    }
 };
-int main()
+int main() 
 {
-  std::ios::sync_with_stdio(false);
-  std::cin.tie(0);
-  std::cout.tie(0);
-  std::cin >> N >> M;
-  for(int i = 0; i < M; i++)
-  {
-    std::cin >> u >> v >> c;
-    inputs.push_back({c, {u, v}});
-  }
-  std::sort(inputs.begin(), inputs.end());
-  DisjointSet ds(N);
-  for(int i = 0; i < inputs.size() && cnt < N-1; i++)
-  {
-    c = inputs[i].first;
-    u = inputs[i].second.first;
-    v = inputs[i].second.second;
-    if(ds.Find(u) == ds.Find(v)) continue;
-    //std::cout << u << ' ' << v << ' ' << c << '\n';
-    ds.Union(u, v);
-    res += c;
-    cnt++;
-  }
-  std::cout << res - c;
-  return 0;
+    ios::sync_with_stdio(false);
+    cin.tie(NULL);
+    std::cin >> N >> M;
+    DisjointSet ds(N);
+    for(int m = 0; m < M; m++)
+    {
+        std::cin >> u >> v >> w;
+        edges.push_back({w, u, v});
+    }
+    std::sort(edges.begin(), edges.end());
+    for(int m = 0; m < M && cnt < N; m++)
+    {
+        w = std::get<0>(edges[m]);
+        u = std::get<1>(edges[m]);
+        v = std::get<2>(edges[m]);
+        if(ds.Find(u) != ds.Find(v))
+        {
+            ds.Union(u, v);
+            res += w;
+            cnt++;
+        }
+    }
+    std::cout << res - w;
+    return 0;
 }
