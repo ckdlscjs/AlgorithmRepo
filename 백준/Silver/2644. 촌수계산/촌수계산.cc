@@ -9,8 +9,7 @@ int main()
     for(int m = 0; m < M; m++)
     {
         std::cin >> x >> y;
-        depth[y]++;
-        depth[y] += depth[x];
+        depth[y] += depth[x] + 1;
         parent[y] = x;
     }
     int rootA = A, rootB = B;
