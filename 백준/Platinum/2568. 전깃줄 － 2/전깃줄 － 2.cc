@@ -29,19 +29,12 @@ int main()
             lis[hi] = inputs[i].second;
         }
     }
-    std::cout << N - len << '\n';
-    len--;
+    std::cout << N - len-- << '\n';
     std::stack<int> st;
     for(int i = N-1; i >= 0; i--)
     {
-        if(idx[i] == len)
-        {
-            len--;
-        }
-        else
-        {
-            st.push(inputs[i].first);
-        }
+        if(idx[i] == len) len--;
+        else st.push(inputs[i].first);
     }
     while(st.size())
     {
