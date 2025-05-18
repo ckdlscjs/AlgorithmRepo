@@ -20,11 +20,7 @@ int main()
                 if(std::isdigit(iter)) sum_b += iter - '0';
             if(sum_a == sum_b)
             {
-                for(int i = 0; i < a.size(); i++)
-                {
-                    if(a[i] == b[i]) continue;
-                    return a[i] < b[i];
-                }
+                return a < b;
             }
             return sum_a < sum_b;
         }
