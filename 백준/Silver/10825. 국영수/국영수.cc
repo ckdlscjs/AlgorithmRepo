@@ -1,3 +1,5 @@
+//입력값을 튜플로 구성하여 정렬한다, 람다를 이용하여 입력조건에따른 별도구현을수행한다
+//NlogN
 #include <bits/stdc++.h>
 using namespace std;
 using tsiii = std::tuple<std::string, int, int, int>;
