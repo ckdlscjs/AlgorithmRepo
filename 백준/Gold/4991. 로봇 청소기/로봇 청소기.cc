@@ -66,23 +66,8 @@ int main()
                 dist[ci][ny][nx] = dist[ci][cy][cx] + 1;
             }
         }
-        if(cnts+1 < poss.size())
-        {
-            std::cout << -1 << '\n';
-            continue;
-        }
-        /*
-        for(int i = 0; i < poss.size(); i++)
-        {
-            for(int j = 0; j < poss.size(); j++)
-            {
-                std::cout << dist[i][poss[j].first][poss[j].second] << ' ';
-            }
-            std::cout << '\n';
-        }
-        std::cout << (1<<poss.size())-1 << '\n';
-        */
-        std::cout << Check(poss, 1, 0) << '\n';
+        if(cnts+1 < poss.size()) std::cout << -1 << '\n';
+        else std::cout << Check(poss, 1, 0) << '\n';
     }
     return 0;
 }
