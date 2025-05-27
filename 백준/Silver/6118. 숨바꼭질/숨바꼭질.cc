@@ -1,8 +1,10 @@
 /*
 1.접근방식:
-
+문제에서 주어진 그래프의 갯수를 기반으로 BFS하면서 최단거리를 체크한다, map을이용하면 정렬되므로
+이중 끝에해당하는 rbegin(--end) 에 해당하는 인자중 set으로 정렬된 첫 원소를 출력하고 거리, 사이즈를 출력한다
 
 2.시간복잡도:
+O(V+E*(logV+logV))
 
 */
 #include <bits/stdc++.h>
@@ -35,6 +37,6 @@ int main()
             q.push(iter);
         }
     }
-    std::cout << *((*chks.rbegin()).second.begin()) << ' ' << (*chks.rbegin()).first << ' ' << (*chks.rbegin()).second.size();
+    std::cout << *(chks.rbegin()->second.begin()) << ' ' << chks.rbegin()->first << ' ' << chks.rbegin()->second.size();
     return 0;
 }
