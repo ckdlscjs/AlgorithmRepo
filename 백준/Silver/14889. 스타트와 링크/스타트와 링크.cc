@@ -1,49 +1,38 @@
+/*
+1.접근방식:
+
+2.시간복잡도:
+
+*/
 #include <bits/stdc++.h>
-using namespace std;
-int arr[25][25];
-int n;
-int res = 987654321;
-void check(int cnt, int idx, int mask)
+int N, arr[22][22], psums[22], sums, ans = (100+100)*22;
+void Check(int cur, int idx, int sum)
 {
-  if(cnt == n/2)
-  {
-    std::vector<int> start;
-    std::vector<int> link;
-    for(int i = 0; i < n; i++)
+    if(cur >= N / 2)
     {
-      if(mask & 1 << i)
-        start.push_back(i);
-      else
-        link.push_back(i);
+        ans = std::min(ans, std::abs(sum));
+        return;
     }
-    int sum_start = 0;
-    int sum_link = 0;
-    for(int i = 0; i < start.size(); i++)
-      for(int j = i+1; j < start.size(); j++)
-        sum_start += arr[start[i]][start[j]] + arr[start[j]][start[i]];
-     for(int i = 0; i < link.size(); i++)
-      for(int j = i+1; j < link.size(); j++)
-        sum_link += arr[link[i]][link[j]] + arr[link[j]][link[i]];
-    res = std::min(res, std::abs(sum_start - sum_link));
-    return;
-  }
-  if(cnt > n / 2)
-    return;
-  if(idx >= n)
-    return;
-  check(cnt, idx+1, mask);
-  check(cnt+1, idx+1, mask | 1 << idx);
+    if(idx >= N) return;
+    Check(cur+1, idx+1, sum - psums[idx]);
+    Check(cur, idx+1, sum);
 }
-int main()
+int main() 
 {
-  std::ios::sync_with_stdio(false);
-  std::cin.tie(0);
-  std::cout.tie(0);
-  std::cin >> n;
-  for(int i = 0; i < n; i++)
-    for(int j = 0; j < n; j++)
-      std::cin >> arr[i][j];
-  check(0, 0, 0);
-  std::cout << res;
-  return 0;
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(NULL);
+    std::cin >> N;
+    for(int i = 0; i < N; i++)
+    {
+        for(int j = 0; j < N; j++)
+        {
+            std::cin >> arr[i][j];
+            psums[i] += arr[i][j];
+            psums[j] += arr[i][j];
+            sums += arr[i][j];
+        }
+    }
+    Check(0, 0, sums);
+    std::cout << ans;
+    return 0;
 }
