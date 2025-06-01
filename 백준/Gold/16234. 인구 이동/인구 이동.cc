@@ -1,83 +1,61 @@
+/*
+1.접근방식:
+
+2.시간복잡도:
+
+*/
 #include <bits/stdc++.h>
-using namespace std;
-const int dy[] = {0, 0, 1, -1};
-const int dx[] = {1, -1, 0, 0};
-const int MaxN = 55;
-int arr[MaxN][MaxN];
-int n, l, r;
-bool Moves()
+const int dy[] = {-1, 1, 0, 0};
+const int dx[] = {0, 0, -1, 1};
+int N, L, R, A[52][52], areas[52][52], res;
+std::pair<int, int> dfs(const int area, int y, int x)
 {
-  bool ret = false;
-  bool visited[MaxN][MaxN];
-  std::memset(visited, false, sizeof(visited));
-  std::queue<std::pair<int, int>> q;
-  for(int i = 0; i < n; i++)
-  {
-    for(int j = 0; j < n; j++)
+    areas[y][x] = area;
+    std::pair<int, int> ret(1, A[y][x]);
+    for(int dir = 0; dir < 4; dir++)
     {
-      if(visited[i][j])
-        continue;
-      for(int dir = 0; dir < 4; dir++)
-      {
-        int ny = i + dy[dir];
-        int nx = j + dx[dir];
-        if(ny < 0 || nx < 0 || ny >= n || nx >= n)
-          continue;
-        int diff = std::abs(arr[ny][nx] - arr[i][j]);
-        if(l <= diff && diff <= r)
+        int ny = y + dy[dir];
+        int nx = x + dx[dir];
+        if(ny < 0 || nx < 0 || ny >= N || nx >= N || areas[ny][nx]) continue;
+        int diff = std::abs(A[ny][nx] - A[y][x]);
+        if(L <= diff && diff <= R)
         {
-          ret = true;
-          q.push({i, j});
-          visited[i][j] = true;
-          break;
+            auto temp = dfs(area, ny, nx);
+            ret.first += temp.first;
+            ret.second += temp.second;
         }
-      }
-      if(q.empty())
-        continue;
-      int sum = 0;
-      std::vector<std::pair<int, int>> poss;
-      while(q.size())
-      {
-        int y = q.front().first;
-        int x = q.front().second;
-        q.pop();
-        sum += arr[y][x];
-        poss.push_back({y, x});
-        for(int dir = 0; dir < 4; dir++)
-        {
-          int ny = y + dy[dir];
-          int nx = x + dx[dir];
-          if(ny < 0 || nx < 0 || ny >= n || nx >= n || visited[ny][nx])
-            continue;
-          int diff = std::abs(arr[ny][nx] - arr[y][x]); 
-          if(!(l <= diff && diff <= r))
-            continue;
-          visited[ny][nx] = true;
-          q.push({ny, nx});
-        }
-      }
-      sum /= poss.size();
-      for(const auto& iter : poss)
-        arr[iter.first][iter.second] = sum;
     }
-  }
-  return ret;
+    return ret;
 }
-int main() {
-  std::ios::sync_with_stdio(false);
-  std::cin.tie(0);
-  std::cout.tie(0);
-  std::cin >> n >> l >> r;
-  for(int i = 0; i < n; i++)
-  {
-    for(int j = 0; j < n; j++)
+int main() 
+{
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(NULL);
+    std::cin >> N >> L >> R;
+    for(int i = 0; i < N; i++)
+        for(int j = 0; j < N; j++)
+            std::cin >> A[i][j];
+    while(1)
     {
-      std::cin >> arr[i][j];
+        int area = 1;
+        int rets[N*N + 1];
+        for(int i = 0; i < N; i++)
+        {
+            for(int j = 0; j < N; j++)
+            {
+                if(areas[i][j] == 0)
+                {
+                    auto ret = dfs(area, i, j);
+                    rets[area++] = ret.second / ret.first;
+                }
+                A[i][j] = rets[areas[i][j]];
+            }
+        }
+        if(area > N*N) break;
+        std::memset(areas, 0, sizeof(areas));
+        res++;
     }
-  }
-  int cnt = 0;
-  while(Moves())
-    cnt++;
-  std::cout << cnt;
-  return 0;
+    std::cout << res;
+    
+    return 0;
 }
