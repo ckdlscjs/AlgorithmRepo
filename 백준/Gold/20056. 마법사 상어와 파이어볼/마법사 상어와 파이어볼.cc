@@ -60,12 +60,6 @@ int main()
                 int s = std::get<3>(boards[i][j]);        //s
                 int d = std::get<4>(boards[i][j]);        //d
                 int cnt = std::get<5>(boards[i][j]);      //cnt
-                std::get<0>(boards[i][j]) = 0;
-                std::get<1>(boards[i][j]) = 0;
-                std::get<2>(boards[i][j]) = 0;
-                std::get<3>(boards[i][j]) = 0;
-                std::get<4>(boards[i][j]) = 0;
-                std::get<5>(boards[i][j]) = 0;
                 if(cnt == 1)
                 {
                     q.push({i, j, m, s, d});
@@ -94,6 +88,7 @@ int main()
                 }
             }
         }
+        std::memset(boards, 0, sizeof(boards));
     }
     std::cout << res;
     return 0;
