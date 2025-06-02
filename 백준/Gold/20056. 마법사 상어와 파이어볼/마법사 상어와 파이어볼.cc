@@ -1,119 +1,86 @@
+/*
+1.접근방식:
+
+2.시간복잡도:
+
+*/
 #include <bits/stdc++.h>
+using pii = std::pair<int, int>;
+using ti5 = std::tuple<int, int, int, int, int>;
+using ti3 = std::tuple<int, int, int>;
 const int dy[] = {-1, -1, 0, 1, 1, 1, 0, -1};
 const int dx[] = {0, 1, 1, 1, 0, -1, -1, -1};
-int N, M, K, r, c, m, s, d;
-struct FB
+int N, M, K, r, c, m, s, d, res;
+std::queue<ti5> q;
+int main() 
 {
-  int r;
-  int c;
-  int m;
-  int s;
-  int d;
-  FB(int _r, int _c, int _m, int _s, int _d) : r(_r), c(_c), m(_m), s(_s), d(_d) {}
-  FB(const FB& _fb)
-  {
-    r = _fb.r;
-    c = _fb.c;
-    m = _fb.m;
-    s = _fb.s;
-    d = _fb.d;
-  }
-  FB& operator=(const FB& _fb)
-  {
-    r = _fb.r;
-    c = _fb.c;
-    m = _fb.m;
-    s = _fb.s;
-    d = _fb.d;
-    return *this;
-  }
-};
-std::queue<FB> q;
-int main()
-{
-  std::ios::sync_with_stdio(false);
-  std::cin.tie(0);
-  std::cout.tie(0);
-  std::cin >> N >> M >> K;
-  for(int i = 0; i < M; i++)
-  {
-    std::cin >> r >> c >> m >> s >> d;
-    q.push(FB(r, c, m, s, d));
-  }
-  for(int k = 0; k < K; k++)
-  {
-    std::map<std::pair<int, int>, std::queue<FB>> FBS;
-    while(q.size())
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(NULL);
+    std::cin >> N >> M >> K;
+    for(int i = 0; i < M; i++)
     {
-      FB fb = q.front();
-      q.pop();
-      fb.r += dy[fb.d] * (fb.s % N);
-      if(fb.r <= 0)
-        fb.r += N;
-      if(fb.r > N)
-        fb.r -= N;
-      fb.c += dx[fb.d] * (fb.s % N);
-      if(fb.c <= 0)
-        fb.c += N;
-      if(fb.c > N)
-        fb.c -= N;
-      //std::cout << k << ": " <<fb.r << ' ' << fb.c << ' ' << fb.m << ' ' << fb.s << ' ' <<fb.d << '\n';
-      FBS[{fb.r, fb.c}].push(fb);
+        std::cin >> r >> c >> m >> s >> d;
+        q.push({r-1, c-1, m, s, d});
     }
-    for(auto& iter : FBS)
+    for(int k = 0; k < K; k++)
     {
-      if(iter.second.size() >= 2)
-      {
-        FB sums(iter.first.first, iter.first.second, 0, 0, 0);
-        int odd = 0, even = 0, cnt = iter.second.size();
-        while(iter.second.size())
+        res = 0;
+        std::map<pii, std::vector<ti3>> boards;
+        while(q.size())
         {
-          FB fb = iter.second.front();
-          iter.second.pop();
-          odd += fb.d % 2 ? 1 : 0;
-          even += fb.d % 2 ? 0 : 1;
-          sums.m += fb.m;
-          sums.s += fb.s;
+            auto cur = q.front();
+            q.pop();
+            r = std::get<0>(cur);
+            c = std::get<1>(cur);
+            m = std::get<2>(cur);
+            s = std::get<3>(cur);
+            d = std::get<4>(cur);
+            int ny = r + dy[d] * (s%N);
+            if(ny < 0) ny += N;
+            ny %= N;
+            int nx = c + dx[d] * (s%N);
+            if(nx < 0) nx += N;
+            nx %= N;
+            boards[{ny, nx}].push_back({m, s, d});
         }
-        if((double)sums.m / 5 < 1.0f)
-          continue;
-        sums.m = std::floor((double)sums.m / 5);
-        sums.s = std::floor((double)sums.s / cnt);
-        if(odd && even)
+        for(const auto& iter : boards)
         {
-          sums.d = 1;
-          q.push(sums);
-          sums.d = 3;
-          q.push(sums);
-          sums.d = 5;
-          q.push(sums);
-          sums.d = 7;
-          q.push(sums);
+            if(iter.second.size() <= 1)
+            {
+                q.push({iter.first.first, iter.first.second, std::get<0>(iter.second[0]), std::get<1>(iter.second[0]), std::get<2>(iter.second[0])});
+                res += std::get<0>(iter.second[0]);
+            }
+            else
+            {
+                int sum_m = 0, sum_s = 0, cnt_odd = 0, cnt_even = 0;
+                for(const auto& fb : iter.second)
+                {
+                    sum_m += std::get<0>(fb);
+                    sum_s += std::get<1>(fb);
+                    cnt_odd += std::get<2>(fb) % 2 ? 1 : 0;
+                    cnt_even += std::get<2>(fb) % 2 ? 0 : 1;
+                }
+                sum_m = std::floor(sum_m/5);
+                sum_s = std::floor(sum_s/iter.second.size());
+                if(sum_m <= 0) continue;
+                if(cnt_odd >= iter.second.size() || cnt_even >= iter.second.size())
+                {
+                    q.push({iter.first.first, iter.first.second, sum_m, sum_s, 0});
+                    q.push({iter.first.first, iter.first.second, sum_m, sum_s, 2});
+                    q.push({iter.first.first, iter.first.second, sum_m, sum_s, 4});
+                    q.push({iter.first.first, iter.first.second, sum_m, sum_s, 6});
+                }
+                else
+                {
+                    q.push({iter.first.first, iter.first.second, sum_m, sum_s, 1});
+                    q.push({iter.first.first, iter.first.second, sum_m, sum_s, 3});
+                    q.push({iter.first.first, iter.first.second, sum_m, sum_s, 5});
+                    q.push({iter.first.first, iter.first.second, sum_m, sum_s, 7});
+                }
+                res += sum_m*4;
+            }
         }
-        else
-        {
-          sums.d = 0;
-          q.push(sums);
-          sums.d = 2;
-          q.push(sums);
-          sums.d = 4;
-          q.push(sums);
-          sums.d = 6;
-          q.push(sums);
-        }
-      }
-      else
-      {
-        q.push(iter.second.front());
-      }
     }
-  }
-  int res = 0;
-  while(q.size())
-  {
-    res += q.front().m;
-    q.pop();
-  }
-  std::cout << res;
-  return 0;
+    std::cout << res;
+    return 0;
 }
