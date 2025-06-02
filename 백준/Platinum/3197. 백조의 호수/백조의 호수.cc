@@ -11,7 +11,7 @@ const int dx[] = {0, 0, -1, 1};
 int R, C, res;
 bool vistied[1502][1502];
 char arr[1502][1502];
-std::queue<pii> q_s;
+std::deque<pii> q_s;
 std::queue<pii> q_i;
 std::vector<pii> swans;
 int main() 
@@ -29,7 +29,7 @@ int main()
         }
     }
     vistied[swans[0].first][swans[0].second] = true;
-    q_s.push(swans[0]);
+    q_s.push_front(swans[0]);
     while(vistied[swans[1].first][swans[1].second] == false)
     {
         int size_qi = q_i.size();
@@ -46,22 +46,20 @@ int main()
                 arr[ny][nx] = '.';
             }
         }
-        std::queue<pii> q_ns;
-        while(q_s.size())
+        while(q_s.size() && arr[q_s.front().first][q_s.front().second] != 'X')
         {
             auto cur = q_s.front();
-            q_s.pop();
+            q_s.pop_front();
             for(int dir = 0; dir < 4; dir++)
             {
                 int ny = cur.first + dy[dir];
                 int nx = cur.second + dx[dir];
                 if(ny < 0 || nx < 0 || ny >= R || nx >= C || vistied[ny][nx]) continue;
                 vistied[ny][nx] = true;
-                if(arr[ny][nx] == '.' || arr[ny][nx] == 'L') q_s.push({ny, nx});
-                else q_ns.push({ny, nx});
+                if(arr[ny][nx] == '.' || arr[ny][nx] == 'L') q_s.push_front({ny, nx});
+                else q_s.push_back({ny, nx});
             }
         }
-        q_s = q_ns;
         res++;
     }
     std::cout << res;
