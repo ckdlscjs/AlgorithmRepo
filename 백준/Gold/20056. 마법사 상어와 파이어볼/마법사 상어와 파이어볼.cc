@@ -1,18 +1,21 @@
 /*
 1.접근방식:
+시뮬레이션문제, 있는그대로 조건에 맞춰 구현하면 되나 최적화를위해 여러방법을 사용해보았다, map의 key로 pair를 두고 체크해봤는데 이보다 더 빠른방법이
+있을거같아 여러 방법중 y,x,m,s,d,cnt를 자료형으로하는 2차원 배열을 두고 이를 사용한다, 특이사항으론 s를 dy,dx로 계산할때 역수부분을 계산하기위해 양수로 
+바꾸고 모듈러 연산후 N에서 빼주는 형태로 뒤쪽의 위치를맞춘다, 이후다시모듈러연산한다(그냥넘어갈경우계산도해야함)
+이후 n^2을 수행하면서 조건에맞는대로 시뮬레이션한다, cnt가 <=0이라면 초기화등 기타 조건문과정이 필요없으므로 이부분도최적화한다
 
 2.시간복잡도:
-
+O(K*N^2)
 */
 #include <bits/stdc++.h>
 using pii = std::pair<int, int>;
-using ti3 = std::tuple<int, int, int>;
 using ti5 = std::tuple<int, int, int, int, int>;
 using ti6 = std::tuple<int, int, int, int, int, int>;
 const int dy[] = {-1, -1, 0, 1, 1, 1, 0, -1};
 const int dx[] = {0, 1, 1, 1, 0, -1, -1, -1};
 int N, M, K, res;
-ti6 boards[52][52];
+ti6 boards[50][50];
 std::queue<ti5> q;
 int main() 
 {
