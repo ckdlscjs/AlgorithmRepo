@@ -54,12 +54,19 @@ int main()
         {
             for(int j = 0; j < N; j++)
             {
+                if(std::get<5>(boards[i][j]) <= 0) continue;
                 int odd = std::get<0>(boards[i][j]);      //odd
                 int even = std::get<1>(boards[i][j]);     //even
                 int m = std::get<2>(boards[i][j]);        //m
                 int s = std::get<3>(boards[i][j]);        //s
                 int d = std::get<4>(boards[i][j]);        //d
                 int cnt = std::get<5>(boards[i][j]);      //cnt
+                std::get<0>(boards[i][j]) = 0;
+                std::get<1>(boards[i][j]) = 0;
+                std::get<2>(boards[i][j]) = 0;
+                std::get<3>(boards[i][j]) = 0;
+                std::get<4>(boards[i][j]) = 0;
+                std::get<5>(boards[i][j]) = 0;
                 if(cnt == 1)
                 {
                     q.push({i, j, m, s, d});
@@ -67,8 +74,8 @@ int main()
                 }
                 else if(cnt > 1)
                 {
-                    m = std::floor(m/5);
-                    s = std::floor(s/cnt);
+                    m /= 5;
+                    s /= cnt;
                     if(m <= 0) continue;
                     if(odd >= cnt || even >= cnt)
                     {
@@ -88,7 +95,6 @@ int main()
                 }
             }
         }
-        std::memset(boards, 0, sizeof(boards));
     }
     std::cout << res;
     return 0;
