@@ -12,22 +12,21 @@ int main()
     std::cin.tie(NULL);
     std::cin >> N >> K;
     for(int n = 0; n < N; n++) std::cin >> S[n];
-    int e = 0, oddcnt = 0;
-    for(int s = 0; s < N; s++)
+    int l = 0, r = 0, oddCnt = 0;
+    while(l <= r && l < N)
     {
-        while(e < N)
+        while(r < N)
         {
-            if(S[e] % 2)
+            if(S[r] % 2)
             {
-                if(oddcnt >= K) break;
-                oddcnt++;
+                if(oddCnt >= K) break;
+                oddCnt++;
             }
-            e++;
+            r++;
         }
-        res = std::max(res, e-s-oddcnt);
+        res = std::max(res, r-l-oddCnt);
         //std::cout << l << ' ' << r << '\n';
-        if(S[s] % 2)
-            oddcnt--;
+        if(S[l++] % 2) oddCnt--;
     }
     std::cout << res;
     return 0;
