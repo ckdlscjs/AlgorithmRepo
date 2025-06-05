@@ -1,32 +1,34 @@
+/*
+1.접근방식:
+
+2.시간복잡도:
+
+*/
 #include <bits/stdc++.h>
-using namespace std;
-int N, K, arr[1'000'005], e, k, len;
-bool chk[1'000'005];
-int main()
+int N, K, S[1'000'005], res;
+int main() 
 {
-  std::ios::sync_with_stdio(false);
-  std::cin.tie(0);
-  std::cout.tie(0);
-  std::cin >> N >> K;
-  for(int i = 0; i < N; i++) std::cin >> arr[i];
-  for(int s = 0; s < N; s++)
-  {
-    while(e < N)
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(NULL);
+    std::cin >> N >> K;
+    for(int n = 0; n < N; n++) std::cin >> S[n];
+    int e = 0, oddcnt = 0;
+    for(int s = 0; s < N; s++)
     {
-      if(arr[e] % 2)
-      {
-        if(k >= K)
-          break;
-        chk[e] = true;
-        k++;
-      }
-      e++;
+        while(e < N)
+        {
+            if(S[e] % 2)
+            {
+                if(oddcnt >= K) break;
+                oddcnt++;
+            }
+            e++;
+        }
+        res = std::max(res, e-s-oddcnt);
+        //std::cout << l << ' ' << r << '\n';
+        if(S[s] % 2)
+            oddcnt--;
     }
-    len = std::max(len, e-s-k);
-    chk[s] = false;
-    if(arr[s] % 2)
-      k--;
-  }
-  std::cout << len;
-  return 0;
+    std::cout << res;
+    return 0;
 }
