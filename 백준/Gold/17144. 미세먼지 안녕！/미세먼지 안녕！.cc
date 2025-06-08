@@ -1,89 +1,105 @@
+/*
+1.접근방식:
+
+2.시간복잡도:
+
+*/
 #include <bits/stdc++.h>
-using namespace std;
-const int dy[] = {0, 0, 1, -1};
-const int dx[] = {1, -1, 0, 0};
-const int air_dy[] = {0, -1, 0, 1};
-const int air_dx[] = {1, 0, -1 ,0};
-int arr[55][55];
-int r, c, t, sum;
-std::vector<std::pair<int, int>> cleaners;
-std::queue<std::pair<int, std::pair<int, int>>> dusts;
-int main()
+#define pii std::pair<int, int>
+const int dy[4] = {-1, 1, 0, 0};
+const int dx[4] = {0, 0, -1, 1};
+const int ady[2][4] = {{0, -1, 0, 1}, {0, 1, 0, -1}};
+const int adx[2][4] = {{1, 0, -1, 0}, {1, 0, -1, 0}};
+int R, C, T, arr[52][52], res;
+std::vector<pii> ac;
+int main() 
 {
-  std::ios::sync_with_stdio(false);
-  std::cin.tie(0);
-  std::cout.tie(0);
-  std::cin >> r >> c >> t;
-  for(int i = 0; i < r; i++)
-  {
-    for(int j = 0; j < c; j++)
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(NULL);
+    std::cin >> R >> C >> T;
+    for(int r = 0; r < R; r++)
     {
-      std::cin >> arr[i][j];
-      if(!arr[i][j])
-        continue;
-      if(arr[i][j] == -1)
-        cleaners.push_back({i, j});
-      else
-        dusts.push({arr[i][j], {i, j}});
+        for(int c = 0; c < C; c++)
+        {
+            std::cin >> arr[r][c];
+            if(arr[r][c] == -1) ac.push_back({r, c});
+        }
     }
-  }
-  while(t)
-  {
-    sum = 0;
-    std::memset(arr, 0, sizeof(arr));
-    for(const auto& iter : cleaners)
-      arr[iter.first][iter.second] = -1;
-    while(dusts.size())
+    for(int t = 0; t < T; t++)
     {
-      int amount = dusts.front().first;
-      int amount_div = amount / 5;
-      std::pair<int, int> pos = dusts.front().second;
-      dusts.pop();
-      for(int dir = 0; dir < 4; dir++)
-      {
-        int ny = pos.first + dy[dir];
-        int nx = pos.second + dx[dir];
-        if(ny < 0 || nx < 0 || ny >= r || nx >= c || arr[ny][nx] == -1)
-          continue;
-        arr[ny][nx] += amount_div;
-        amount -= amount_div;
-      }
-      arr[pos.first][pos.second] += amount;
+        int nxt[52][52];
+        std::memset(nxt, 0, sizeof(nxt));
+        for(int r = 0; r < R; r++)
+        {
+            for(int c = 0; c < C; c++)
+            {
+                if(arr[r][c] <= 0) continue;
+                int amount = arr[r][c];
+                int spread = std::floor(amount / 5.0f);
+                int cnt = 0;
+                for(int dir = 0; dir < 4; dir++)
+                {
+                    int ny = r + dy[dir];
+                    int nx = c + dx[dir];
+                    if(ny < 0 || nx < 0 || ny >= R || nx >= C || arr[ny][nx] == -1) continue;
+                    cnt++;
+                    nxt[ny][nx] += spread;
+                }
+                nxt[r][c] += (amount - spread * cnt);
+            }
+        }
+   
+        //ac0
+        int ly = 0, lx = 0, ry = ac[0].first, rx = C-1;
+        int y = ac[0].first, x = ac[0].second, prv = nxt[y][x], dir = 0;
+        y += ady[0][dir]; x += adx[0][dir];
+        while(!(y == ac[0].first && x == ac[0].second))
+        {
+            int cur = nxt[y][x];
+            int ny = y + ady[0][dir];
+            int nx = x + adx[0][dir];
+            if(ny < ly || nx < lx || ny > ry || nx > rx)
+            {
+                dir++;
+                continue;
+            }
+            nxt[y][x] = prv;
+            prv = cur;
+            y = ny;
+            x = nx;
+        }
+        //ac1
+        ly = ac[1].first; lx = ac[1].second; ry = R-1; rx = C-1; 
+        y = ac[1].first; x = ac[1].second; prv = nxt[y][x]; dir = 0;
+        y += ady[1][dir]; x += adx[1][dir];
+        while(!(y == ac[1].first && x == ac[1].second))
+        {
+            int cur = nxt[y][x];
+            int ny = y + ady[1][dir];
+            int nx = x + adx[1][dir];
+            if(ny < ly || nx < lx || ny > ry || nx > rx)
+            {
+                dir++;
+                continue;
+            }
+            nxt[y][x] = prv;
+            prv = cur;
+            y = ny;
+            x = nx;
+        }
+ 
+        res = 0;
+        for(int r = 0; r < R; r++)
+        {
+            for(int c = 0; c < C; c++)
+            {
+                arr[r][c] = nxt[r][c];
+                res += arr[r][c];
+            }
+        }
+        arr[ac[0].first][ac[0].second] = -1;
+        arr[ac[1].first][ac[1].second] = -1;
     }
-    for(int i = 0; i < cleaners.size(); i++)
-    {
-      int y = cleaners[i].first;
-      int x = cleaners[i].second + 1;
-      int next = 0;
-      int dir = 0;
-      while(!(y == cleaners[i].first && x == cleaners[i].second))
-      {
-        int temp = arr[y][x];
-        arr[y][x] = next;
-        next = temp;
-        int ny = y + air_dy[dir] * (i ? -1 : 1);
-        int nx = x + air_dx[dir];
-        if((ny == cleaners[i].first && nx == c-1) || (ny == (i ? r-1 : 0) && nx == c-1) || (ny == (i ? r-1 : 0) && nx == 0))
-          dir++;
-        y = ny;
-        x = nx;
-      }
-      arr[cleaners[i].first][cleaners[i].second] = -1;
-    }
-    for(int i = 0; i < r; i++)
-    {
-      for(int j = 0; j < c; j++)
-      {
-        //std::cout << arr[i][j] << ' ';
-        if(!arr[i][j] || arr[i][j] == -1)
-          continue;
-        sum += arr[i][j];
-        dusts.push({arr[i][j], {i, j}});
-      }
-      //std::cout << '\n';
-    }
-    t--;
-  }
-  std::cout << sum;
-  return 0;
+    std::cout << res;
+    return 0;
 }
