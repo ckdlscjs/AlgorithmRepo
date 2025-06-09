@@ -1,110 +1,73 @@
+/*
+1.접근방식:
+
+2.시간복잡도:
+
+*/
 #include <bits/stdc++.h>
 const int dy[] = {0, 1, 0, -1};
 const int dx[] = {-1, 0, 1, 0};
-const int tor[4][5][5] =
+float tor[5][5] =
 {
-  {
-    {-1, -1, 1, -1, -1},
-    {-1, 4, 3, 0, -1},
-    {2, 5, -1, -1, -1},
-    {-1, 4, 3, 0, -1},
-    {-1, -1, 1, -1, -1}
-  },
-  {
-    {-1, -1, -1, -1, -1},
-    {-1, 0, -1, 0, -1},
-    {1, 3, -1, 3, 1},
-    {-1, 4, 5, 4, -1},
-    {-1, -1, 2, -1, -1}
-  },
-  {
-    {-1, -1, 1, -1, -1},
-    {-1, 0, 3, 4, -1},
-    {-1, -1, -1, 5, 2},
-    {-1, 0, 3, 4, -1},
-    {-1, -1, 1, -1, -1}
-  },
-  {
-    {-1, -1, 2, -1, -1},
-    {-1, 4, 5, 4, -1},
-    {1, 3, -1, 3, 1},
-    {-1, 0, -1, 0, -1},
-    {-1, -1, -1, -1, -1}
-  }
+    {0.0f, 0.0f, 0.02f, 0.0f, 0.0f},
+    {0.0f, 0.1f, 0.07f, 0.01f, 0.0f},
+    {0.05f, 0.0f, 0.0f, 0.0f, 0.0f},
+    {0.0f, 0.1f, 0.07f, 0.01f, 0.0f},
+    {0.0f, 0.0f, 0.02f, 0.0f, 0.0f},
 };
-int N, arr[505][505], dir, len = 1, cnt, res;
-void Tornado(int y, int x, int dir)
+void RotateCCW()
 {
-  int cur = arr[y][x];
-  arr[y][x] = 0;
-  int ratios[5];
-  ratios[0] = std::floor(cur*0.01f);
-  ratios[1] = std::floor(cur*0.02f);
-  ratios[2] = std::floor(cur*0.05f);
-  ratios[3] = std::floor(cur*0.07f);
-  ratios[4] = std::floor(cur*0.1f);
-  int amount = ratios[0]*2 + ratios[1]*2 + ratios[2] + ratios[3]*2 + ratios[4]*2;
-  for(int i = -2; i <= 2; i++)
-  {
-    for(int j = -2; j <= 2; j++)
-    {
-      int ny = y + i;
-      int nx = x + j;
-      if(ny < 0 || nx < 0 || ny >= N || nx >= N)
-      {
-        if(tor[dir][i+2][j+2] == -1) 
-          continue;
-        res += (tor[dir][i+2][j+2] == 5 ? cur-amount : ratios[tor[dir][i+2][j+2]]);
-        //std::cout << res << '\n';
-      }
-      else if(tor[dir][i+2][j+2] == -1)
-      {
-        continue;
-      }
-      else
-      {
-        arr[ny][nx] += (tor[dir][i+2][j+2] == 5 ? cur-amount : ratios[tor[dir][i+2][j+2]]);
-      }
-    }
-  }
+    float nxt[5][5];
+    for(int i = 0; i < 5; i++)
+        for(int j = 0; j < 5; j++)
+            nxt[i][j] = tor[j][5-i-1];
+    for(int i = 0; i < 5; i++)
+        for(int j = 0; j < 5; j++)
+            tor[i][j] = nxt[i][j];
 }
-int main()
+int N, A[502][502], res;
+int main() 
 {
-  std::ios::sync_with_stdio(false);
-  std::cin.tie(0);
-  std::cout.tie(0);
-  std::cin >> N;
-  for(int i = 0; i < N; i++)
-    for(int j = 0; j < N; j++)
-      std::cin >> arr[i][j];
-  int y = N/2;
-  int x = N/2;
-  while(!(y == 0 && x == -1))
-  {
-    for(int i = 0; i < len; i++)
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(NULL);
+    std::cin >> N;
+    for(int i = 0; i < N; i++)
+        for(int j = 0; j < N; j++)
+            std::cin >> A[i][j];
+
+    int y = N/2, x = N/2, dir = 0, cnt = 1;
+
+    while(x >= 0)
     {
-      y += dy[dir];
-      x += dx[dir];
-      Tornado(y, x, dir);
-      /*
-      for(int ii = 0; ii < N; ii++)
-      {
-        for(int jj = 0; jj < N; jj++)
-          std::cout << arr[ii][jj] << ' ';
-        std::cout << '\n';
-      }
-      std::cout << "---------\n";
-      */
+        for(int c = 0; c < cnt; c++)
+        {
+            int ny = y + dy[dir];
+            int nx = x + dx[dir];
+            int cur = A[ny][nx];
+            
+            for(int i = 0; i < 5; i++)
+            {
+                for(int j = 0; j < 5; j++)
+                {
+                    if(tor[i][j] <= 0.005f) continue;
+                    int amount = A[ny][nx] * tor[i][j];
+                    if(amount == 0) continue;
+                    if(ny-2 + i < 0 || nx-2+j < 0 || ny-2+i >= N || nx-2+j >= N) res += amount;
+                    else A[ny-2+i][nx-2+j] += amount;
+                    cur -= amount;
+                }
+            }
+            if(ny+dy[dir] < 0 || nx+dx[dir] < 0 || ny+dy[dir] >= N || nx+dx[dir] >= N) res += cur;
+            else A[ny+dy[dir]][nx+dx[dir]] += cur;
+            y = ny;
+            x = nx;
+        }
+        //std::cout << y << ' ' << x << '\n';
+        RotateCCW();
+        dir++;
+        dir %= 4;
+        if(dir % 2 == 0) cnt++;
     }
-    dir++;
-    dir %= 4;
-    cnt++;
-    if(cnt >= 2)
-    {
-      len++;
-      cnt = 0;
-    }
-  }
-  std::cout << res;
-  return 0;
+    std::cout << res;
+    return 0;
 }
