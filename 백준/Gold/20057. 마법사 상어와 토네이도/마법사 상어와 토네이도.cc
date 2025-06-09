@@ -25,7 +25,7 @@ void RotateCCW()
         for(int j = 0; j < 5; j++)
             tor[i][j] = nxt[i][j];
 }
-int N, A[502][502], res;
+int N, A[500][500], res;
 int main() 
 {
     std::ios::sync_with_stdio(false);
@@ -41,26 +41,25 @@ int main()
     {
         for(int c = 0; c < cnt; c++)
         {
-            int ny = y + dy[dir];
-            int nx = x + dx[dir];
-            int cur = A[ny][nx];
-            
+            y += dy[dir];
+            x += dx[dir];
+            int ay = y + dy[dir];
+            int ax = x + dx[dir];
+            int cur = A[y][x];
             for(int i = 0; i < 5; i++)
             {
                 for(int j = 0; j < 5; j++)
                 {
                     if(tor[i][j] <= 0.005f) continue;
-                    int amount = A[ny][nx] * tor[i][j];
+                    int amount = A[y][x] * tor[i][j];
                     if(amount == 0) continue;
-                    if(ny-2 + i < 0 || nx-2+j < 0 || ny-2+i >= N || nx-2+j >= N) res += amount;
-                    else A[ny-2+i][nx-2+j] += amount;
+                    if(y-2 + i < 0 || x-2+j < 0 || y-2+i >= N || x-2+j >= N) res += amount;
+                    else A[y-2+i][x-2+j] += amount;
                     cur -= amount;
                 }
             }
-            if(ny+dy[dir] < 0 || nx+dx[dir] < 0 || ny+dy[dir] >= N || nx+dx[dir] >= N) res += cur;
-            else A[ny+dy[dir]][nx+dx[dir]] += cur;
-            y = ny;
-            x = nx;
+            if(ay < 0 || ax < 0 || ay >= N || ax >= N) res += cur;
+            else A[ay][ax] += cur;
         }
         //std::cout << y << ' ' << x << '\n';
         RotateCCW();
