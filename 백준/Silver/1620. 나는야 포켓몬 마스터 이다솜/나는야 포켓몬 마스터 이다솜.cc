@@ -20,11 +20,12 @@ int main()
         poke[n] = name;
         nums[name] = n;
     }
+    
     for(int m = 0; m < M; m++)
     {
         std::string input;
         std::cin >> input;
-        if(std::isdigit(input[0])) std::cout << poke[std::stoi(input)] << '\n';
+        if(std::isdigit(input.c_str()[0])) std::cout << poke[std::stoi(input)] << '\n';
         else std::cout << nums[input] << '\n';
     }
     return 0;
