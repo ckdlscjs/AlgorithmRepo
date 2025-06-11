@@ -1,30 +1,31 @@
+/*
+1.접근방식:
+
+2.시간복잡도:
+
+*/
 #include <bits/stdc++.h>
-using namespace std;
 int N, M;
-std::unordered_map<std::string, int> input_str;
-std::unordered_map<int, std::string> input_num;
+std::string poke[100'005];
+std::unordered_map<std::string, int> nums;
 int main() 
 {
-  std::ios::sync_with_stdio(false);
-  std::cin.tie(0);
-  std::cout.tie(0);
-  std::cin >> N >> M;
-  for(int i = 1; i <= N; i++)
-  {
-    std::string str;
-    std::cin >> str;
-    input_str[str] = i;
-    input_num[i] = str;
-  }
-  for(int i = 0; i < M; i++)
-  {
-    std::string str;
-    std::cin >> str;
-    if(input_str.find(str) == input_str.end())
-      std::cout << input_num[std::stoi(str)];
-    else
-      std::cout << input_str[str];
-    std::cout <<'\n';
-  }
-  return 0;
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(NULL);
+    std::cin >> N >> M;
+    for(int n = 1; n <= N; n++)
+    {
+        std::string name;
+        std::cin >> name;
+        poke[n] = name;
+        nums[name] = n;
+    }
+    for(int m = 0; m < M; m++)
+    {
+        std::string input;
+        std::cin >> input;
+        if(std::isdigit(input[0])) std::cout << poke[std::stoi(input)] << '\n';
+        else std::cout << nums[input] << '\n';
+    }
+    return 0;
 }
