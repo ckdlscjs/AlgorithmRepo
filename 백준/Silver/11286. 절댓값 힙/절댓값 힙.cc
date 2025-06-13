@@ -1,29 +1,29 @@
+/*
+1.접근방식:
+
+2.시간복잡도:
+
+*/
 #include <bits/stdc++.h>
-using pii = std::pair<int, int>;
-std::vector<int> arr;
-int N, val;
-struct compare
+int N;
+struct comp
 {
-    bool operator()(const pii& a, const pii& b)
+    bool operator()(const int& a, const int& b)
     {
-        return a.first == b.first ? arr[a.second] > arr[b.second] : a.first > b.first;
+        return std::abs(a) == std::abs(b) ? a > b : std::abs(a) > std::abs(b);
     }
 };
-std::priority_queue<pii, std::vector<pii>, compare> pq;
-int main()
+std::priority_queue<int, std::vector<int>, comp> pq;
+int main() 
 {
     std::ios::sync_with_stdio(false);
     std::cin.tie(NULL);
     std::cin >> N;
     for(int n = 0; n < N; n++)
     {
+        int val;
         std::cin >> val;
-        if(val != 0)
-        {
-            arr.push_back(val);
-            pq.push({std::abs(val), arr.size()-1});
-        }
-        else
+        if(!val)
         {
             if(pq.empty())
             {
@@ -31,10 +31,14 @@ int main()
             }
             else
             {
-                std::cout << arr[pq.top().second] <<'\n';
+                std::cout << pq.top() << '\n';
                 pq.pop();
             }
         }
+        else
+        {
+            pq.push(val);
+        }
     }
-	return 0;
+    return 0;
 }
