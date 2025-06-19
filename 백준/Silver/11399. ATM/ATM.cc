@@ -1,19 +1,23 @@
+/*
+1.접근방식:
+
+2.시간복잡도:
+
+*/
 #include <bits/stdc++.h>
-using namespace std;
-int N, arr[1005], psum[1005], sum;
+int N, P[1'005], res;
 int main() 
 {
-  std::ios::sync_with_stdio(false);
-  std::cin.tie(0);
-  std::cout.tie(0);
-  std::cin >> N;
-  for(int i = 1; i <= N; i++) std::cin >> arr[i];
-  std::sort(arr + 1, arr+N+1, std::less<int>());
-  for(int i = 0; i <= N; i++)
-  {
-    psum[i] += psum[i-1] + arr[i];
-    sum += psum[i];
-  }
-  std::cout << sum;
-  return 0;
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(NULL);
+    std::cin >> N;
+    for(int n = 1; n <= N; n++) std::cin >> P[n];
+    std::sort(P+1, P+N+1);
+    for(int n = 1; n <= N; n++)
+    {
+        P[n] += P[n-1];
+        res += P[n];
+    }
+    std::cout << res;
+    return 0;
 }
