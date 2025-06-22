@@ -1,30 +1,35 @@
+/*
+1.접근방식:
+
+2.시간복잡도:
+
+*/
 #include <bits/stdc++.h>
-long long int T, N, input;
-int main()
+long long T;
+int main() 
 {
-  std::ios::sync_with_stdio(false);
-  std::cin.tie(0);
-  std::cout.tie(0);
-  std::cin >> T;
-  for(int t = 0; t < T; t++)
-  {
-    long long int res = 0;
-    std::priority_queue<long long int, std::vector<long long int>, std::greater<long long int>> pq;
-    std::cin >> N;
-    for(int n = 0; n < N; n++)
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(NULL);
+    std::cin >> T;
+    for(long long t = 0; t < T; t++)
     {
-      std::cin >> input;
-      pq.push(input);
+        long long N, res = 0;
+        std::cin >> N;
+        std::priority_queue<long long, std::vector<long long>, std::greater<long long>> pq;
+        for(long long n = 0; n < N; n++)
+        {
+            long long val;
+            std::cin >> val;
+            pq.push(val);
+        }
+        while(pq.size() >= 2)
+        {
+            long long val1 = pq.top();pq.pop();
+            long long val2 = pq.top();pq.pop();
+            res += (val1 + val2);
+            pq.push(val1 + val2);
+        }
+        std::cout << res << '\n';
     }
-    while(pq.size() > 1)
-    {
-      long long int a = pq.top(); pq.pop();
-      long long int b = pq.top(); pq.pop();
-      res += a + b;
-      pq.push(a+b);
-    }
-    std::cout << res << '\n';
-  }
-  
-  return 0;
+    return 0;
 }
