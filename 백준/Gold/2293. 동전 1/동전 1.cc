@@ -1,20 +1,24 @@
+/*
+1.접근방식:
+
+2.시간복잡도:
+
+*/
 #include <bits/stdc++.h>
-int n, k, arr[105], dp[100'005];
+int N, K, C[105], DP[10'005];
 int main()
 {
-  std::ios::sync_with_stdio(false);
-  std::cin.tie(0);
-  std::cout.tie(0);
-  std::cin >> n >> k;
-  for(int i = 0; i < n; i++) std::cin >> arr[i];
-  dp[0] = 1; //자기자신을 쓰는 방법은 한가지
-  for(int i = 0; i < n; i++)
-  {
-    for(int j = arr[i]; j <= k; j++)
-      dp[j] += dp[j - arr[i]]; //현재값-해당동전을 제한경우의수값(ex, j = 10, dp[10 - 5] 5동전을 사용하고 나머지5를 구성하는 경우의수)
-    
-  }
-  std::cout << dp[k];
-  
-  return 0;
+	std::ios::sync_with_stdio(false);
+	std::cin.tie(NULL);
+    std::cin >> N >> K;
+    for(int n = 0; n < N; n++) std::cin >> C[n];
+    DP[0] = 1;
+    for(int n = 0; n < N; n++)
+    {
+        if(C[n] > K) continue;
+        for(int k = C[n]; k <= K; k++) 
+            DP[k] += DP[k-C[n]];
+    }
+    std::cout << DP[K];
+	return 0;
 }
