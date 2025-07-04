@@ -14,33 +14,34 @@ int main()
 	{
 	    cnt++;
 	    if(N == 0 && M == 0) break;
-	    std::vector<std::vector<int>> graph(N+1);
-	    std::vector<bool> visited(N+1, false);
+	    std::vector<int> parents(N+1, 0);
+	    for(int i = 1; i <= N; i++) parents[i] = i;
+	    std::function<int(int)> Find = [&](int node)->int{
+	        if(parents[node] == node) return node;
+	        return node = Find(parents[node]);
+	    };
+	    std::function<void(int, int)> Union = [&](int node1, int node2)->void
+	    {
+	        int root1 = Find(node1);
+	        int root2 = Find(node2);
+	        if(root1 == root2) return;
+	        if(root1 < root2) parents[root2] = root1;
+	        else parents[root1] = root2;
+	    };
 	    for(int m = 0; m < M; m++)
 	    {
 	        int A, B;
 	        std::cin >> A >> B;
-	        graph[A].push_back(B);
-	        graph[B].push_back(A);
-	    }
-	    std::function<bool(int, int)> DFS = [&](int prv, int cur)->bool{
-	        visited[cur] = true;
-	        for(const auto& iter : graph[cur])
+	        if(Find(A) == Find(B))
 	        {
-	            if(prv == iter) continue;
-	            if(visited[iter]) return false;
-	            if(!DFS(cur, iter)) return false;
+	            Union(0, A);
 	        }
-	        return visited[cur];
-	    };
-	    int res = 0;
-	    
-	    for(int i = 1; i <= N; i++)
-	    {
-	        if(visited[i]) continue;
-	        if(DFS(-1, i)) res++;
+	        else Union(A, B);
 	    }
 	    
+	    int res = 0;
+	    for(int i = 1; i <= N; i++)
+	        if(parents[i] == i) res++;
 	    std::cout << "Case " <<cnt<<": ";
 	    if(res > 1) std::cout <<"A forest of "<<res<<" trees."<<'\n';
 	    else if(res == 1) std::cout <<"There is one tree." << '\n';
