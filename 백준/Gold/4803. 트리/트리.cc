@@ -14,10 +14,10 @@ int main()
 	{
 	    cnt++;
 	    if(N == 0 && M == 0) break;
-	    std::vector<int> parents(N+1, 0);
-	    for(int i = 1; i <= N; i++) parents[i] = i;
+	    std::vector<int> parents(N+1, -1);
 	    std::function<int(int)> Find = [&](int node)->int{
 	        if(parents[node] == node) return node;
+	        if(parents[node] == -1) return parents[node] = node;
 	        return node = Find(parents[node]);
 	    };
 	    std::function<void(int, int)> Union = [&](int node1, int node2)->void
@@ -32,16 +32,13 @@ int main()
 	    {
 	        int A, B;
 	        std::cin >> A >> B;
-	        if(Find(A) == Find(B))
-	        {
-	            Union(0, A);
-	        }
+	        if(Find(A) == Find(B)) Union(0, A);
 	        else Union(A, B);
 	    }
 	    
 	    int res = 0;
 	    for(int i = 1; i <= N; i++)
-	        if(parents[i] == i) res++;
+	        if(parents[Find(i)] == i) res++;
 	    std::cout << "Case " <<cnt<<": ";
 	    if(res > 1) std::cout <<"A forest of "<<res<<" trees."<<'\n';
 	    else if(res == 1) std::cout <<"There is one tree." << '\n';
