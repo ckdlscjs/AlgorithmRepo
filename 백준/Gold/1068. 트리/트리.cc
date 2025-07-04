@@ -1,47 +1,39 @@
+/*
+1.접근방식:
+
+2.시간복잡도:
+
+*/
 #include <bits/stdc++.h>
-using namespace std;
-int parent[55];
-int main() 
+int N, root, erase;
+std::vector<int> graph[52];
+int DFS(int cur)
 {
-  std::ios::sync_with_stdio(false);
-  std::cin.tie(0);
-  std::cout.tie(0);
-  int n;
-  std::cin >> n;
-  int root = 0;
-  for(int i = 0; i < n; i++)
-  {
-    std::cin >> parent[i];
-    if(parent[i] == -1)
-      root = i;
-  }
-  int del;
-  std::cin >> del;
-  parent[del] = -2;
-  std::vector<int> tree[55];
-  for(int i = 0; i < n; i++)
-  {
-    if(parent[i] == -1 || parent[i] == -2)
-      continue;
-    tree[parent[i]].push_back(i);
-  }
-  int result = 0;
-  if(parent[root] != -2)
-  {
-    std::queue<int> q;
-    q.push(root);
-    while(q.size())
+    if(cur == erase) return 0;
+    if(graph[cur].size() <= 0) return 1;
+    int ret = 0;
+    for(const auto& iter : graph[cur])
     {
-      int cur = q.front();
-      q.pop();
-      if(tree[cur].empty())
-        result++;
-      for(const auto& iter : tree[cur])
-      {
-        q.push(iter);
-      }
+        ret += DFS(iter);
+        if(graph[cur].size() <= 1 && iter == erase) ret+=1;
     }
-  }
-  std::cout << result;
-  return 0;
+        
+    return ret;
 }
+int main()
+{
+	std::ios::sync_with_stdio(false);
+	std::cin.tie(NULL);
+    std::cin >> N;
+    for(int i = 0; i < N; i++)
+    {
+        int parent;
+        std::cin >> parent;
+        if(parent == -1) root = i;
+        else graph[parent].push_back(i);
+    }
+    std::cin >> erase;
+    std::cout << DFS(root);
+	return 0;
+}
+
