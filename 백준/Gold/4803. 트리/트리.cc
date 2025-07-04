@@ -16,8 +16,7 @@ int main()
 	    if(N == 0 && M == 0) break;
 	    std::vector<int> parents(N+1, -1);
 	    std::function<int(int)> Find = [&](int node)->int{
-	        if(parents[node] == node) return node;
-	        if(parents[node] == -1) return parents[node] = node;
+	        if(parents[node] == -1 || parents[node] == node) return parents[node] = node;
 	        return node = Find(parents[node]);
 	    };
 	    std::function<void(int, int)> Union = [&](int node1, int node2)->void
