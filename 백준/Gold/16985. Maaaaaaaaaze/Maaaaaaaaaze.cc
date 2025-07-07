@@ -1,80 +1,89 @@
+/*
+1.접근방식:
+
+2.시간복잡도:
+
+*/
 #include <bits/stdc++.h>
-using namespace std;
-const int dk[] = {0, 0, 0, 0, -1, 1};
+const int INF = 25*25*25+1;
+const int dz[] = {-1, 1, 0, 0, 0, 0};
 const int dy[] = {0, 0, -1, 1, 0, 0};
-const int dx[] = {-1, 1, 0, 0, 0, 0};
-const int INF = 987654321;
-int dist[7][7][7];
-int arr[5][7][7][7];
-int res = INF;
-void Rotate90(int idx, int k)
+const int dx[] = {0, 0, 0, 0, -1, 1};
+int maze[5][4][5][5], res = INF;
+void rotateCW(int (*idxarr)[5][5], int idx, int (*arr)[5])
 {
-  for(int i = 0; i < 5; i++)
-    for(int j = 0; j < 5; j++)
-      arr[idx][k][i][j] = arr[idx-1][k][5-1-j][i];
-}
-
-void Check(int mask, int idx, std::pair<int, int>* order)
-{
-  if(res <= 13)
-    return;
-  if(idx >= 5)
-  {
-    std::queue<std::pair<int, std::pair<int, int>>> q;
-    if(arr[order[0].first][order[0].second][0][0] == 1 && arr[order[4].first][order[4].second][4][4] == 1)
-    {
-      std::fill_n(&dist[0][0][0], 7 * 7 * 7, 0);
-      q.push({0, {0, 0}});
-      dist[0][0][0] = 1;
-      while(q.size())
-      {
-        int ck = q.front().first;
-        int cy = q.front().second.first;
-        int cx = q.front().second.second;
-        q.pop();
-        for(int dir = 0; dir < 6; dir++)
-        {
-          int nk = ck + dk[dir];
-          int ny = cy + dy[dir];
-          int nx = cx + dx[dir];
-          if(nk < 0 || ny < 0 || nx < 0 || nk >= 5 || ny >= 5 || nx >= 5 || dist[nk][ny][nx] || arr[order[nk].first][order[nk].second][ny][nx] == 0) continue;
-          dist[nk][ny][nx] = dist[ck][cy][cx] + 1;
-          q.push({nk, {ny, nx}});
-        }
-      }
-      if(dist[4][4][4] > 0)
-        res = std::min(res, dist[4][4][4]);
-    }
-    return;
-  }
-  for(int i = 0; i < 5; i++)
-  {
-    if(mask & (1 << i)) continue;
-    order[idx].second = i;
-    for(int rot = 0; rot < 4; rot++)
-    {
-      order[idx].first = rot;
-      Check(mask | (1 << i), idx+1, order);
-    }
-  }
-}
-
-int main() 
-{
-  std::ios::sync_with_stdio(false);
-  std::cin.tie(0);
-  std::cout.tie(0);
-  for(int k = 0; k < 5; k++)
+    int temp[5][5];
     for(int i = 0; i < 5; i++)
-      for(int j = 0; j < 5; j++)
-        std::cin >> arr[0][k][i][j];
-        
-  for(int rot = 1; rot < 4; rot++)
-    for(int k = 0; k < 5; k++)
-      Rotate90(rot, k);
- 
-  std::pair<int, int> order[5] = {{0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}};
-  Check(0, 0, order);
-  std::cout << (res == INF ? -1 : res - 1);
-  return 0;
+        for(int j = 0; j < 5; j++) 
+            temp[j][5-i-1] = arr[i][j];
+    for(int i = 0; i < 5; i++)
+        for(int j = 0; j < 5; j++)
+            idxarr[idx][i][j] = temp[i][j];
 }
+
+int main()
+{
+	std::ios::sync_with_stdio(false);
+	std::cin.tie(NULL);
+    for(int idx = 0; idx < 5; idx++)
+        for(int i = 0; i < 5; i++)
+            for(int j = 0; j < 5; j++)
+                std::cin >> maze[idx][0][i][j];
+    for(int i = 0; i < 5; i++)
+        for(int idx = 1; idx < 4; idx++)
+            rotateCW(maze[i], idx, maze[i][0+idx-1]);
+       
+
+    int chk[] = {0, 1, 2, 3, 4};
+    do
+    {
+        for(int i0 = 0; i0 < 4 && res > 12; i0++)
+        {
+            for(int i1 = 0; i1 < 4 && res > 12; i1++)
+            {
+                for(int i2 = 0; i2 < 4 && res > 12; i2++)
+                {
+                    for(int i3 = 0; i3 < 4 && res > 12; i3++)
+                    {
+                        for(int i4 = 0; i4 < 4; i4++)
+                        {
+                            if(maze[chk[0]][i0][0][0] == 0 || maze[chk[4]][i4][4][4] == 0) continue;
+                            int dist[5][5][5];
+                            std::memset(dist, 0, sizeof(dist));
+                            std::queue<std::tuple<int, int, int>> q;
+                            q.push({0, 0, 0});
+                            dist[0][0][0] = 1;
+                            while(q.size())
+                            {
+                                auto cur = q.front();
+                                q.pop();
+                                int cz = std::get<0>(cur);
+                                int cy = std::get<1>(cur);
+                                int cx = std::get<2>(cur);
+                                for(int dir = 0; dir < 6; dir++)
+                                {
+                                    int nz = cz + dz[dir];
+                                    int ny = cy + dy[dir];
+                                    int nx = cx + dx[dir];
+                                    if(nz < 0 || ny < 0 || nx < 0 || nz >= 5 || ny >= 5 || nx >= 5 || dist[nz][ny][nx]) continue;
+                                    if(nz == 0 && maze[chk[nz]][i0][ny][nx] == 0) continue;
+                                    else if(nz == 1 && maze[chk[nz]][i1][ny][nx] == 0) continue;
+                                    else if(nz == 2 && maze[chk[nz]][i2][ny][nx] == 0) continue;
+                                    else if(nz == 3 && maze[chk[nz]][i3][ny][nx] == 0) continue;
+                                    else if(nz == 4 && maze[chk[nz]][i4][ny][nx] == 0) continue;
+                                    q.push({nz, ny, nx});
+                                    dist[nz][ny][nx] = dist[cz][cy][cx] + 1;
+                                }
+                            }
+                            if(dist[4][4][4] != 0)
+                                res = std::min(res, dist[4][4][4]-1);
+                        }
+                    }
+                }
+            }
+        }
+    }while(std::next_permutation(chk, chk+5) && res > 12);
+    std::cout << (res >= INF ? -1 : res);
+	return 0;
+}
+
