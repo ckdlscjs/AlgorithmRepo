@@ -1,47 +1,80 @@
+/*
+1.접근방식:
+
+2.시간복잡도:
+
+*/
 #include <bits/stdc++.h>
-using namespace std;
-int T, k;
-int main() 
+int T, K;
+int main()
 {
-  std::ios::sync_with_stdio(false);
-  std::cin.tie(0);
-  std::cout.tie(0);
-  std::cin >> T;
-  for(int t = 0; t < T; t++)
-  {
-    char Q;
-    std::cin >> k;
-    int val = 0;
-    std::multiset<int> q;
-    for(int i = 0; i < k; i++)
+	std::ios::sync_with_stdio(false);
+	std::cin.tie(NULL);
+	std::cin >> T;
+    for(T; T > 0; T--)
     {
-      std::cin >> Q >> val;
-      if(Q == 'I')
-      {
-        q.insert(val);
-      }
-      else
-      {
-        if(q.size() <= 0) continue;
-        if(val == 1)
+        std::cin >> K;
+        int size = 0;
+        std::unordered_map<int, int> cnts_low;
+        std::unordered_map<int, int> cnts_high;
+        std::priority_queue<int, std::vector<int>, std::greater<int>> pq_low;
+        std::priority_queue<int, std::vector<int>, std::less<int>> pq_high;
+        for(K; K > 0; K--)
         {
-          q.erase(--q.end());
+            char ch;
+            int n;
+            std::cin >> ch >> n;
+            if(ch == 'D')
+            {
+                if(size <= 0) continue;
+                size--;
+                if(n == 1)
+                {
+                    while(pq_high.size() && cnts_high[pq_high.top()])
+                    {
+                       cnts_high[pq_high.top()]--;
+                       pq_high.pop();
+                    }
+                    cnts_low[pq_high.top()]++;
+                    pq_high.pop();
+                }
+                else
+                {
+                    while(pq_low.size() && cnts_low[pq_low.top()])
+                    {
+                       cnts_low[pq_low.top()]--;
+                       pq_low.pop();
+                    }
+                    cnts_high[pq_low.top()]++;
+                    pq_low.pop();
+                }
+            }
+            else
+            {
+                pq_low.push(n);
+                pq_high.push(n);
+                size++;
+            }
+        }
+        while(pq_low.size() && cnts_low[pq_low.top()])
+        {
+            cnts_low[pq_low.top()]--;
+            pq_low.pop();
+        }
+        while(pq_high.size() && cnts_high[pq_high.top()])
+        {
+            cnts_high[pq_high.top()]--;
+            pq_high.pop();
+        }
+        if(size <= 0)
+        {
+            std::cout << "EMPTY" << '\n';
         }
         else
         {
-          q.erase(q.begin());
+            std::cout << pq_high.top() << ' ' << pq_low.top() << '\n';
         }
-      }
     }
-    if(q.size() <= 0)
-    {
-      std::cout << "EMPTY" << '\n';
-    }
-    else
-    {
-      std::cout << *q.rbegin() << ' ' << *q.begin() << '\n';
-    }
-  }
-  
-  return 0;
+	return 0;
 }
+
