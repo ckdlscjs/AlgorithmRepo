@@ -18,16 +18,12 @@ void Union(int node1, int node2)
     int root1 = Find(node1);
     int root2 = Find(node2);
     if(root1 == root2) return;
-    if(ranks[root1] == ranks[root2]) 
+    if(ranks[root1] == ranks[root2])  
         ranks[root1]++;
-    if(ranks[root1] > ranks[root2])
-    {
+    if(ranks[root1] > ranks[root2]) 
         sets[root2] = root1;
-    }
-    else
-    {
+    else 
         sets[root1] = root2;
-    }
 }
 int N, M, T, res;
 std::vector<std::vector<int>> partys;
