@@ -9,15 +9,6 @@ const int INF = 205;
 int N, M, dist[102][102], res = 205*100;
 std::pair<int, int> lesss;
 std::vector<int> graph[102];
-void DFS(const int& st, int cur)
-{
-    for(const auto& iter : graph[cur])
-    {
-        if(dist[st][iter] != INF) continue;
-        dist[st][iter] = dist[st][cur] + 1;
-        DFS(st, iter);
-    }
-}
 int main()
 {
 	std::ios::sync_with_stdio(false);
@@ -34,15 +25,29 @@ int main()
     for(int i = 1; i <= N; i++)
     {
         dist[i][i] = 0;
-        DFS(i, i);
+        std::queue<int> q;
+        q.push(i);
+        while(q.size())
+        {
+            auto cur = q.front();
+            q.pop();
+            for(const auto& iter : graph[cur])
+            {
+                if(dist[i][iter] != INF) continue;
+                dist[i][iter] = dist[i][cur] + 1;
+                q.push(iter);
+            }
+        }
     }
     for(int i = N; i >= 1; i--)
     {
         for(int j = i-1; j >= 1; j--)
         {
+            //std::cout << j << i << '\n';
             int cur = 0;
             for(int idx = 1; idx <= N; idx++)
                 cur += 2*std::min(dist[idx][j], dist[idx][i]);
+                
             if(cur <= res)
             {
                 res = cur;
