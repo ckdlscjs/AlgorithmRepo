@@ -1,73 +1,53 @@
+/*
+1.접근방식:
+
+2.시간복잡도:
+
+*/
 #include <bits/stdc++.h>
-std::vector<int> ip, mask;
-int N, maskpos = 35;
-std::string prev, nxt;
+int N;
+std::vector<unsigned int> ips;
+unsigned int common = 0xffffffff, diff;
 int main()
 {
-  std::ios::sync_with_stdio(false);
-  std::cin.tie(0);
-  std::cout.tie(0);
-  std::cin >> N;
-  std::cin >> prev;
-  prev += ".";
-  std::string tempip = prev;
-  auto pos_ip = tempip.find(".");
-  while(pos_ip != std::string::npos)
-  {
-    int inum = std::stoi(tempip.substr(0, pos_ip));
-    tempip = tempip.substr(pos_ip+1);
-    pos_ip = tempip.find(".");
-    ip.push_back(inum);
-  }
-  for(int n = 1; n < N; n++)
-  {
-    std::cin >> nxt;
-    nxt += ".";
-    std::string temp_prev = prev;
-    std::string temp_nxt = nxt;
-    auto pos_prev = temp_prev.find(".");
-    auto pos_nxt = temp_nxt.find(".");
-    int temppos = 0;
-    while(pos_prev != std::string::npos && pos_nxt != std::string::npos)
+	std::ios::sync_with_stdio(false);
+	std::cin.tie(NULL);
+    std::cin >> N;
+    for(int n = 0; n < N; n++)
     {
-      int pnum = std::stoi(temp_prev.substr(0, pos_prev));
-      int nnum = std::stoi(temp_nxt.substr(0, pos_nxt));
-      temp_prev = temp_prev.substr(pos_prev+1);
-      pos_prev = temp_prev.find(".");
-      temp_nxt = temp_nxt.substr(pos_nxt+1);
-      pos_nxt = temp_nxt.find(".");
-      if(pnum == nnum)
-      {
-        temppos += 8;
-      }
-      else
-      {
-        for(int i = 7; i >= 0; i--)
+        std::string str;
+        std::cin >> str;
+        str += '.';
+        auto iter = str.find('.');
+        unsigned int curip = 0;
+        int shift = 24;
+        while(iter != std::string::npos)
         {
-          if((pnum & (1 << i)) == (nnum & (1 << i))) continue;
-          temppos += 7-i;
-          break;
+            unsigned int num = std::stoi(str.substr(0, iter));
+            num <<= shift;
+            curip |= num;
+            shift -= 8;
+            //std::cout << shift << ' ';
+            str = str.substr(iter+1);
+            iter = str.find('.');
         }
-        break;
-      }
+        ips.push_back(curip);
+        common &= curip;
     }
-    maskpos = std::min(maskpos, temppos);
-    prev = nxt;
-  }
-  
-  int num = 0;
-  for(int i = 1; i <= 32; i++)
-  {
-    int shiftcnt = 7 - ((i-1) % 8);
-    if(i <= maskpos)
-      num |= 1 << shiftcnt;
-    if(shiftcnt%8 == 0)
+    for(const auto& iter : ips) 
+        diff |= common^iter;
+    unsigned int shift = 0;
+    while(diff)
     {
-      mask.push_back(num);
-      num = 0;
+        shift++;
+        diff >>= 1;
     }
-  }
-  std::cout << (int)(ip[0] & mask[0]) << '.' << (int)(ip[1] & mask[1]) <<'.' << (int)(ip[2] & mask[2]) << '.' << (int)(ip[3] & mask[3]) << '\n';
-  std::cout <<  mask[0] << '.' << mask[1] <<'.' << mask[2] << '.' <<  mask[3];
-  return 0;
+    unsigned int bitmask = shift < 32 ? 0xffffffff << shift : 0;
+    unsigned int first = bitmask & common;
+    std::function<std::string(unsigned int)> func = [](unsigned int ip) -> std::string {
+        return std::to_string((ip >> 24) & 255) + "." + std::to_string((ip >> 16) & 255) + "." + std::to_string((ip >> 8) & 255) +"."+ std::to_string(ip & 255);
+    };
+    std::cout << func(first) << '\n' << func(bitmask);
+	return 0;
 }
+
