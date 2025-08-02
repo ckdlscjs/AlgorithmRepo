@@ -22,7 +22,7 @@ int main()
 {
 	std::ios::sync_with_stdio(false);
 	std::cin.tie(NULL);
-    std::fill_n(&DP[0][0][0], 101*10*(1<<10), -1);
+    std::memset(DP, -1, sizeof(DP));
     std::cin >> N;
     for(int i = 1; i <= 9; i++)
         res = (res + Check(N-1, i, 1 << i)) % Mod;
