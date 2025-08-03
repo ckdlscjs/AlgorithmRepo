@@ -5,8 +5,7 @@
 
 */
 #include <bits/stdc++.h>
-int N, M, dist[200'005];
-bool chks[200'005];
+int N, M, dist[200'005], cnts[200'005];
 std::vector<int> graph[200'005];
 int main()
 {
@@ -31,7 +30,7 @@ int main()
         int val;
         std::cin >> val;
         dist[val] = 0;
-        chks[val] = true;
+        cnts[val] = graph[val].size();
         if(graph[val].size())
             q.push(val);
     }
@@ -44,11 +43,9 @@ int main()
             q.pop();
             for(const auto& iter : graph[cur])
             {
-                if(chks[iter]) continue;
-                int chkcount = 0;
-                for(const auto& neig : graph[iter])
-                    if(chks[neig]) chkcount++;
-                if(chkcount >= graph[iter].size() / 2)
+                if(cnts[iter] >= graph[iter].size()/2) continue;
+                cnts[iter]++;
+                if(cnts[iter] >= graph[iter].size()/2)
                     nq.push(iter); 
             }
         }
@@ -56,9 +53,7 @@ int main()
         {
             auto cur = nq.front();
             nq.pop();
-            if(chks[cur]) continue;
             dist[cur] = i;
-            chks[cur] = true;
             q.push(cur);
         }
     }
