@@ -1,26 +1,30 @@
+/*
+1.접근방식:
+
+2.시간복잡도:
+
+*/
 #include <bits/stdc++.h>
-using namespace std;
-long long A, B, dp[64];
-long long Check(long long num)
+long long A, B, dp[65];
+long long Count(long long num)
 {
-    long long ret = 0;
-    for(int i = 60; i >= 0; i--)
-    {
-        if(num & (1LL << i))
-        {
-            ret += dp[i] + (num - (1LL << i) + 1);
-            num -= (1LL << i);
-        }
-    }
-    return ret;
+    if(num <= 0) return 0;
+    int i = 62;
+    while(num < (1LL << i))
+        i--;
+    long long cnt = dp[i] + (num - (1LL << i) + 1LL);
+    cnt += Count(num - (1LL << i));
+    return cnt;
 }
-int main() 
+
+int main()
 {
-    ios::sync_with_stdio(false);
-    cin.tie(NULL);
+	std::ios::sync_with_stdio(false);
+	std::cin.tie(NULL);
     dp[1] = 1;
-    for(int i = 2; i < 60; i++) dp[i] = (1LL << (i-1)) + dp[i-1] * 2;
+    for(int i = 2; i <= 62; i++) dp[i] = dp[i-1]*2 + (1LL << (i-1));
     std::cin >> A >> B;
-    std::cout << Check(B) - Check(A-1);
-    return 0;
+    std::cout << Count(B) - Count(A-1);
+	return 0;
 }
+
