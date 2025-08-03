@@ -34,27 +34,19 @@ int main()
         if(graph[val].size())
             q.push(val);
     }
-    for(int i = 1; q.size(); i++)
+    while(q.size())
     {
-        std::queue<int> nq;
-        while(q.size())
+        auto cur = q.front();
+        q.pop();
+        for(const auto& iter : graph[cur])
         {
-            auto cur = q.front();
-            q.pop();
-            for(const auto& iter : graph[cur])
+            if(cnts[iter] >= graph[iter].size()/2) continue;
+            cnts[iter]++;
+            if(cnts[iter] >= graph[iter].size()/2)
             {
-                if(cnts[iter] >= graph[iter].size()/2) continue;
-                cnts[iter]++;
-                if(cnts[iter] >= graph[iter].size()/2)
-                    nq.push(iter); 
+                q.push(iter);
+                dist[iter] = dist[cur]+1;
             }
-        }
-        while(nq.size())
-        {
-            auto cur = nq.front();
-            nq.pop();
-            dist[cur] = i;
-            q.push(cur);
         }
     }
     for(int i = 1; i <= N; i++) std::cout << dist[i] << ' ';
