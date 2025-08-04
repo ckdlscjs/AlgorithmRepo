@@ -1,41 +1,69 @@
+/*
+1.접근방식:
+
+2.시간복잡도:
+
+*/
 #include <bits/stdc++.h>
-using namespace std;
-const int MaxN = 105;
-int n, l;
-int arr1[MaxN][MaxN];
-int arr2[MaxN][MaxN];
-int Check(int arr[][MaxN])
+int N, L, arr[102][102], res;
+int Check()
 {
-  int ret = 0;
-  for(int i = 0; i < n; i++)
-  {
-    int cnt = 1;
-    int j = 0;
-    for(j = 0; j < n-1; j++)
+    int cnt = 0;
+    for(int i = 0; i < N; i++)
     {
-      if(arr[i][j] == arr[i][j+1]) cnt++;
-      else if(arr[i][j] + 1 == arr[i][j+1] && cnt >= l) cnt = 1;
-      else if(arr[i][j] - 1 == arr[i][j+1] && cnt >= 0) cnt = -l + 1;
-      else break;
+        int cur = arr[i][0];
+        int j = 1;
+        int cnt_same = 1;
+        for(j; j < N; j++)
+        {
+            if(arr[i][j] == cur) cnt_same++;
+            else
+            {
+                if(std::abs(cur - arr[i][j]) > 1) break;
+                else if(arr[i][j] > cur)
+                {
+                    if(cnt_same < L) break;
+                    cnt_same = 1;
+                }
+                else
+                {
+                    int cnt_nxt = 0;
+                    for(int l = 0; l < L && j + l < N; l++)
+                    {
+                        if(arr[i][j+l] == arr[i][j]) 
+                            cnt_nxt++;
+                    }
+                    if(cnt_nxt < L) break;
+                    j += L - 1;
+                    cnt_same = 0;
+                }
+                cur = arr[i][j];
+            }
+        }
+        if(j >= N) cnt++;
     }
-    if(j >= n-1 && cnt >= 0) ret++;
-  }
-  return ret;
+    return cnt;
 }
-int main() 
+void RotateCW()
 {
-  std::ios::sync_with_stdio(false);
-  std::cin.tie(0);
-  std::cout.tie(0);
-  std::cin >> n >> l;
-  for(int i = 0; i < n; i++)
-  {
-    for(int j = 0; j < n; j++)
-    {
-      std::cin >> arr1[i][j];
-      arr2[j][i] = arr1[i][j];
-    }
-  }
-  std::cout << Check(arr1) + Check(arr2);
-  return 0;
+    int tmp[102][102];
+    for(int i = 0; i < N; i++)
+        for(int j = 0; j < N; j++)
+            tmp[j][N-i-1] = arr[i][j];
+    std::memcpy(arr, tmp, sizeof(tmp));
 }
+int main()
+{
+	std::ios::sync_with_stdio(false);
+	std::cin.tie(NULL);
+    std::cin >> N >> L;
+    for(int i = 0; i < N; i++)
+        for(int j = 0; j < N; j++)
+            std::cin >> arr[i][j];
+    res += Check();
+    RotateCW();
+    res += Check();
+    std::cout << res;
+	return 0;
+}
+
