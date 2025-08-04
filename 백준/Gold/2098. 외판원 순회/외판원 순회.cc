@@ -16,9 +16,7 @@ int Check(int cur, int mask)
     ret = INF;
     for(int i = 0; i < N; i++)
     {
-        if(cur == i) continue;
-        if(!costs[cur][i]) continue;
-        if(mask & 1 << i) continue;
+        if(mask & 1 << i || !costs[cur][i]) continue;
         ret = std::min(ret, Check(i, mask | 1 << i) + costs[cur][i]);
     }
     return ret;
