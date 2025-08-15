@@ -1,51 +1,58 @@
+/*
+1.접근방식:
+
+2.시간복잡도:
+
+*/
 #include <bits/stdc++.h>
-using namespace std;
-#define pll std::pair<long long, long long>
-const long long INF = (long long)100'000*100'000+5;
-long long N, M, u, v, w, costs[1'005], s, e, prv[1'005];
-std::vector<int> route;
-std::vector<pll> graph[1'005];
-std::priority_queue<pll, std::vector<pll>, std::greater<pll>> pq;
-int main() 
+#define pii std::pair<int, int>
+const int INF = 100'000 * 1'005; 
+int N, M, costs[1'005], prv[1'005];
+std::vector<pii> graph[1'005];
+std::priority_queue<pii, std::vector<pii>, std::greater<pii>> pq;
+int main()
 {
-    ios::sync_with_stdio(false);
-    cin.tie(NULL);
+	std::ios::sync_with_stdio(false);
+	std::cin.tie(NULL);
     std::cin >> N >> M;
+    std::fill_n(&costs[0], 1'005, INF);
     for(int m = 0; m < M; m++)
     {
+        int u, v, w;
         std::cin >> u >> v >> w;
         graph[u].push_back({v, w});
     }
-    std::cin >> s >> e;
-    std::fill_n(&costs[0], 1'005, INF);
-    costs[s] = 0;
-    pq.push({0, s});
+    int u, v;
+    std::cin >> u >> v;
+    costs[u] = 0;
+    pq.push({costs[u], u});
     while(pq.size())
     {
-        pll cur = pq.top();
+        auto cur = pq.top();
         pq.pop();
-        if(costs[cur.second] < cur.first) continue;
+        if(cur.first > costs[cur.second]) continue;
         for(const auto& iter : graph[cur.second])
         {
-            v = iter.first;
-            w = iter.second;
-            if(costs[cur.second] + w < costs[v])
-            {
-                prv[v] = cur.second;
-                costs[v] = costs[cur.second] + w;
-                pq.push({costs[v], v});
-            }
+            if(iter.second + costs[cur.second] >= costs[iter.first]) continue;
+            costs[iter.first] = costs[cur.second] + iter.second;
+            prv[iter.first] = cur.second;
+            pq.push({costs[iter.first], iter.first});
         }
     }
-    std::cout << costs[e] << '\n';
-    route.push_back(e);
-    while(prv[e])
+    std::cout << costs[v] << '\n';
+    std::stack<int> paths;
+    paths.push(v);
+    while(prv[v])
     {
-        route.push_back(prv[e]);
-        e = prv[e];
+        paths.push(prv[v]);
+        v = prv[v];
     }
-    std::cout << route.size() << '\n';
-    for(int i = route.size()-1; i >= 0; i--)
-        std::cout << route[i] << ' ';
-    return 0;
+    std::cout << paths.size() << '\n';
+    while(paths.size())
+    {
+        std::cout << paths.top() << ' ';
+        paths.pop();
+    }
+	return 0;
 }
+
