@@ -1,7 +1,7 @@
 #include <bits/stdc++.h>
 #define ll long long int
 const ll INF = 1e14+5;
-ll N, M, A, B, C, u, v, w, maxW;
+ll N, M, A, B, C, u, v, w, maxW, costs[100'005], minCost = INF;
 std::vector<std::pair<ll, ll>> graph[100'005];
 int main()
 {
@@ -20,7 +20,7 @@ int main()
   while(lo + 1 < hi)
   {
     ll mid = (lo + hi) / 2;
-    std::vector<ll> costs(100'005, INF);
+    std::fill_n(costs, 100'005, INF);
     costs[A] = 0;
     std::priority_queue<std::pair<ll, ll>, std::vector<std::pair<ll, ll>>, std::greater<std::pair<ll, ll>>> pq;
     pq.push({0, A});
@@ -29,6 +29,7 @@ int main()
       ll u = pq.top().second;
       ll c = pq.top().first;
       pq.pop();
+      if(u == B) break;
       if(costs[u] < c) continue;
       for(const auto& iter : graph[u])
       {
@@ -38,7 +39,6 @@ int main()
           pq.push({costs[iter.second], iter.second});
         }
       }
-      if(costs[B] < INF) break;
     }
     if(costs[B] <= C) hi = mid;
     else lo = mid;
