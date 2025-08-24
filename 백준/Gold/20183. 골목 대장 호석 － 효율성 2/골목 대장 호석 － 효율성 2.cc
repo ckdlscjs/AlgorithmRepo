@@ -1,7 +1,7 @@
 #include <bits/stdc++.h>
 #define ll long long int
 const ll INF = 1e14+5;
-ll N, M, A, B, C, u, v, w, maxW, minCost = INF;
+ll N, M, A, B, C, u, v, w, maxW;
 std::vector<std::pair<ll, ll>> graph[100'005];
 int main()
 {
