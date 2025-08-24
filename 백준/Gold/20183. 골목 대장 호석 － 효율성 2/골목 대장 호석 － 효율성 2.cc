@@ -20,7 +20,7 @@ int main()
   while(lo + 1 < hi)
   {
     ll mid = (lo + hi) / 2;
-    std::fill_n(costs, 100'005, INF);
+    std::vector<ll> costs(100'005, INF);
     costs[A] = 0;
     std::priority_queue<std::pair<ll, ll>, std::vector<std::pair<ll, ll>>, std::greater<std::pair<ll, ll>>> pq;
     pq.push({0, A});
@@ -38,6 +38,7 @@ int main()
           pq.push({costs[iter.second], iter.second});
         }
       }
+      if(costs[B] < INF) break;
     }
     if(costs[B] <= C) hi = mid;
     else lo = mid;
