@@ -8,7 +8,7 @@
 #define ll long long
 #define pll std::pair<ll, ll>
 ll N, M, costs[100'005];
-const ll INF = 1e18;
+const ll INF = 100'000LL * 700'000LL + 100LL;
 std::vector<pll> graph[100'005];
 std::priority_queue<pll, std::vector<pll>, std::greater<pll>> pq;
 int main()
