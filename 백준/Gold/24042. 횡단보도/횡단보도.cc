@@ -40,12 +40,9 @@ int main()
             ll v = iter.first;
             ll w = iter.second;
             if(cc > w)
-            {
-                ll cnt = cc/M;
-                if(cnt*M + w < cc)
-                    cnt++;
-                w = cnt * M + w;
-            }
+                w = (cc / M) * M + w;
+            if(cc > w)
+                w += M;
             if(w > costs[v]) continue;
             costs[v] = w;
             pq.push({costs[v], v});
