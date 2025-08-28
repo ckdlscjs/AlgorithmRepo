@@ -24,9 +24,9 @@ std::pair<int, int> Check(const vector<int>& num, const vector<vector<int>>& lin
         c += rr.first;
         r = rr.second;
     }
-    if(m > mid) return std::make_pair(10'005, 10'000*10'000 + 15'000);
+    if(c >= 10'005 || m > mid) return std::make_pair(10'005, 0);
     if(m + l + r <= mid) return std::make_pair(c, m + l + r);
-    if(m + l > mid && m + r > mid && m <= mid) return std::make_pair(c + 2, m);
+    if(m + l > mid && m + r > mid) return std::make_pair(c + 2, m);
     if(m + l > mid && m + r <= mid) return std::make_pair(c + 1, m + r);
     if(m + r > mid && m + l <= mid) return std::make_pair(c + 1, m + l);
     if(m + l < mid && m + r < mid) return std::make_pair(c + 1, std::min(m + l, m + r));
@@ -40,14 +40,9 @@ int solution(int k, vector<int> num, vector<vector<int>> links)
         if(links[i][0] != -1) indegree[links[i][0]]++;
         if(links[i][1] != -1) indegree[links[i][1]]++;
     }
-    for(int i = 0; i < num.size(); i++)
-    {
-        if(indegree[i] == 0)
-        {
+    for(int i = 0; i < num.size(); i++) 
+        if(indegree[i] == 0) 
             root = i;
-            break;
-        }
-    }
     int lo = 0, hi = dfs(num, links, root) + 1;
     while(lo + 1 < hi)
     {
