@@ -1,51 +1,73 @@
+/*
+1.접근방식:
+
+2.시간복잡도:
+
+*/
 #include <bits/stdc++.h>
-long long int N, S, E, M, u, v, w, earns[55], costs[55];
-std::vector<std::tuple<long long int, long long int, long long int>> edges;
+#define tlll std::tuple<long long, long long, long long>
+const long long INF = 987654321;
+long long N, A, B, M, costs[55], earns[55];
+std::vector<tlll> edges;
+std::vector<int> graph[55];
+std::queue<int> q;
+bool visited[55];
 int main()
 {
-  std::ios::sync_with_stdio(false);
-  std::cin.tie(0);
-  std::cout.tie(0);
-  std::cin >> N >> S >> E >> M;
-  for(int m = 0; m < M; m++)
-  {
-    std::cin >> u >> v >> w;
-    edges.push_back(std::make_tuple(u, v, w));
-  }
-  for(int n = 0; n < N; n++)
-  {
-    std::cin >> earns[n];
-  }
-  std::fill_n(costs, 55, LONG_MIN);
-  costs[S] = earns[S];
-  
-  for(int i = 0; i < N+100; i++)
-  {
-    for(const auto& iter : edges)
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(0);
+    std::cout.tie(0);
+    std::cin >> N >> A >> B >> M;
+    std::fill_n(&costs[0], 55, -INF);
+    for(int m = 0; m < M; m++)
     {
-      u = std::get<0>(iter);
-      v = std::get<1>(iter);
-      w = earns[v] - std::get<2>(iter);
-      if(costs[u] == LONG_MAX)
-      {
-        costs[v] = LONG_MAX;
-        continue;
-      }
-      if(costs[u] != LONG_MIN && costs[u] + w > costs[v])
-      {
-        costs[v] = costs[u] + w;
-        if(i >= N-1)
-        {
-          costs[v] = LONG_MAX;
-        }
-      }
+        long long u, v, w;
+        std::cin >> u >> v >> w;
+        edges.push_back({u, v, -w});
+        graph[v].push_back(u);
     }
-  }
-  if(costs[E] == LONG_MIN)
-    std::cout << "gg";
-  else if(costs[E] == LONG_MAX)
-    std::cout << "Gee";
-  else
-    std::cout << costs[E];
-  return 0;
+    for(int n = 0; n < N; n++)
+        std::cin >> earns[n];
+        
+    visited[B] = true;
+    q.push(B);
+    while(q.size())
+    {
+        auto cur = q.front();
+        q.pop();
+        for(const auto& iter : graph[cur])
+        {
+            if(visited[iter]) continue;
+            visited[iter] = true;
+            q.push(iter);
+        }
+    }
+    
+    costs[A] = earns[A];
+    for(int i = 0; i < N; i++)
+    {
+        for(const auto& iter : edges)
+        {
+            long long u = std::get<0>(iter);
+            long long v = std::get<1>(iter);
+            long long w = std::get<2>(iter);
+            if(costs[u] > -INF && costs[u] + w + earns[v] > costs[v])
+            {
+                if(i >= N-1 && visited[v])
+                {
+                    std::cout << "Gee";
+                    return 0;
+                }
+                costs[v] = costs[u] + w + earns[v];
+            }
+        }
+    }
+    if(costs[B] <= -INF)
+    {
+        std::cout << "gg";
+        return 0;
+    }
+    
+    std::cout << costs[B];
+    return 0;
 }
