@@ -38,7 +38,7 @@ int main()
             {
                 int ny = cy + dy[dir] * k;
                 int nx = cx + dx[dir] * k;
-                if(ny < 0 || nx < 0 || ny >= N || nx >= M || arr[ny][nx] == '#' || dist[ny][nx] <= dist[cy][cx]) break;
+                if(ny < 0 || nx < 0 || ny >= N || nx >= M || arr[ny][nx] == '#' || dist[cy][cx] + 1 > dist[ny][nx]) break;
                 if(dist[ny][nx] < INF) continue;
                 dist[ny][nx] = dist[cy][cx] + 1;
                 q.push({ny, nx});
