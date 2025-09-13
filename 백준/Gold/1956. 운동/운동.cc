@@ -1,38 +1,47 @@
+/*
+1.접근방식:
+
+2.시간복잡도:
+
+*/
 #include <bits/stdc++.h>
-const int INF = 987654321;
-int dist[405][405];
-int V, E, a, b, c, res = INF;
+const int INF = 10'005 * 400;
+int V, E, costs[402][402];
 int main()
 {
-  std::ios::sync_with_stdio(false);
-  std::cin.tie(0);
-  std::cout.tie(0);
-  std::fill_n(&dist[0][0], 405*405, INF);
-  std::cin >> V >> E;
-  for(int e = 0; e < E; e++)
-  {
-    std::cin >> a >> b >> c;
-    dist[a][b] = c;
-  }
-  for(int i = 1; i <= V; i++) dist[i][i] = 0;
-  for(int i = 1; i <= V; i++)
-  {
-    for(int j = 1; j <= V; j++)
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(0);
+    std::cout.tie(0);
+    std::fill_n(&costs[0][0], 402*402, INF);
+    std::cin >> V >> E;
+    for(int i = 1; i <= V; i++) costs[i][i] = 0;
+    for(int e = 0; e < E; e++)
     {
-      for(int k = 1; k <= V; k++)
-      {
-        dist[i][j] = std::min(dist[i][j], dist[i][k] + dist[k][j]);
-      }
+        int a, b, c;
+        std::cin >> a >> b >> c;
+        costs[a][b] = c;
     }
-  }
-  for(int i = 1; i <= V; i++)
-  {
-    for(int j = i+1; j <= V; j++)
+    
+    for(int i = 1; i <= V; i++)
     {
-      if(dist[i][j] != INF && dist[j][i] != INF)
-        res = std::min(res, dist[i][j] + dist[j][i]);
+        for(int j = i + 1; j <= V; j++)
+        {
+            for(int k = i; k <= V; k++)
+            {
+                if(costs[i][k] == INF || costs[k][j] == INF) continue;
+                costs[i][j] = std::min(costs[i][j], costs[i][k] + costs[k][j]);
+            }
+        }
     }
-  }
-  std::cout << (res == INF ? -1 : res);
-  return 0;
+    
+    int result = INF;
+    for(int i = 1; i <= V; i++)
+    {
+        for(int j = i + 1; j <= V; j++)
+        {
+            result = std::min(result, costs[i][j] + costs[j][i]);
+        }
+    }
+    std::cout << (result >= INF ? -1 : result);
+    return 0;
 }
