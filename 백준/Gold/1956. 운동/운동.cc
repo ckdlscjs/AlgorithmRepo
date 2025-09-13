@@ -28,7 +28,6 @@ int main()
         {
             for(int k = i; k <= V; k++)
             {
-                if(costs[i][k] == INF || costs[k][j] == INF) continue;
                 costs[i][j] = std::min(costs[i][j], costs[i][k] + costs[k][j]);
             }
         }
