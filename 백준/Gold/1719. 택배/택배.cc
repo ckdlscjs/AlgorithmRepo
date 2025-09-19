@@ -19,16 +19,10 @@ int main()
     {
         int u, v, c;
         std::cin >> u >> v >> c;
-        if(c < costs[u][v])
-        {
-            costs[u][v] = c;
-            prv[u][v] = v;
-        }
-        if(c < costs[v][u])
-        {
-            costs[v][u] = c;
-            prv[v][u] = u;
-        }
+        costs[u][v] = c;
+        costs[v][u] = c;
+        prv[u][v] = v;
+        prv[v][u] = u;
     }
     for(int k = 1; k <= N; k++)
     {
