@@ -20,29 +20,16 @@ ll Check(std::vector<ll> _nums, std::vector<char> _ops)
                 next_ops.push_back(_ops[i]);
                 continue;
             }
-            if(_ops[i] == '+')
-            {
-                _nums[i+1] =  _nums[i] + _nums[i+1];
-                //std::cout << '+' << _nums[i+1] << '\n';
-            }
-            else if(_ops[i] == '-')
-            {
-                _nums[i+1] = _nums[i] - _nums[i+1];
-                //std::cout << '-' << _nums[i+1] << '\n';
-            }
-            else if(_ops[i] == '*')
-            {
-                _nums[i+1] = _nums[i] * _nums[i+1];
-                //std::cout << '*' << _nums[i+1] << '\n';
-            }
+            if(_ops[i] == '+') _nums[i+1] =  _nums[i] + _nums[i+1];
+            else if(_ops[i] == '-') _nums[i+1] = _nums[i] - _nums[i+1];
+            else if(_ops[i] == '*') _nums[i+1] = _nums[i] * _nums[i+1];
         }
         next_nums.push_back(_nums.back());
         _nums = next_nums;
         _ops = next_ops;
         _order--;
     }
-    
-    return std::abs(_nums.back());
+    return std::abs(_nums[0]);
 }
 long long solution(string expression) 
 {
@@ -62,7 +49,6 @@ long long solution(string expression)
     }
     nums.push_back(stoll(num));
     long long answer = 0;
-    
     do
     {
         opers['+'] = orders[0];
@@ -70,6 +56,5 @@ long long solution(string expression)
         opers['*'] = orders[2];
         answer = std::max(answer, Check(nums, ops));
     }while(std::next_permutation(orders, orders+3));
-    
     return answer;
 }
