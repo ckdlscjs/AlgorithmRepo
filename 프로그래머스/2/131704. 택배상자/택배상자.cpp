@@ -1,21 +1,25 @@
 #include <bits/stdc++.h>
-
 using namespace std;
+std::stack<int> st;
 int solution(vector<int> order) 
 {
-    std::stack<int> st;
     int answer = 0;
-    int start = 1;
+    int idx = 1;
     for(const auto& iter : order)
     {
-        while(start <= iter)
-            st.push(start++);
-        if(st.size() && st.top() == iter)
+        while(iter >= idx)
+        {
+            st.push(idx++);
+        }
+        if(iter == st.top())
         {
             st.pop();
             answer++;
         }
-        else break;
+        else
+        {
+            break;
+        }
     }
     return answer;
 }
