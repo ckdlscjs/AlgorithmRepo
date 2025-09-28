@@ -1,25 +1,19 @@
 #include <bits/stdc++.h>
 
 using namespace std;
-bool Check(const std::vector<int>& stones, const int& k, const int& height)
-{
-    int cnt = 0;
-    for(const auto& iter : stones)
-    {
-        if(iter > height) cnt = 0;
-        else cnt++;
-        if(cnt >= k) return false;
-    }
-    return true;
-}
+std::deque<int> dq;
 int solution(vector<int> stones, int k) 
 {
-    int lo = 0, hi = 200'000'001;
-    while(lo + 1 < hi)
+    int answer = 200'000'001;
+    for(int i = 0; i < stones.size(); i++)
     {
-        int mid = (lo + hi) / 2;
-        if(Check(stones, k, mid)) lo = mid;
-        else hi = mid;
+        while(dq.size() && i - dq.front() >= k) 
+            dq.pop_front();
+        while(dq.size() && stones[dq.back()] <= stones[i]) 
+            dq.pop_back();
+        dq.push_back(i);
+        if(i >= k-1)
+            answer = std::min(answer, stones[dq.front()]);
     }
-    return hi;
+    return answer;
 }
