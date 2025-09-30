@@ -1,55 +1,52 @@
 #include <bits/stdc++.h>
 using namespace std;
-struct comp
+int diff;
+std::vector<int> res;
+void Check(const std::vector<int>& apeach, int sum_a, std::vector<int>& lion, int sum_l, int i, int n)
 {
-    bool operator()(const std::pair<int, std::vector<int>>& a, const std::pair<int, std::vector<int>>& b)
+    if(i >= apeach.size())
     {
-        if(a.first == b.first)
+        if(sum_l - sum_a > 0 && sum_l - sum_a >= diff)
         {
-            for(int i = a.second.size()-1; i >= 0; i--)
+            if(diff == sum_l-sum_a)
             {
-                if(a.second[i] == b.second[i]) continue;
-                return a.second[i] < b.second[i];
+                for(int j = lion.size()-1; j >= 0; j--)
+                {
+                    if(lion[j] == res[j]) continue;
+                    if(lion[j] > res[j])
+                    {
+                        res = lion;
+                        return;
+                    } 
+                    return;
+                }
+            }
+            else
+            {
+                diff = sum_l - sum_a;
+                res = lion;
             }
         }
-        return a.first < b.first;
-    }
-};
-std::priority_queue<std::pair<int, std::vector<int>>, std::vector<std::pair<int, std::vector<int>>>, comp> pq;
-void DFS(const int& n, const std::vector<int>& info, int idx, int cnt, std::vector<int>& ans)
-{
-    if(idx >= info.size())
-    {
-        if(n != cnt) return;
-        int sum_ryan = 0, sum_appeach = 0;
-        for(int i = 0; i < idx; i++)
-        {
-            if(ans[i] == 0 && info[i] == 0) continue;
-            if(ans[i] <= info[i]) sum_appeach += 10-i;
-            else sum_ryan += 10-i;
-        }
-        if(sum_ryan > sum_appeach)
-            pq.push({sum_ryan-sum_appeach, ans});
-        return;
-    }
-    DFS(n, info, idx+1, cnt, ans);
-    if(n-cnt > info[idx])
-    {
-        ans[idx] = info[idx]+1;
-        DFS(n, info, idx+1, cnt + ans[idx], ans);
-        ans[idx] = 0;
     }
     else
-    {
-        ans[idx] = n-cnt;
-        DFS(n, info, idx+1, cnt + ans[idx], ans);
-        ans[idx] = 0;
+    {   lion[i] = 0;
+        if(lion[i] == apeach[i])
+            Check(apeach, sum_a, lion, sum_l, i+1, n);
+        Check(apeach, sum_a + 10 - i, lion, sum_l, i+1, n);
+        int wincnt = apeach[i] + 1;
+        if(n >= wincnt)
+        {
+            lion[i] = wincnt;
+            Check(apeach, sum_a, lion, sum_l + 10-i, i+1, n - wincnt);
+        }
+        lion[i] = n;
+        Check(apeach, sum_a + 10 - i, lion, sum_l, i+1, 0);
     }
 }
+
 vector<int> solution(int n, vector<int> info) 
 {
-    pq.push({-1, {-1}});
-    vector<int> answer(11, 0);
-    DFS(n, info, 0, 0, answer);
-    return pq.top().second;
+    std::vector<int> lion(11, 0);
+    Check(info, 0, lion, 0, 0, n);
+    return res.size() ? res : std::vector<int>(1, -1);
 }
