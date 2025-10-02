@@ -1,32 +1,26 @@
 #include <bits/stdc++.h>
 using namespace std;
+
 vector<int> solution(string s) 
 {
-    vector<int> answer;
-    int cnt_change = 0;
-    int cnt_zero = 0;
-  
+    int count = 0;
+    int count_0 = 0;
     while(s != "1")
     {
-        std::string temps;
-        for(const auto& iter : s)
+        count++;
+        int nxt = 0;
+        std::string nxt_s;
+        for(const auto& ch : s)
         {
-            if(iter == '1')
-                temps += iter;
-            else
-                cnt_zero++;
+            if(ch == '0') count_0++;
+            else nxt++;
         }
-        int s_size = temps.size();
-        s.clear();
-        while(s_size > 0)
+        while(nxt)
         {
-            s += std::to_string(s_size % 2);
-            s_size /= 2;
+            nxt_s += std::to_string(nxt%2);
+            nxt /= 2;
         }
-        std::reverse(s.begin(), s.end());
-        cnt_change++;
+        s = nxt_s;
     }
-    answer.push_back(cnt_change);
-    answer.push_back(cnt_zero);
-    return answer;
+    return {count, count_0};
 }
