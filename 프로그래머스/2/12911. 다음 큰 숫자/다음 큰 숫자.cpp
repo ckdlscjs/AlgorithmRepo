@@ -1,23 +1,9 @@
-#include <string>
-#include <vector>
+#include <bits/stdc++.h>
 
 using namespace std;
-int count(int num)
-{
-    int result = 0;
-    while(num)
-    {
-        result += num%2;
-        num /= 2;
-    }
-    return result;
-}
 int solution(int n) 
 {
-    int ncount = count(n++);
-    while(ncount != count(n++))
-    {
-        
-    }
-    return n-1;
+    int cnt = std::bitset<25>(n).count();
+    while(std::bitset<25>(++n).count() != cnt) {}
+    return n;
 }
