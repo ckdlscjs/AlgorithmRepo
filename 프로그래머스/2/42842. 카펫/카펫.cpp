@@ -2,17 +2,28 @@
 
 using namespace std;
 
-vector<int> solution(int brown, int yellow) {
-    int height = 3, width = 3;
-    for(height; height <= std::sqrt(brown+yellow); height++)
+vector<int> solution(int brown, int yellow) 
+{
+    std::vector<int> answer;
+    int y = 3;
+    while(!answer.size())
     {
-        if((brown+yellow) % height != 0)
-            continue;
-        width = (brown+yellow)/height;
-        int b = width*2 + height*2-4;
-        int y = brown+yellow-b;
-        if(b == brown && y == yellow && width*height == brown+yellow)
-            break;
+        int b = 3;
+        while(b * y < brown + yellow)
+        {
+            b++;
+        }
+        if(b * y == brown + yellow)
+        {
+            int cnt_b = b * 2 + (y-2) * 2;
+            int cnt_y = brown + yellow - cnt_b;
+            if(cnt_b == brown && cnt_y == yellow)
+            {
+                answer.push_back(b);
+                answer.push_back(y);
+            }  
+        }
+        y++;
     }
-    return {width, height};
+    return answer;
 }
