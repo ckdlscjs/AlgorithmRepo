@@ -11,7 +11,7 @@ void Check(const std::vector<std::vector<std::string>>& relations, const int siz
             std::string str;
             for(int j = 0; j < size; j++)
             {
-                str += " " + relations[i][arr[j]];
+                str += relations[i][arr[j]] + " ";
             }
             chks.insert(str);
         }
@@ -19,16 +19,11 @@ void Check(const std::vector<std::vector<std::string>>& relations, const int siz
         if(chks.size() >= relations.size())
         {
             int mask = 0;
-            std::vector<int> arrs(arr, arr+size);
-            for(int i = 0; i <= size; i++)
+            for(int i = 0; i < size; i++) 
+                mask |= (1 << arr[i]);
+            for(const auto& iter : res)
             {
-                do
-                {
-                    mask = 0;
-                    for(int j = 0; j < i; j++)
-                        mask |= 1 << arrs[j];
-                    if(res.find(mask) != res.end()) return;
-                }while(std::prev_permutation(arrs.begin(), arrs.end()));
+                if((mask & iter) == iter) return;
             }
             res.insert(mask);
         }
