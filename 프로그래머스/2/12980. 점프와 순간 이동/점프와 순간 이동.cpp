@@ -1,12 +1,26 @@
 #include <bits/stdc++.h>
-using namespace std;
+
+std::unordered_map<int, int> dist;
 int solution(int n)
 {
-    int ans = 0;
-    while(n)
+    std::deque<int> dq;
+    dist[n] = 0;
+    dq.push_back(n);
+    while(1)
     {
-        ans = n%2 ? ans+1 : ans;
-        n = n%2 ? n-1 : n/2;
+        auto cur = dq.front();
+        dq.pop_front();
+        if(cur <= 0) break;
+        if(cur % 2 == 0 && dist.find(cur / 2) == dist.end())
+        {
+            dq.push_front(cur/2);
+            dist[cur/2] = dist[cur];
+        }
+        else
+        {
+            dq.push_back(cur-1);
+            dist[cur-1] = dist[cur] + 1;
+        }
     }
-    return ans;
+    return dist[0];
 }
