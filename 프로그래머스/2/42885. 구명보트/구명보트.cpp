@@ -1,24 +1,36 @@
 #include <bits/stdc++.h>
 using namespace std;
-
-int solution(vector<int> people, int limit) 
+bool chk[50'005];
+int solution(vector<int> arr, int limit) 
 {
-    std::sort(people.begin(), people.end());
-    int l = 0, r = people.size()-1;
     int answer = 0;
-    while(l <= r)
+    std::sort(arr.begin(), arr.end());
+    for(int i = 0; i < arr.size(); i++)
     {
-        if(people[l] + people[r] > limit)
+        if(chk[i]) continue;
+        chk[i] = true;
+        int lo = i, hi = arr.size();
+        while(lo + 1 < hi)
         {
-            answer++;
-            r--;
+            int mid = (lo + hi) / 2;
+            if(arr[i] + arr[mid] > limit) hi = mid;
+            else if(arr[i] + arr[mid] <= limit && chk[mid]) hi = mid;
+            else lo = mid;
         }
-        else
+        if(arr[i] + arr[lo] <= limit)
         {
-            answer++;
-            l++;
-            r--;
+            int idx = lo;
+            while(chk[idx] && arr[idx] == arr[lo])
+            {
+                idx--;
+            }
+            if(arr[idx] == arr[lo] && !chk[idx])
+            {
+                chk[idx] = true;
+            }
         }
+        
+        answer++;
     }
     return answer;
 }
