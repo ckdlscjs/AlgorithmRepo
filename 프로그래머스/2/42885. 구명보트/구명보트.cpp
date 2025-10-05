@@ -17,17 +17,9 @@ int solution(vector<int> arr, int limit)
             else if(arr[i] + arr[mid] <= limit && chk[mid]) hi = mid;
             else lo = mid;
         }
-        if(arr[i] + arr[lo] <= limit)
+        if(arr[i] + arr[lo] <= limit && !chk[lo])
         {
-            int idx = lo;
-            while(chk[idx] && arr[idx] == arr[lo])
-            {
-                idx--;
-            }
-            if(arr[idx] == arr[lo] && !chk[idx])
-            {
-                chk[idx] = true;
-            }
+            chk[lo] = true;
         }
         
         answer++;
