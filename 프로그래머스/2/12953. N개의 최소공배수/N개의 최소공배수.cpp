@@ -1,25 +1,20 @@
 #include <bits/stdc++.h>
-
 using namespace std;
-
+int gcd(int large, int small)
+{
+    if(large % small == 0) return small;
+    return gcd(small, large % small);
+}
 int solution(vector<int> arr) 
 {
-    std::sort(arr.begin(), arr.end(), std::less<>());
-    int small = 1;
-    int answer = 0;
+    std::sort(arr.begin(), arr.end());
+    int _lcm = 1;
     for(const auto& iter : arr)
     {
-        int big = std::max(iter, small);
-        int gcd = std::min(iter, small);
-        while(big % gcd)
-        {
-            int temp = big % gcd;
-            big = gcd;
-            gcd = temp;
-        }
-        answer = iter * small / gcd;
-        small = answer;
+        int large = std::max(iter, _lcm);
+        int small = std::min(iter, _lcm);
+        int _gcd = gcd(large, small);
+        _lcm = iter * _lcm / _gcd;
     }
-    
-    return answer;
+    return _lcm;
 }
