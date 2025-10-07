@@ -1,21 +1,26 @@
-//https://school.programmers.co.kr/learn/courses/30/lessons/131701
 #include <bits/stdc++.h>
-using namespace std;
 
+using namespace std;
+std::unordered_set<int> chks;
+std::vector<int> psums;
 int solution(vector<int> elements) 
 {
-    int length = elements.size();
-    for(int i = 0; i < length; i++) 
-        elements.push_back(elements[i]);
-    std::unordered_set<int> chks;
-    for(int len = 0; len < length; len++)
+    psums.resize(elements.size() * 2 + 1, 0);
+    for(int i = 0; i < elements.size(); i++)
     {
-        for(int i = 0; i < length; i++)
+        psums[i+1] = elements[i];
+        psums[i+1] += psums[i];
+    }
+    for(int i = 0; i < elements.size(); i++)
+    {
+        psums[elements.size() + i+1] = elements[i];
+        psums[elements.size() + i+1] += psums[elements.size() + i];
+    }
+    for(int i = 1; i <= elements.size(); i++)
+    {
+        for(int j = 1; j <= elements.size(); j++)
         {
-            int sum = 0;
-            for(int j = 0; j <= len; j++)
-                sum += elements[i+j];
-            chks.insert(sum);
+            chks.insert(psums[j+i] - psums[j]);
         }
     }
     return chks.size();
