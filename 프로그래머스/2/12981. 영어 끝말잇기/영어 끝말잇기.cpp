@@ -1,26 +1,17 @@
-//school.programmers.co.kr/learn/courses/30/lessons/12981
 #include <bits/stdc++.h>
+
 using namespace std;
 std::unordered_set<std::string> chks;
 vector<int> solution(int n, vector<string> words) 
 {
-    int cnt = 0;
-    char ch = '0';
+    char ch = words[0][0];
     for(int i = 0; i < words.size(); i++)
     {
-        if(chks.find(words[i]) != chks.end())
-            break;
-        if(i >= 1 && words[i][0] != ch)
-            break;
-        ch = *words[i].rbegin();
-        cnt++;
+        if(chks.find(words[i]) != chks.end()  || ch != words[i][0])
+            return {i % n + 1, i / n + 1};
         chks.insert(words[i]);
+        ch = words[i].back();
     }
-    std::vector<int> answer(2, 0);
-    if(cnt < words.size())
-    {
-        answer[0] = (cnt%n)+1;
-        answer[1] = cnt/n + 1;
-    }
-    return answer;
+    
+    return {0, 0};
 }
