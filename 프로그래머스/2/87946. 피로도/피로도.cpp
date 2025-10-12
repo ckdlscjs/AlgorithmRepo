@@ -1,28 +1,26 @@
 #include <bits/stdc++.h>
 using namespace std;
-int result;
-bool visited[10];
-void check(int idx, int cnt, int k, const std::vector<std::vector<int>>& dungeons)
+int Check(const std::vector<std::vector<int>> dungeons, int k, int cnt, int mask)
 {
-    if(idx >= dungeons.size())
+    if(cnt >= dungeons.size())
     {
-        result = std::max(result, cnt);
-        return;
+        return dungeons.size();
     }
-    for(int i = 0; i < dungeons.size(); i++)
+    else
     {
-        if(visited[i])
-            continue;
-        if(k < dungeons[i][0])
-            continue;
-        visited[i] = true;
-        check(idx+1, cnt+1, k - dungeons[i][1], dungeons);
-        visited[i] = false;
+        int ret = cnt;
+        for(int i = 0; i < dungeons.size(); i++)
+        {
+            if(mask & (1 << i)) continue;
+            int need = dungeons[i][0];
+            int used = dungeons[i][1];
+            if(need > k) continue;
+            ret = std::max(ret, Check(dungeons, k-used, cnt+1, mask | (1 << i)));
+        }
+        return ret;
     }
-    check(idx+1, cnt, k, dungeons);
 }
 int solution(int k, vector<vector<int>> dungeons) 
 {
-    check(0, 0, k, dungeons);
-    return result;
+    return Check(dungeons, k, 0, 0);
 }
