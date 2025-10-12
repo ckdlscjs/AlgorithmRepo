@@ -1,29 +1,32 @@
 #include <bits/stdc++.h>
+
 using namespace std;
 
 vector<int> solution(vector<int> progresses, vector<int> speeds) 
 {
-    std::queue<int> q;
     vector<int> answer;
+    std::queue<int> q;
+    int cnt = 0;
     for(int i = 0; i < progresses.size(); i++)
     {
-        int open = ((100-progresses[i]) / speeds[i]) + ((100-progresses[i]) % speeds[i] ? 1 : 0);
-        if(q.empty() || q.front() > open)
+        int need = (100 - progresses[i]) / speeds[i] + ((100 - progresses[i]) % speeds[i] ? 1 : 0);
+        if(q.empty())
         {
-            q.push(open);
-            continue;
+            q.push(need);
         }
-        int cnt = 0;
-        while(q.size() && q.front() < open)
+        else
         {
-            q.pop();
-            cnt++;
+            if(need > q.front())
+            {
+                q.pop();
+                answer.push_back(cnt);
+                cnt = 0;
+                q.push(need);
+            }
         }
-        if(cnt)
-            answer.push_back(cnt);
-        q.push(open);
+        cnt++;
     }
     if(q.size())
-        answer.push_back(q.size());
+        answer.push_back(cnt);
     return answer;
 }
