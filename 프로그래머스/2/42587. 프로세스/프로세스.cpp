@@ -1,31 +1,30 @@
 #include <bits/stdc++.h>
 using namespace std;
-std::queue<std::pair<int, int>> q;
-std::priority_queue<int, std::vector<int>, std::less<>> pq;
 int solution(vector<int> priorities, int location) 
 {
+    std::priority_queue<int, std::vector<int>, std::less<int>> pq;
+    std::deque<std::pair<int, int>> dq;
     for(int i = 0; i < priorities.size(); i++)
     {
         pq.push(priorities[i]);
-        q.push({priorities[i], i});
+        dq.push_back({priorities[i], i});
     }
-    int count = 0;
-    int answer = 0;
-    while(pq.size())
+    int i = 1;
+    while(dq.size())
     {
-        std::pair<int, int> iter = q.front();
-        q.pop();
-        if(pq.top() == iter.first)
+        if(pq.top() == dq.front().first)
         {
+            int idx = dq.front().second;
+            dq.pop_front();
             pq.pop();
-            count++;
-            if(iter.second == location)
-                answer = count;
+            if(idx == location) return i;
+            i++;
         }
         else
         {
-            q.push(iter);
+            dq.push_back(dq.front());
+            dq.pop_front();
         }
     }
-    return answer;
+    return 0;
 }
