@@ -1,62 +1,25 @@
-//https://school.programmers.co.kr/learn/courses/30/lessons/43162
 #include <bits/stdc++.h>
-struct DisjointSet
-{
-    std::vector<int> parents;
-    std::vector<int> ranks;
-    DisjointSet(int _size) : parents(_size, -1), ranks(_size, 0) {}
-    int Find(int node)
-    {
-        if(parents[node] == -1) return node;
-        return parents[node] = Find(parents[node]);
-    }
-    void Union(int node1, int node2)
-    {
-        int root1 = Find(node1);
-        int root2 = Find(node2);
-        if(root1 == root2) return;
-        if(ranks[root1] == ranks[root2])
-        {
-            ranks[root1]++;
-            parents[root2] = root1;
-        }
-        else if(ranks[root1] > ranks[root2])
-        {
-            parents[root2] = root1;
-        }
-        else
-        {
-            parents[root1] = root2;
-        }
-    }
-};
 using namespace std;
-
+bool visited[202];
+void DFS(const std::vector<std::vector<int>>& coms, int cur)
+{
+    visited[cur] = true;
+    for(int i = 0; i < coms[cur].size(); i++)
+    {
+        if(i == cur) continue;
+        if(visited[i]) continue;
+        if(coms[cur][i] == 0) continue;
+        DFS(coms, i);
+    }
+}
 int solution(int n, vector<vector<int>> computers) 
 {
-    DisjointSet ds(n);
     int answer = 0;
-    for(int i = 0; i < computers.size(); i++)
+    for(int i = 0; i < n; i++)
     {
-        for(int j = 0; j < computers.size(); j++)
-        {
-            if(i == j)
-                continue;
-            if(ds.Find(i) == ds.Find(j))
-                continue;
-            if(computers[i][j])
-                ds.Union(i, j);
-        }
+        if(visited[i]) continue;
+        DFS(computers, i);
+        answer++;
     }
-    for(int i = 0; i < ds.parents.size(); i++)
-    {
-        if(ds.parents[i] == -1)
-            ds.parents[i] = i;
-    }
-    std::unordered_set<int> chks;
-    for(int i = 0; i < ds.parents.size(); i++)
-    {
-        chks.insert(ds.parents[i]);
-    }
-    return chks.size();
+    return answer;
 }
