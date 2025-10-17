@@ -1,40 +1,43 @@
-//https://school.programmers.co.kr/learn/courses/30/lessons/92335
 #include <bits/stdc++.h>
+
 using namespace std;
-bool IsPrime(long long int num)
+bool isPrime(const std::string& str)
 {
-    if(num < 2) return false;
-    for(int i = 2; i <= std::sqrt(num); i++)
+    long long cur = std::stoll(str);
+    if(cur < 2) return false;
+    for(long long i = 2; i <= std::sqrt(cur); i++)
     {
-        if(num % i == 0)
+        if(cur % i == 0) 
             return false;
     }
     return true;
 }
 int solution(int n, int k) 
 {
-    std::string num = "";
+    
+    std::string str;
     while(n)
     {
-        num += std::to_string(n % k);
+        str += std::to_string(n % k);
         n /= k;
     }
+    
+    std::reverse(str.begin(), str.end());
+    str += '0';
+    //std::cout << str;
     int answer = 0;
-    std::reverse(num.begin(), num.end());
-    num += '0';
-    std::string temp = "";
-    for(const auto& iter : num)
+    std::string num = "";
+    for(const auto& ch : str)
     {
-        if(temp.empty() && iter == '0')
-            continue;
-        temp += iter;
-        if(temp[temp.size()-1] == '0')
+        if(ch == '0')
         {
-            std::string numstr = temp.substr(0, temp.size() - 1);
-            if(IsPrime(std::stoll(numstr)))
+            if(num.size() && isPrime(num))
                 answer++;
-            temp.clear();
+            num.clear();
+            continue;
         }
+        num += ch;
     }
+    
     return answer;
 }
