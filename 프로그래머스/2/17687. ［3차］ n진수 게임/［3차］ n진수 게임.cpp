@@ -1,40 +1,34 @@
-//https://school.programmers.co.kr/learn/courses/30/lessons/17687
 #include <bits/stdc++.h>
 using namespace std;
+char ch[] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};
 string solution(int n, int t, int m, int p) 
 {
-    char lists[] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};
+    p--;
+    int idx = 0;
+    int num = 0;
     string answer = "";
-    int start = 0;
-    int turn = 0;
-    int numidx = 0;
-    std::string num = "";
-    
     while(answer.size() < t)
     {
-        if(num.empty())
+        std::stack<char> st;
+        int cur = num;
+        while(cur)
         {
-            numidx = 0;
-            int cur = start;
-            while(cur)
-            {
-                num += lists[cur%n];
-                cur /= n;
-            }
-            if(num.empty())
-                num += lists[0];
-            std::reverse(num.begin(), num.end());
+            st.push(ch[cur % n]);
+            //std::cout << ch[cur%n];
+            cur /= n;
         }
-        if((turn%m) + 1 == p)
-            answer += num[numidx];
-        turn++;
-        numidx++;
-        if(numidx >= num.size())
+        if(num == 0)
+            st.push(ch[0]);
+        while(st.size())
         {
-            num.clear();
-            start++;
+            if(idx == p)
+                answer += st.top();
+            st.pop();
+            idx++;
+            idx %= m;
         }
+        num++;
     }
     
-    return answer;
+    return answer.substr(0, t);
 }
