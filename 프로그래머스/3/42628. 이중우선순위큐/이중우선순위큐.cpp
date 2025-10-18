@@ -1,50 +1,47 @@
-//https://school.programmers.co.kr/learn/courses/30/lessons/42628
 #include <bits/stdc++.h>
+
 using namespace std;
-vector<int> solution(vector<string> operations) 
+using pii = std::pair<int, int>;
+std::priority_queue<pii, std::vector<pii>, std::greater<pii>> pq_small;
+std::priority_queue<pii, std::vector<pii>, std::less<pii>> pq_large;
+bool dels[1'000'002];
+vector<int> solution(vector<string> oper) 
 {
-    std::priority_queue<int, std::vector<int>, std::less<int>> hi_low;
-    std::priority_queue<int, std::vector<int>, std::greater<int>> low_hi;
     int cnt = 0;
-    for(const auto& iter : operations)
+    for(int i = 0; i < oper.size(); i++)
     {
-        std::string order = iter.substr(0, 1);
-        int num = std::stoi(iter.substr(2));
-        if(order == "I")
+        int num = std::stoi(oper[i].substr(2));
+        if(oper[i][0] == 'I')
         {
+            pq_small.push({num, i});
+            pq_large.push({num, i});
             cnt++;
-            hi_low.push(num);
-            low_hi.push(num);
         }
         else
         {
-            if(cnt > 0)
+            if(cnt <= 0) continue;
+            cnt--;
+            if(num == 1)
             {
-                if(num == 1)
-                    hi_low.pop();
-                else
-                    low_hi.pop();
-                cnt--;
+                while(pq_large.size() && dels[pq_large.top().second])
+                    pq_large.pop();
+                dels[pq_large.top().second] = true;
+                pq_large.pop();
             }
-            std::stack<int> st;
-            if(hi_low.size() > cnt)
+            else
             {
-                while(hi_low.size() != 1)
-                    st.push(hi_low.top()), hi_low.pop();
-                hi_low.pop();
-                while(st.size())
-                    hi_low.push(st.top()), st.pop();
-            }
-            if(low_hi.size() > cnt)
-            {
-                while(low_hi.size() != 1)
-                    st.push(low_hi.top()), low_hi.pop();
-                low_hi.pop();
-                while(st.size())
-                    low_hi.push(st.top()), st.pop();
+                
+                while(pq_small.size() && dels[pq_small.top().second])
+                    pq_small.pop();
+                dels[pq_small.top().second] = true;
+                pq_small.pop();
             }
         }
     }
-
-    return cnt <= 0 ? std::vector<int>({0, 0}) : std::vector<int>({hi_low.top(), low_hi.top()});
+    while(pq_large.size() && dels[pq_large.top().second])
+                    pq_large.pop();
+    while(pq_small.size() && dels[pq_small.top().second])
+                    pq_small.pop();
+    if(cnt <= 0) return {0, 0};
+    return {pq_large.top().first, pq_small.top().first};
 }
