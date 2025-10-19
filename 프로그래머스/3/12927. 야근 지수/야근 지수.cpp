@@ -1,23 +1,21 @@
-//https://school.programmers.co.kr/learn/courses/30/lessons/12927
 #include <bits/stdc++.h>
 using namespace std;
-
+std::priority_queue<int, std::vector<int>, std::less<int>> pq;
 long long solution(int n, vector<int> works) 
 {
-    std::priority_queue<long long int, std::vector<long long int>, std::less<long long int>> pq;
     for(const auto& iter : works)
         pq.push(iter);
-    while(n-- && pq.size())
+    while(n && pq.size())
     {
-        long long int cur = pq.top();
+        int cur = pq.top();
         pq.pop();
-        cur--;
-        if(cur)
-            pq.push(cur);
+        if(cur >= 1)
+            pq.push(cur-1);
+        n--;
     }
     long long answer = 0;
     while(pq.size())
-        answer += std::pow(pq.top(), 2), pq.pop();
+        answer += pq.top() * pq.top(), pq.pop();
     
     return answer;
 }
