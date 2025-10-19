@@ -1,34 +1,22 @@
-//school.programmers.co.kr/learn/courses/30/lessons/17684
 #include <bits/stdc++.h>
 using namespace std;
-std::unordered_map<std::string, int> words;
+std::unordered_map<std::string, int> dic;
 vector<int> solution(string msg) 
 {
-    int len = 1;
-    for(int i = 0; i < 26; i++)
-        words[std::string(1, 'A' + i)] = words.size()+1;
+    int idx = 1;
+    for(idx = 1; idx <= 26; idx++)
+        dic[std::string(1, 'A' + idx - 1)] = idx;
+    std::string str;
     vector<int> answer;
-    while(msg.size())
+    for(const auto& iter : msg)
     {
-        std::string w = "";
-        for(int i = len; i >= 1; i--)
-        {
-            if(msg.size() < i)
-                continue;
-            w = msg.substr(0, i);
-            if(words.find(w) != words.end())
-            {
-                msg = msg.substr(i);
-                break;
-            }
-        }
-        answer.push_back(words[w]);
-        if(msg.size())
-        {
-            w += msg[0];
-            len = std::max(len, (int)w.size());
-            words[w] = words.size()+1;
-        }
+        std::string temp = str;
+        str += iter;
+        if(dic.find(str) != dic.end()) continue;
+        answer.push_back(dic[temp]);
+        dic[str] = idx++;
+        str = iter;
     }
+    answer.push_back(dic[str]);
     return answer;
 }
