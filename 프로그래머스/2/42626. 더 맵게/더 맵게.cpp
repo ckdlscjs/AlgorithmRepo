@@ -1,30 +1,21 @@
 #include <bits/stdc++.h>
+
 using namespace std;
-std::priority_queue<int, std::vector<int>, std::greater<>> pq;
+std::priority_queue<int, std::vector<int>, std::greater<int>> pq;
 int solution(vector<int> scoville, int K) 
 {
     for(const auto& iter : scoville)
         pq.push(iter);
-    int cur = pq.top();
-    pq.pop();
+        
+    
     int answer = 0;
-    if(cur >= K)
-        return answer;
-    while(pq.size())
+    while(pq.size() >= 2 && pq.top() < K)
     {
-        int top = pq.top();
-        pq.pop();
-        int min1 = std::min(cur, top);
-        int min2 = std::max(cur, top);
-        cur = min1 + (min2 * 2);
-        pq.push(cur);
-        cur = pq.top();
-        pq.pop();
+        auto sco0 = pq.top(); pq.pop();
+        auto sco1 = pq.top(); pq.pop();
+        pq.push(sco0 + sco1 * 2);
         answer++;
-        if(pq.size() && pq.top() >= K && cur >= K)
-            break;
     }
-    if(cur < K)
-        return -1;
-    return answer;
+    
+    return pq.top() >= K ? answer : -1;
 }
