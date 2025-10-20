@@ -1,15 +1,22 @@
 #include <bits/stdc++.h>
 using namespace std;
-int dp[4];
+int dp[2][4];
 int solution(vector<vector<int>> land)
 {
-    for(int i = 0; i < land.size(); i++)
+    dp[0][0] = land[0][0];
+    dp[0][1] = land[0][1];
+    dp[0][2] = land[0][2];
+    dp[0][3] = land[0][3];
+    for(int i = 1; i < land.size(); i++)
     {
-        int prev[4] = {dp[0], dp[1], dp[2], dp[3]};
-        dp[0] = land[i][0] + std::max({prev[1], prev[2], prev[3]});
-        dp[1] = land[i][1] + std::max({prev[0], prev[2], prev[3]});
-        dp[2] = land[i][2] + std::max({prev[0], prev[1], prev[3]});
-        dp[3] = land[i][3] + std::max({prev[0], prev[1], prev[2]});
+        dp[1][0] = std::max({dp[0][1], dp[0][2], dp[0][3]}) + land[i][0];
+        dp[1][1] = std::max({dp[0][0], dp[0][2], dp[0][3]}) + land[i][1];
+        dp[1][2] = std::max({dp[0][0], dp[0][1], dp[0][3]}) + land[i][2];
+        dp[1][3] = std::max({dp[0][0], dp[0][1], dp[0][2]}) + land[i][3];
+        dp[0][0] = dp[1][0]; 
+        dp[0][1] = dp[1][1]; 
+        dp[0][2] = dp[1][2]; 
+        dp[0][3] = dp[1][3];
     }
-    return std::max({dp[0], dp[1], dp[2], dp[3]});
+    return std::max({dp[1][0], dp[1][1], dp[1][2], dp[1][3]});
 }
