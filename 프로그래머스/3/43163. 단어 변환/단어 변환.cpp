@@ -1,37 +1,37 @@
-//https://school.programmers.co.kr/learn/courses/30/lessons/43163
 #include <bits/stdc++.h>
 using namespace std;
-std::unordered_set<char> alps[12];
 std::unordered_map<std::string, int> chks;
+std::queue<std::string> q;
+bool CalcDiif(const std::string& str1, const std::string& str2)
+{
+    int cnt = 0;
+    for(int i = 0; i < str1.size(); i++)
+    {
+        if(str1[i] == str2[i]) continue;
+        cnt++;
+        if(cnt >= 2) return false;
+    }
+    return true;
+}
 int solution(string begin, string target, vector<string> words) 
 {
-    for(const auto& iter : words)
-    {
-        chks[iter] = 0;
-        for(int i = 0; i < iter.size(); i++)
-            alps[i].insert(iter[i]);
-    }
-        
+    for(int i = 0; i < words.size(); i++)
+        chks[words[i]] = 0;
     if(chks.find(target) == chks.end()) return 0;
-    std::queue<std::string> q;
     chks[begin] = 1;
     q.push(begin);
     while(q.size())
     {
-        std::string cur = q.front();
+        auto cur = q.front();
         q.pop();
-        for(int idx = 0; idx < cur.size(); idx++)
+        for(const auto& iter : words)
         {
-            for(const auto& iter : alps[idx])
-            {
-                std::string temp = cur;
-                temp[idx] = iter;
-                if(chks.find(temp) == chks.end() || chks[temp])
-                    continue;
-                chks[temp] = chks[cur] + 1;
-                q.push(temp);
-            }
+            if(iter == cur) continue;
+            if(chks[iter] > 0) continue;
+            if(!CalcDiif(cur, iter)) continue;
+            chks[iter] = chks[cur] + 1;
+            q.push(iter);
         }
     }
-    return chks[target] - 1;
+    return chks[target] >= 1 ? chks[target] -1 : 0;
 }
