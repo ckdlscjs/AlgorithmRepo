@@ -1,4 +1,5 @@
 #include <bits/stdc++.h>
+
 using namespace std;
 
 vector<int> solution(vector<int> prices) 
@@ -16,7 +17,7 @@ vector<int> solution(vector<int> prices)
     }
     while(st.size())
     {
-        answer[st.top()] = prices.size() - 1 - st.top();
+        answer[st.top()] = prices.size() - st.top() -1;
         st.pop();
     }
         
