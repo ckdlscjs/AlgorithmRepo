@@ -1,28 +1,23 @@
-//https://school.programmers.co.kr/learn/courses/30/lessons/49993
 #include <bits/stdc++.h>
 using namespace std;
+int trees[26];
 int solution(string skill, vector<string> skill_trees) 
 {
-    int alps = 0;
-    std::unordered_set<std::string> chks;
-    std::string skills = "";
-    for(const auto& ch : skill)
-    {
-        alps |= 1 << (ch-'A');
-        skills += ch;
-        chks.insert(skills);
-    }
     int answer = 0;
-    for(const auto& iter : skill_trees)
+    int idx = 1;
+    for(const auto& iter : skill) trees[iter-'A'] = idx++;
+    for(const auto& str : skill_trees)
     {
-        std::string temp = "";
-        for(const auto& ch : iter)
+        int cur = 0;
+        int i = 0;
+        for(i = 0; i < str.size(); i++)
         {
-            if(alps & 1 << (ch - 'A'))
-                temp += ch;
+            if(trees[str[i]-'A'] < cur || trees[str[i]-'A'] == 0) continue;
+            if(trees[str[i]-'A'] == cur + 1) cur++;
+            else break;
         }
-        answer += (chks.find(temp) != chks.end() ? 1 : 0);
-        answer += temp.empty() ? 1 : 0;
+        if(i >= str.size())
+            answer++;
     }
     return answer;
 }
