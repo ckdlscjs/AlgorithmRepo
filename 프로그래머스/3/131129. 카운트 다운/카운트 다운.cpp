@@ -1,74 +1,41 @@
 #include <bits/stdc++.h>
 
 using namespace std;
-int dp[100'052], cnts[100'052];
-std::queue<std::tuple<int, int, int, int, int>> q;
+int dp[100'002], cnts[100'002];
+std::vector<int> sb = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20};
 vector<int> solution(int target) 
 {
-    q.push({0, 0, 0, 0, 0});
-    while(q.size())
+    std::fill_n(&dp[1], 100'002, 100'000);
+    for(int i = 0; i < sb.size(); i++)
     {
-        auto cur = q.front();
-        q.pop();
-        int cc = std::get<0>(cur);
-        int cs = std::get<1>(cur);
-        int cd = std::get<2>(cur);
-        int ct = std::get<3>(cur);
-        int cb = std::get<4>(cur);
-        /*
-        if(cc == target)
+        dp[sb[i]] = 1;
+        cnts[sb[i]] = 1;
+    }
+    dp[50] = 1;
+    cnts[50] = 1;
+    for(int i = 21; i <= target; i++)
+    {
+        if(i - 50 >= 0 && dp[i-50] + 1 <= dp[i])
         {
-            std::cout << cc;
-            std::cout << cs << ' ' << cd <<' ' << ct <<' ' << cb<< '\n';
+            dp[i] = dp[i-50] + 1;
+            cnts[i] = std::max(cnts[i], cnts[i-50] + 1);
         }
-        */
-        if(cc + 50 <= 100'000)
+        for(const auto& iter : sb)
         {
-            if(dp[cc + 50] == 0)
+            if(i - iter >= 0 && dp[i-iter] + 1 <= dp[i])
             {
-                q.push({cc+50, cs, cd, ct, cb+1});
-                dp[cc + 50] = dp[cc]+1;
+                dp[i] = dp[i-iter] + 1;
+                cnts[i] = std::max(cnts[i], cnts[i-iter] + 1);
             }
-            if(dp[cc + 50] == dp[cc] + 1)
-                cnts[cc+50] = std::max(cnts[cc+50], cs+cb+1);
-        }
-        for(int i = 1; i <= 20; i++)
-        {
-            if(cc + i <= 100'000)
+            if(i - iter * 2 >= 0 && dp[i-iter*2] + 1 < dp[i])
             {
-                if(dp[cc+i] == 0)
-                {
-                    q.push({cc+i, cs+1, cd, ct, cb});
-                    dp[cc+i] = dp[cc]+1;
-                }
-                if(dp[cc+i] == dp[cc] + 1)
-                    cnts[cc+i] = std::max(cnts[cc+i], cs+1+cb);
+                dp[i] = dp[i-iter*2] + 1;
+                cnts[i] = 0;
             }
-        }
-        for(int i = 1; i <= 20; i++)
-        {
-            if(cc + i*2 <= 100'000)
+            if(i - iter * 3 >= 0 && dp[i-iter*3] + 1 < dp[i])
             {
-                if(dp[cc+i*2] == 0)
-                {
-                    q.push({cc+i*2, cs, cd+1, ct, cb});
-                    dp[cc+i*2] = dp[cc] + 1;
-                }
-                if(dp[cc+i*2] == dp[cc] + 1)
-                    cnts[cc+i*2] = std::max(cnts[cc+i*2], cs+cb);
-            }
-        }    
-        for(int i = 1; i <= 20; i++)
-        {
-            if(cc + i*3 <= 100'000)
-            {
-                if(dp[cc+i*3] == 0)
-                {
-                    q.push({cc+i*3, cs, cd, ct+1, cb});
-                    dp[cc+i*3] = dp[cc] + 1;
-                }
-                if(dp[cc+i*3] == dp[cc] + 1)
-                    cnts[cc+i*3] = std::max(cnts[cc+i*3], cs+cb);
+                dp[i] = dp[i-iter*3] + 1;
+                cnts[i] = 0;
             }
         }
     }
