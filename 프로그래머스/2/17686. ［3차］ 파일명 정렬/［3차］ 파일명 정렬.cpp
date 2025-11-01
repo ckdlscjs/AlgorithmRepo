@@ -1,43 +1,32 @@
-//https://school.programmers.co.kr/learn/courses/30/lessons/17686
 #include <bits/stdc++.h>
+
 using namespace std;
-void split(const std::string& str, std::string& head, std::string& num)
-{
-    std::string temp;
-    for(const auto& iter : str)
-    {
-        if(head.empty() && temp.size() && std::isdigit(iter))
-        {
-            std::transform(temp.begin(), temp.end(), temp.begin(), ::tolower);
-            head = temp;
-            temp.clear();
-        }
-        else if(num.empty() && head.size() && temp.size() && !std::isdigit(iter))
-        {
-            num = temp;
-            temp.clear();
-        }
-        temp += iter;
-    }
-    if(num.empty())
-    {
-        num = temp;
-        return;
-    }
-}
-bool compare(const std::string& a, const std::string& b)
-{
-    std::string str[2][2];
-    split(a, str[0][0], str[0][1]);
-    split(b, str[1][0], str[1][1]);
-    if(str[0][0] == str[1][0])
-    {
-        return std::stoi(str[0][1]) < std::stoi(str[1][1]);
-    }
-    return str[0][0] < str[1][0];
-}
+
 vector<string> solution(vector<string> files) 
 {
-    std::stable_sort(files.begin(), files.end(), compare);
+    std::stable_sort(files.begin(), files.end(), [](const std::string& a, const std::string& b) {
+        std::function<std::vector<std::string>(const std::string& str)> func = [](const std::string& str)
+        {
+            std::vector<std::string> HNT(3, "");
+            int idx = 0;
+            for(const auto& iter : str)
+            {
+                if(idx == 0 && std::isdigit(iter)) idx++;
+                if(idx == 1 && !std::isdigit(iter)) idx++;
+                if('A' <= iter && iter <= 'Z') HNT[idx] += std::string(1, iter + 32);
+                else HNT[idx] += iter;
+            }
+            return HNT;
+        };
+        //std::cout << a << b <<'\n';
+        auto hnt_a = func(a);
+        auto hnt_b = func(b);
+        if(hnt_a[0] == hnt_b[0])
+        {
+            return std::stoi(hnt_a[1]) < std::stoi(hnt_b[1]);
+        }
+        return hnt_a[0] < hnt_b[0];
+    });
+    
     return files;
 }
