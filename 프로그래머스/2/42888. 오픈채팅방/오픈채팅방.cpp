@@ -1,34 +1,30 @@
-//https://school.programmers.co.kr/learn/courses/30/lessons/42888
 #include <bits/stdc++.h>
 using namespace std;
-std::vector<std::pair<std::string, std::string>> results;
-std::unordered_map<std::string, std::string> db;
+
+std::unordered_map<std::string, std::string> uid_name;
 vector<string> solution(vector<string> record) 
 {
-    for(auto iter : record)
+    vector<std::string> uids;
+    vector<std::string> answer;
+    for(const auto& iter : record)
     {
-        int it = iter.find(' ');
-        std::string order = iter.substr(0, it); 
-        iter = iter.substr(it+1);
-        
-        it = iter.find(' ');
-        std::string uid = iter.substr(0, it); 
-        iter = iter.substr(it+1);
-        if(order == "Enter" || order == "Change")
-            db[uid] = iter;
-        if(order == "Change")
+        std::string uid, name;
+        std::string str = iter.substr(iter.find(' ') + 1);
+        size_t pos = str.find(' ');
+        uid = str.substr(0, pos);
+        name = str.substr(pos + 1);
+        //std::cout << uid << ' ' << name << '\n';
+        if(iter[0] == 'E' || iter[0] == 'C') uid_name[uid] = name;
+        if(iter[0] == 'C') 
             continue;
-        results.push_back({uid, order});
+        //std::cout << uid << '\n';        
+        uids.push_back(uid);
+        if(iter[0] == 'E') answer.push_back("님이 들어왔습니다.");
+        else if(iter[0] == 'L') answer.push_back("님이 나갔습니다.");
     }
-    vector<string> answer;
-    std::string str;
-    for(const auto& iter : results)
+    for(int i = 0; i < uids.size(); i++)
     {
-        str += db[iter.first];
-        str += "님이 ";
-        str += iter.second == "Enter" ? "들어왔습니다." : "나갔습니다.";
-        answer.push_back(str);
-        str.clear();
+        answer[i] = uid_name[uids[i]] + answer[i];
     }
     return answer;
 }
