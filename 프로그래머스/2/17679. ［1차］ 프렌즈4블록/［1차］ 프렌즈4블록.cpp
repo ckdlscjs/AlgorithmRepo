@@ -1,67 +1,68 @@
 #include <bits/stdc++.h>
+
 using namespace std;
-int CheckBoard(const int N, const int M, std::vector<std::string>& board)
-{
-    std::set<std::pair<int, int>> erases;
-    for(int i = 0; i < N-1; i++)
-    {
-        for(int j = 0; j < M-1; j++)
-        {
-            if(board[i][j] == '0') continue;
-            bool chk = true;
-            for(int ii = 0; ii < 2; ii++)
-                for(int jj = 0; jj < 2; jj++)
-                    chk &= (board[i+ii][j+jj] == board[i][j]);
-            if(chk)
-                erases.insert({i, j});
-        }
-    }
-    int ret = 0;
-    for(const auto& iter : erases)
-    {
-        for(int i = iter.first; i < iter.first + 2; i++)
-        {
-            for(int j = iter.second; j < iter.second + 2; j++)
-            {
-                if(board[i][j] == '0') continue;
-                ret++;
-                board[i][j] = '0';
-            }
-        }
-    }
-    return ret;
-}
-void MoveBoard(const int N, const int M, std::vector<std::string>& board)
-{
-    for(int j = 0; j < M; j++)
-    {
-        int i = N-1;
-        while(i > 0)
-        {
-            if(board[i][j] != '0')
-            {
-                i--;
-                continue;
-            }
-            int ii = i-1;
-            for(ii; ii >= 0; ii--)
-                if(board[ii][j] != '0') break;
-            if(ii <= -1) break;
-            board[i][j] = board[ii][j];
-            board[ii][j] = '0';
-            i--;
-        }
-    }
-}
-int solution(int n, int m, vector<string> board) 
+int solution(int m, int n, vector<string> board) 
 {
     int answer = 0;
-    while(1)
+    bool chk = true;
+    while(chk)
     {
-        int ret = CheckBoard(n, m, board);
-        if(ret == 0) break;
-        answer += ret;
-        MoveBoard(n, m, board);
+        chk = false;
+        std::queue<std::pair<int, int>> q;
+        for(int i = 0; i < board.size()-1; i++)
+        {
+            for(int j = 0; j < board[0].size()-1; j++)  
+            {
+                if(board[i][j] == -1) continue;
+                if(
+                    board[i][j] == board[i][j+1] &&
+                    board[i][j] == board[i+1][j] &&
+                    board[i][j] == board[i+1][j+1]
+                  )
+                    q.push({i, j});
+            }
+        }
+        while(q.size())
+        {
+            chk = true;
+            auto ij = q.front();
+            q.pop();
+            board[ij.first][ij.second] = -1;
+            board[ij.first+1][ij.second] = -1;
+            board[ij.first][ij.second+1] = -1;
+            board[ij.first+1][ij.second+1] = -1;
+        }
+        if(chk)
+        {
+            for(int j = 0; j < board[0].size(); j++)
+            {
+                std::queue<char> chs;
+                for(int i = board.size()-1; i >= 0; i--)
+                    if(board[i][j] != -1)
+                        chs.push(board[i][j]);
+                for(int i = board.size()-1; i >= 0; i--)
+                {
+                    if(chs.size())
+                    {
+                        board[i][j] = chs.front();
+                        chs.pop();
+                    }
+                    else
+                    {
+                        board[i][j] = -1;
+                    }     
+                }
+            }
+        }
     }
+    for(int i = 0; i < board.size(); i++)
+    {
+        for(int j = 0; j < board[0].size(); j++)
+        {
+            if(board[i][j] == -1)
+                answer++;
+        }
+    }
+    
     return answer;
 }
