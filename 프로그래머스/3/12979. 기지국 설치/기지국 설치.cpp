@@ -1,29 +1,22 @@
-//https://school.programmers.co.kr/learn/courses/30/lessons/12979
 #include <bits/stdc++.h>
 using namespace std;
-std::queue<std::pair<int, int>> q;
+
 int solution(int n, vector<int> stations, int w)
 {
-    int answer = 0;
-    for(const auto& iter : stations)
-        q.push({iter-w, std::min(iter+w, n)});
-    q.push({n+1, n+1});
-    w = w*2+1;
-    int r = 0;
-    if(q.front().first > 1)
+    stations.push_back(n+w+1);
+    int cur = 0;
+    int cnt = 0;
+    int r = w * 2 + 1;
+    for(int i = 0; i < stations.size(); i++)
     {
-        int cnt = std::ceil((q.front().first - r - 1) / (double)w);
-        answer += cnt;
-        r = w * cnt;
+        if(cur < stations[i] - w)
+        {
+            int diff = (stations[i] - w - cur - 1);
+            cnt += diff/r + (diff%r ? 1 : 0);
+            cur = stations[i] + w;
+        }
+        cur = std::max(stations[i] + w, cur);
     }
     
-    while(q.size())
-    {
-        std::pair<int, int> cur = q.front();
-        q.pop();
-        if(cur.first > r)
-            answer += std::ceil((cur.first - r - 1) / (double)w);
-        r = cur.second;
-    }
-    return answer;
+    return cnt;
 }
