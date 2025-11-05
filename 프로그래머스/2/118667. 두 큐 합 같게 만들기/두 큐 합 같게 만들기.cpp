@@ -4,8 +4,8 @@ using namespace std;
 int solution(vector<int> queue1, vector<int> queue2) 
 {
     int answer = 0;
-    long long sum1 = 0, sum2 = 0;
-    std::queue<long long> q1, q2;
+    int sum1 = 0, sum2 = 0;
+    std::queue<int> q1, q2;
     for(const auto& iter : queue1)
     {
         sum1 += iter;
@@ -18,7 +18,7 @@ int solution(vector<int> queue1, vector<int> queue2)
         q2.push(iter);
     }
         
-    while(sum1 != sum2 && answer < (q1.size() + q2.size()) * 2)
+    while(sum1 != sum2 && answer <= q1.size() + q2.size())
     {
         if(sum1 < sum2)
         {
@@ -36,5 +36,5 @@ int solution(vector<int> queue1, vector<int> queue2)
         }
         answer++;
     }
-    return answer >= (q1.size() + q2.size()) * 2 ? -1 : answer;
+    return answer > q1.size() + q2.size() ? -1 : answer;
 }
