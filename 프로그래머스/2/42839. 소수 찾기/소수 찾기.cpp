@@ -1,42 +1,42 @@
 #include <bits/stdc++.h>
 using namespace std;
-bool IsNotPrimes[10000000];
-std::unordered_set<int> primes;
-bool IsPrime(int num)
-{
-    if(num < 2) return false;
-    for(int i = 2; i <= std::sqrt(num); i++)
-        if(num%i == 0)
-            return false;
-    return true;   
-}
-void Check(const std::string& nums, std::string str, int used)
+std::unordered_set<int> notprimes;
+std::unordered_set<int> strs;
+void Check(const std::string& nums, std::string& str, int mask)
 {
     if(str.size())
-    {
-        int num = std::stoi(str);
-        if(!IsNotPrimes[num])
-            primes.insert(num);
-    }
+        strs.insert(std::stoi(str));
+    if(str.size() >= nums.size()) return;
     for(int i = 0; i < nums.size(); i++)
     {
-        if(used & (1 << i))
-            continue;
-        Check(nums, str+nums[i], used | 1<<i);
+        if(mask & (1 << i)) continue;
+        str += nums[i];
+        Check(nums, str, mask | 1 << i);
+        str.pop_back();
     }
 }
-
 int solution(string numbers) 
 {
-    IsNotPrimes[0] = IsNotPrimes[1] = true;
-    for(int i = 2; i < 10000000; i++)
+    notprimes.insert(0);
+    notprimes.insert(1);
+    for(int i = 2; i <= std::sqrt(10'000'000); i++)
     {
-        if(IsNotPrimes[i])
+        if(notprimes.find(i) != notprimes.end()) 
             continue;
-        for(int j = i*2; j < 10000000; j+=i)
-            IsNotPrimes[j] = true;
+        for(int j = 2; i * j < 10'000'000; j++)
+            notprimes.insert(i * j);
     }
-    std::stable_sort(numbers.begin(), numbers.end(), std::less<>());
-    Check(numbers, {}, 0);
-    return primes.size();
+    std::string s;
+    Check(numbers, s, 0);
+    int answer = 0;
+    
+    for(const auto& str : strs)
+        if(notprimes.find(str) == notprimes.end())
+        {
+            //std::cout << stoi(str) << '\n';
+            answer++;
+        }
+            
+            
+    return answer;
 }
