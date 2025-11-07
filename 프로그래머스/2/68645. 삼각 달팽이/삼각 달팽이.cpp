@@ -11,19 +11,19 @@ vector<int> solution(int n)
     
     for(int i = n; i >= 1; i--)
     {
-        for(int j = 0; j < i; j++)
+        for(int j = 0; j < i-1; j++)
         {
             int idx = y * n + x;
             for(int diff = 0; diff < y; diff++)
-            {
                 idx -= (n-(diff+1));
-            }
             answer[idx] = num++;
             y += dy[dir];
             x += dx[dir];
         }
-        y -= dy[dir];
-        x -= dx[dir];
+        int idx = y * n + x;
+        for(int diff = 0; diff < y; diff++)
+            idx -= (n-(diff+1));
+        answer[idx] = num++;
         dir++;
         dir%=3;
         y += dy[dir];
