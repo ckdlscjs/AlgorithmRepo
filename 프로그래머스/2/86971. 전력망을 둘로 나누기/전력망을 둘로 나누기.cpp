@@ -1,28 +1,33 @@
-//https://school.programmers.co.kr/learn/courses/30/lessons/86971
 #include <bits/stdc++.h>
+
 using namespace std;
-std::vector<int> graph[105];
-int nodes[105];
-void dfs(int idx)
+std::vector<int> graph[102];
+int cnts[102];
+void DFS(int cur)
 {
-    nodes[idx] = 1;
-    for(const auto& next : graph[idx])
+    cnts[cur] = 1;
+    for(const auto& iter : graph[cur])
     {
-        if(nodes[next]) continue;
-        dfs(next);
-        nodes[idx] += nodes[next];
+        if(cnts[iter]) continue;
+        DFS(iter);
+        cnts[cur] += cnts[iter];
     }
 }
-int solution(int n, vector<vector<int>> wires)
+int solution(int n, vector<vector<int>> wires) 
 {
+    int answer = 100;
     for(const auto& iter : wires)
     {
         graph[iter[0]].push_back(iter[1]);
         graph[iter[1]].push_back(iter[0]);
     }
-    dfs(1);
-    int answer = INT_MAX;
+    DFS(1);
+
     for(int i = 1; i <= n; i++)
-        answer = std::min(answer, std::abs(nodes[i]*2 - n));
+    {
+        //std::cout << cnts[i] << '\n';
+        answer = std::min(answer, std::abs(cnts[i] * 2 - n));
+    }
+    
     return answer;
 }
