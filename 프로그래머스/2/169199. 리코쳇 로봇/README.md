@@ -4,7 +4,7 @@
 
 ### 성능 요약
 
-메모리: 3.68 MB, 시간: 55.68 ms
+메모리: 4.13 MB, 시간: 0.25 ms
 
 ### 구분
 
@@ -16,7 +16,7 @@
 
 ### 제출 일자
 
-2025년 02월 20일 22:06:22
+2025년 11월 20일 07:35:24
 
 ### 문제 설명
 
@@ -27,7 +27,7 @@
 <p>이 게임에서 말의 이동은 현재 위치에서 상, 하, 좌, 우 중 한 방향으로 게임판 위의 장애물이나 게임판 가장자리까지 부딪힐 때까지 미끄러져 움직이는 것을 한 번의 이동으로 정의합니다. </p>
 
 <p>다음은 보드게임판을 나타낸 예시입니다. ("."은 빈 공간을, "R"은 로봇의 처음 위치를, "D"는 장애물의 위치를, "G"는 목표지점을 나타냅니다.)</p>
-<div class="highlight" bis_skin_checked="1"><pre class="codehilite"><code>...D..R
+<div class="highlight"><pre class="codehilite"><code>...D..R
 .D.G...
 ....D.D
 D....D.
@@ -84,7 +84,7 @@ D....D.
 </ul>
 
 <p>입출력 예 #2</p>
-<div class="highlight" bis_skin_checked="1"><pre class="codehilite"><code>.D.R
+<div class="highlight"><pre class="codehilite"><code>.D.R
 ....
 .G..
 ...D
