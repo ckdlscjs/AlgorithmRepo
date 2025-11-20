@@ -1,27 +1,31 @@
-//https://school.programmers.co.kr/learn/courses/30/lessons/142085
 #include <bits/stdc++.h>
+
 using namespace std;
-int solution(int n, int k, vector<int> enemy) 
+
+int solution(int n, int k, vector<int> enemy)
 {
-    std::priority_queue<int, std::vector<int>, std::less<int>> pq;
-    int sum = 0;
-    int answer = 0;
-    for(const auto& iter : enemy)
+    int lo = -1, hi = enemy.size() + 1;
+    while(lo + 1 < hi)
     {
-        sum += iter;
-        pq.push(iter);
-        if(sum > n)
+        int mid = (lo + hi) / 2;
+        std::vector<int> temp(enemy.begin(), enemy.begin() + mid);
+        std::sort(temp.begin(), temp.end(), std::greater<>());
+        int cn = n;
+        int ck = k;
+        int idx = 0;
+        for(idx; idx < temp.size(); idx++)
         {
-            while(k && pq.size() && sum > n)
+            if(ck > 0)
             {
-                k--;
-                sum -= pq.top();
-                pq.pop();
+                ck--;
+                continue;
             }
-            if(sum > n)
+            cn -= temp[idx];
+            if(cn < 0) 
                 break;
         }
-        answer++;
+        if(idx >= temp.size()) lo = mid;
+        else hi = mid;
     }
-    return answer;
+    return lo;
 }
