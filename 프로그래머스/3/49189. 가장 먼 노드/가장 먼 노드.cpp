@@ -1,36 +1,35 @@
 #include <bits/stdc++.h>
 using namespace std;
-const int MaxN = 20005;
+std::vector<int> dist;
+std::vector<std::vector<int>> graph;
+std::queue<int> q;
 int solution(int n, vector<vector<int>> edge) 
 {
-    int dist[MaxN];
-    std::vector<int> graph[MaxN];
+    dist.resize(n+1, 0);
+    graph.resize(n+1, std::vector<int>());
     for(const auto& iter : edge)
     {
         graph[iter[0]].push_back(iter[1]);
         graph[iter[1]].push_back(iter[0]);
     }
-        
-    std::queue<int> q;
-    q.push(1);
     dist[1] = 1;
-    int dist_max = 0;
+    q.push(1);
+    int maxdist = 0;
     while(q.size())
     {
-        int cur = q.front();
+        auto cur = q.front();
         q.pop();
-        dist_max = std::max(dist_max, dist[cur]);
+        maxdist = std::max(maxdist, dist[cur]);
         for(const auto& iter : graph[cur])
         {
-            if(dist[iter])
-                continue;
-            dist[iter] = dist[cur]+1;
+            if(dist[iter]) continue;
             q.push(iter);
+            dist[iter] = dist[cur] + 1;
         }
     }
     int answer = 0;
-    for(int i = 1; i <= n; i++)
-        if(dist_max == dist[i])
+    for(const auto& iter : dist)
+        if(iter == maxdist)
             answer++;
     
     return answer;
