@@ -1,27 +1,27 @@
-//https://school.programmers.co.kr/learn/courses/30/lessons/43164
 #include <bits/stdc++.h>
 using namespace std;
-std::unordered_map<std::string, std::vector<std::pair<std::string, bool>>> graph;
-bool Check(const int counts, std::vector<std::string>& ans, std::string cur)
+std::map<std::string, std::vector<std::pair<std::string, bool>>> graph;
+bool DFS(const int& cnt, vector<string>& answer, const std::string& cur)
 {
-    ans.push_back(cur);
-    if(ans.size() > counts) return true;
-    for(auto& it : graph[cur])
+    if(answer.size() > cnt) return true;
+    for(auto& iter : graph[cur])
     {
-        if(it.second) continue;
-        it.second = true;
-        if(Check(counts, ans, it.first)) return true;
-        it.second = false;
+        if(iter.second) continue;
+        iter.second = true;
+        answer.push_back(iter.first);
+        bool res = DFS(cnt, answer, iter.first);
+        if(res) return true;
+        answer.pop_back();
+        iter.second = false;
     }
-    ans.pop_back();
     return false;
 }
 vector<string> solution(vector<vector<string>> tickets) 
 {
     for(const auto& iter : tickets) graph[iter[0]].push_back({iter[1], false});
-    for(auto& it : graph)
-        std::sort(it.second.begin(), it.second.end(), std::less<>());
+    for(auto& iter : graph) std::sort(iter.second.begin(), iter.second.end());  
     std::vector<std::string> answer;
-    Check(tickets.size(), answer, "ICN");
+    answer.push_back("ICN");
+    DFS(tickets.size(), answer, "ICN");
     return answer;
 }
