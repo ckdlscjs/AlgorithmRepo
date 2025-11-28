@@ -11,7 +11,7 @@ const int dx[] = {0, 0, -1, 1};
 const int INF = 987654321;
 int arr[1'005][1'005], cnts[1'000'005];
 int visited[1'005][1'005];
-std::priority_queue<std::tuple<int, int, int>, std::vector<std::tuple<int, int, int>>, std::greater<std::tuple<int, int, int>>> pq;
+std::deque<std::tuple<int, int, int>> dq;
 int main()
 {
     std::ios::sync_with_stdio(false);
@@ -31,17 +31,18 @@ int main()
                 if(r == 0 || c == 0 || r == R-1 || c == C-1)
                 {
                     visited[r][c] = arr[r][c];
-                    pq.push({visited[r][c], r, c});
+                    if(!arr[r][c]) dq.push_front({visited[r][c], r, c});
+                    else dq.push_back({visited[r][c], r, c});
                 }
             }
         }
         int largeIdx = 0; 
-        while(pq.size())
+        while(dq.size())
         {
-            int cc = std::get<0>(pq.top());
-            int cy = std::get<1>(pq.top());
-            int cx = std::get<2>(pq.top());
-            pq.pop();
+            int cc = std::get<0>(dq.front());
+            int cy = std::get<1>(dq.front());
+            int cx = std::get<2>(dq.front());
+            dq.pop_front();
             //std::cout << cc << ' ' << cy << ' ' << cx << '\n';
             if(cc > visited[cy][cx]) continue;
             largeIdx = std::max(cc, largeIdx);
@@ -51,7 +52,8 @@ int main()
                 int ny = cy + dy[dir];
                 int nx = cx + dx[dir];
                 if(ny < 0 || nx < 0 || ny >= R || nx >= C || visited[ny][nx] <= cc) continue;
-                pq.push({cc+arr[ny][nx], ny, nx});
+                if(cc + arr[ny][nx] <= std::get<0>(dq.front())) dq.push_front({cc+arr[ny][nx], ny, nx});
+                else dq.push_back({cc+arr[ny][nx], ny, nx});
                 visited[ny][nx] = cc + arr[ny][nx];
             }
         }
