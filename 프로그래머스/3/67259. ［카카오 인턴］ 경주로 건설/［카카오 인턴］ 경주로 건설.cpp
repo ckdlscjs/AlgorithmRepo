@@ -1,36 +1,33 @@
-//https://school.programmers.co.kr/learn/courses/30/lessons/67259
 #include <bits/stdc++.h>
 using namespace std;
-const int dy[] = {0, 0, 1, -1};
-const int dx[] = {1, -1, 0, 0};
-int costs[30][30][4];
+const int dy[] = {-1, 1, 0, 0};
+const int dx[] = {0, 0, -1, 1};
+const int INF = 987654321;
+int dist[4][26][26];
+std::queue<std::tuple<int, int, int>> q;
 int solution(vector<vector<int>> board) 
 {
-    int n = board.size();
-    std::queue<std::pair<std::pair<int, int>, int>> q;
-    std::fill_n(&costs[0][0][0], 30*30*4, 987654321);
-    costs[0][0][0] = costs[0][0][1] = costs[0][0][2] = costs[0][0][3] = 1;
-    q.push({{0, 0}, 0}); q.push({{0, 0}, 2});
+    std::fill_n(&dist[0][0][0], 4*26*26, INF);
+    dist[0][0][0] = dist[1][0][0] = dist[2][0][0] = dist[3][0][0] = 0;
+    q.push({0, 0, 0}); q.push({1, 0, 0}); q.push({2, 0, 0}); q.push({3, 0, 0});
     while(q.size())
     {
-        int y = q.front().first.first;
-        int x = q.front().first.second;
-        int cur = q.front().second;
+        int cd = std::get<0>(q.front());
+        int cy = std::get<1>(q.front());
+        int cx = std::get<2>(q.front());
         q.pop();
         for(int dir = 0; dir < 4; dir++)
         {
-            int ny = y + dy[dir];
-            int nx = x + dx[dir];
-            if(ny < 0 || nx < 0 || ny >= n || nx >= n || board[ny][nx])
-                continue;
-            int corner = (dir != cur ? 5 : 0);
-            if(costs[y][x][cur] + 1 + corner < costs[ny][nx][dir])
-            {
-                costs[ny][nx][dir] = costs[y][x][cur] + 1 + corner;
-                q.push({{ny, nx}, dir});
-            }
+            int ny = cy + dy[dir];
+            int nx = cx + dx[dir];
+            if(ny < 0 || nx < 0 || ny >= board.size() || nx >= board[0].size()) continue;
+            int nxt_cost = dist[cd][cy][cx] + 1;
+            if(cd < 2 && dir >= 2) nxt_cost += 5;
+            if(cd >= 2 && dir < 2) nxt_cost += 5;
+            if(board[ny][nx] || nxt_cost >= dist[dir][ny][nx]) continue;
+            dist[dir][ny][nx] = nxt_cost;
+            q.push({dir, ny, nx});
         }
     }
-    
-    return (std::min({costs[n-1][n-1][0], costs[n-1][n-1][1], costs[n-1][n-1][2], costs[n-1][n-1][3]}) - 1) * 100;
+    return std::min({dist[0][board.size()-1][board[0].size()-1], dist[1][board.size()-1][board[0].size()-1], dist[2][board.size()-1][board[0].size()-1], dist[3][board.size()-1][board[0].size()-1]}) * 100;
 }
