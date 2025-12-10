@@ -1,17 +1,16 @@
-//https://school.programmers.co.kr/learn/courses/30/lessons/12946
 #include <bits/stdc++.h>
+
 using namespace std;
-void Hanoi(std::vector<std::vector<int>>& ans, int n, int s, int d, int t)
+void Hanoi(std::vector<std::vector<int>>& arr, int s, int e, int t, int n)
 {
-    if(n <= 0)
-        return;
-    Hanoi(ans, n-1, s, t, d);
-    ans.push_back({s, d});
-    Hanoi(ans, n-1, t, d, s);
+    if(n <= 0) return;
+    Hanoi(arr, s, t, e, n-1);
+    arr.push_back({s, e});
+    Hanoi(arr, t, e, s, n-1);
 }
 vector<vector<int>> solution(int n) 
 {
-    std::vector<std::vector<int>> answer;
-    Hanoi(answer, n, 1, 3, 2);
+    vector<vector<int>> answer;
+    Hanoi(answer, 1, 3, 2, n);
     return answer;
 }
