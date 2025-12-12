@@ -1,50 +1,38 @@
 #include <bits/stdc++.h>
+
 using namespace std;
-struct Node
-{
-    int sum = 0;
-    std::string parent = "";
-};
-std::unordered_map<std::string, Node> trees;
-vector<int> solution(vector<string> enroll, vector<string> referral, vector<string> seller, vector<int> amount) 
-{
-    Node node;
-    node.sum = 0;
-    node.parent = "";
-    trees["-"] = node;
+//enroll    ->  판매원의이름
+//referral  ->  판매원을 참여시킨 다른판매원의이름
+//seller, amount -> 판매금액
+std::unordered_map<std::string, std::string> parent;
+vector<int> solution(vector<string> enroll, vector<string> referral, vector<string> seller, vector<int> amount) {  
     for(int i = 0; i < enroll.size(); i++)
     {
-        node.parent = referral[i];
-        trees[enroll[i]] = node;
+        parent[enroll[i]] = referral[i];
     }
-    
+    std::unordered_map<std::string, int> sell;
     for(int i = 0; i < seller.size(); i++)
     {
-        std::string sel = seller[i];
+        auto str = seller[i];
         int price = amount[i] * 100;
-  
-        while(sel != "" && price)
+        sell[str] += price;
+        while(price && parent.find(str) != parent.end())
         {
-            float upper = price * 0.1;
-            if(upper < 1.0)
-            {
-                trees[sel].sum += price;
-                price = 0;
-            }
-            else
-            {
-                trees[sel].sum += price - (int)std::floor(upper);
-                price = (int)std::floor(upper);
-            }
-            sel = trees[sel].parent;
+            int carry = price * 0.1f;
+            sell[str] -= carry;
+            price = carry;
+            //std::cout << str << ' ' << sell[str] << ", ";
+            str = parent[str];
+            sell[str] += price;
+            //std::cout << str << ' ' << sell[str] << '\n';
         }
     }
-    std::vector<int> answer;
+    vector<int> answer;
     for(int i = 0; i < enroll.size(); i++)
     {
-        answer.push_back(trees[enroll[i]].sum);
+        //std::cout << enroll[i] << ' ' << sell[enroll[i]] << '\n';
+        answer.push_back(sell[enroll[i]]);
     }
-    
     
     return answer;
 }
