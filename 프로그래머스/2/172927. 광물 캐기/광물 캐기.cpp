@@ -1,37 +1,36 @@
-//https://school.programmers.co.kr/learn/courses/30/lessons/172927
 #include <bits/stdc++.h>
+
 using namespace std;
-std::unordered_map<std::string, int> idxs;
-int arr[5][5];
-int res = INT_MAX;
-void Check(std::vector<int>& picks, const std::vector<std::string>& minerals, int idx, int sum)
+std::unordered_map<std::string, int> pick;
+const int cost[3][3] = 
 {
-    if(idx >= minerals.size() || (picks[0] | picks[1] | picks[2]) == 0)
-    {
-        res = std::min(res, sum);
-        return;
-    }
+    {1, 1, 1},
+    {5, 1, 1},
+    {25, 5, 1}
+};
+int Check(std::vector<int>& picks, const std::vector<std::string>& minerals, int cnt, int idx)
+{
+    if(idx >= minerals.size() || cnt <= 0) return 0;
+    int ret = 25 * 55;
     for(int i = 0; i < 3; i++)
     {
-        if(picks[i])
-        {
-            picks[i] -= 1;
-            int j = idx;
-            int temp = 0;
-            for(j; j < idx + 5 && j < minerals.size(); j++)
-                temp += arr[i][idxs[minerals[j]]];
-            Check(picks, minerals, j, sum + temp);
-            picks[i] += 1;
-        }
+        if(picks[i] <= 0) continue;
+        picks[i] -= 1;
+        int amount = 0;
+        for(int j = 0; j < 5 && idx + j < minerals.size(); j++)
+            amount += cost[i][pick[minerals[idx+j]]];
+        ret = std::min(ret, Check(picks, minerals, cnt - 1, idx+5) + amount);
+        picks[i] += 1;
     }
+    return ret;
 }
 int solution(vector<int> picks, vector<string> minerals) 
 {
-    idxs["diamond"] = 0; idxs["iron"] = 1; idxs["stone"] = 2;
-    arr[0][0] = arr[0][1] = arr[0][2] = arr[1][1] = arr[1][2] = arr[2][2] = 1;
-    arr[1][0] = arr[2][1] = 5;
-    arr[2][0] = 25;
-    Check(picks, minerals, 0, 0);
-    std::cout << res;
-    return res;
+    pick["diamond"] = 0;
+    pick["iron"] = 1;
+    pick["stone"] = 2;
+    int cnt = 0;
+    for(const auto& iter : picks)
+        cnt += iter;
+    return Check(picks, minerals, cnt, 0);
 }
