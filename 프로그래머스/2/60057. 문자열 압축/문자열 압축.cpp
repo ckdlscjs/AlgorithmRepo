@@ -1,51 +1,30 @@
-//https://school.programmers.co.kr/learn/courses/30/lessons/60057
 #include <bits/stdc++.h>
+
 using namespace std;
 
 int solution(string s) 
 {
     int answer = s.size();
-    for(int len = 1; len <= s.size(); len++)
-    {   
+    for(int i = 1; i <= s.size() / 2; i++)
+    {
         std::string str = s;
-        std::string temp = "";
-        int cnt = 0;
         std::string result = "";
-        while(str.size() >= len)
+        while(str.size() >= i*2)
         {
-            if(temp.empty())
+            int cnt = 1;
+            std::string origin = str.substr(0, i);
+            str = str.substr(i);
+            while(str.size() >= i && origin == str.substr(0, i))
             {
-                temp = str.substr(0, len);
-                str = str.substr(len);
                 cnt++;
+                str = str.substr(i);
             }
-            else
-            {
-                if(str.substr(0, len) == temp)
-                {
-                    str = str.substr(len);
-                    cnt++;
-                }
-                else
-                {
-                    if(cnt >= 2)
-                        temp = std::to_string(cnt) + temp;
-                    result += temp;
-                    temp.clear();
-                    cnt = 0;
-                }
-            }
-        }
-        if(temp.size())
-        {
             if(cnt >= 2)
-                temp = std::to_string(cnt) + temp;
-            result += temp;
+                result += std::to_string(cnt);
+            result += origin;
         }
-        if(str.size())
-        {
-            result += str;
-        }
+        result += str;
+        //std::cout << result << '\n';
         answer = std::min(answer, (int)result.size());
     }
     return answer;
