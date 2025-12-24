@@ -1,10 +1,10 @@
 # [level 2] 과제 진행하기 - 176962 
 
-[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/176962#) 
+[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/176962) 
 
 ### 성능 요약
 
-메모리: 4.16 MB, 시간: 1.03 ms
+메모리: 4.12 MB, 시간: 0.71 ms
 
 ### 구분
 
@@ -16,7 +16,7 @@
 
 ### 제출 일자
 
-2025년 02월 20일 21:02:44
+2025년 12월 24일 22:10:21
 
 ### 문제 설명
 

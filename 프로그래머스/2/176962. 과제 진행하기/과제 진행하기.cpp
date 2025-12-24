@@ -1,43 +1,41 @@
 #include <bits/stdc++.h>
 using namespace std;
-int calc_time(const std::string& str)
+int ConvInt(const std::string& str)
 {
     return std::stoi(str.substr(0, 2)) * 60 + std::stoi(str.substr(3));
 }
 vector<string> solution(vector<vector<string>> plans) 
 {
-    std::sort(plans.begin(), plans.end(), [](std::vector<std::string>& atom1, std::vector<std::string>& atom2) -> bool
+    std::sort(plans.begin(), plans.end(), [](const std::vector<std::string>& a, const std::vector<std::string>& b)->bool
               {
-                  return atom1[1] < atom2[1];
+                  return a[1] < b[1];
               });
+    
     vector<string> answer;
-    int cur_time = 0;
-    std::deque<std::tuple<std::string, int>> remains;
+    std::stack<std::tuple<std::string, int>> st;
+    int curtime = 0;
     for(const auto& iter : plans)
     {
-        int iter_time = calc_time(iter[1]);
-        int iter_remain = std::stoi(iter[2]);
-        while(remains.size() && cur_time + std::get<1>(remains.front()) <= iter_time)
+        std::string itername = iter[0];
+        int iterstart = ConvInt(iter[1]);
+        int itertime = std::stoi(iter[2]);
+        while(st.size() && curtime + std::get<1>(st.top()) <= iterstart)
         {
-            answer.push_back(std::get<0>(remains.front()));
-            cur_time += std::get<1>(remains.front());
-            remains.pop_front();
+            answer.push_back(std::get<0>(st.top()));
+            curtime += std::get<1>(st.top());
+            st.pop();
         }
-        if(remains.size())
+        if(st.size())
         {
-            auto front = remains.front();
-            remains.pop_front();
-            std::get<1>(front) = cur_time + std::get<1>(front) - iter_time;
-            remains.push_front(front);
+            std::get<1>(st.top()) = curtime + std::get<1>(st.top()) - iterstart;
         }
-        remains.push_front({iter[0], iter_remain});
-        cur_time = iter_time;
+        st.push({itername, itertime});
+        curtime = iterstart;
     }
-    while(remains.size())
+    while(st.size())
     {
-        answer.push_back(std::get<0>(remains.front()));
-        remains.pop_front();
+        answer.push_back(std::get<0>(st.top()));
+        st.pop();
     }
-        
     return answer;
 }
