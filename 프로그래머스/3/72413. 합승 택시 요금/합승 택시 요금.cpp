@@ -1,32 +1,32 @@
-//https://school.programmers.co.kr/learn/courses/30/lessons/72413
 #include <bits/stdc++.h>
+
 using namespace std;
-const int INF = 987654321;
-int costs[205][205];
+const int INF = 1e5*1e5+5;
+int costs[202][202];
 int solution(int n, int s, int a, int b, vector<vector<int>> fares) 
 {
-    std::fill_n(&costs[0][0], 205*205, INF);
+    std::fill_n(&costs[0][0], 202*202, INF);
     for(int i = 1; i <= n; i++) costs[i][i] = 0;
     for(const auto& iter : fares)
     {
         costs[iter[0]][iter[1]] = iter[2];
         costs[iter[1]][iter[0]] = iter[2];
     }
-    for(int m = 1; m <= n; m++)
+    for(int k = 1; k <= n; k++)
     {
-        for(int u = 1; u <= n; u++)
+        for(int i = 1; i <= n; i++)
         {
-            for(int v = 1; v <= n; v++)
+            for(int j = 1; j <= n; j++)
             {
-                if(costs[u][m] == INF || costs[m][v] == INF) continue;
-                costs[u][v] = std::min(costs[u][v], costs[u][m] + costs[m][v]);
+                if(costs[i][k] != INF && costs[k][j] != INF)
+                    costs[i][j] = std::min(costs[i][j], costs[i][k] + costs[k][j]);
             }
         }
     }
-   
-    int answer = INT_MAX;
+    std::cout << costs[s][a] << ' ' << costs[s][b] <<'\n';
+    int answer = INF;
     for(int i = 1; i <= n; i++)
-        if(costs[s][i] != INF && costs[a][i] != INF && costs[b][i] != INF)
-            answer = std::min(answer, costs[s][i] + costs[i][a] + costs[i][b]);
+        answer = std::min(answer, costs[s][i] + costs[i][a] + costs[i][b]);
+    
     return answer;
 }
