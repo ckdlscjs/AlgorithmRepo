@@ -1,65 +1,73 @@
 #include <bits/stdc++.h>
 using namespace std;
-const int dy[] = {0, 0, -1, 1};
-const int dx[] = {-1, 1, 0, 0};
+const int dy[] = {-1, 1, 0, 0};
+const int dx[] = {0, 0, -1, 1};
 int solution(vector<string> storage, vector<string> requests) 
-{  
-    int answer = storage.size() * storage[0].size();
-    std::vector<std::vector<char>> areas(storage.size()+2, std::vector<char>(storage[0].size()+2, '0'));
-    for(int i = 0; i < storage.size(); i++)
-    {
-        for(int j = 0; j < storage[0].size(); j++)
-        {
-            areas[i+1][j+1] = storage[i][j];
-        }
-    }
+{
     for(const auto& req : requests)
     {
+        std::unordered_map<std::string, std::vector<std::pair<int, int>>> alps;
         if(req.size() <= 1)
         {
-            std::vector<std::vector<bool>> visited(storage.size()+2, std::vector<bool>(storage[0].size()+2, false));
-            std::set<std::pair<int, int>> erases;
+            std::vector<std::vector<bool>> visited(storage.size(), std::vector<bool>(storage[0].size(), false));
             std::queue<std::pair<int, int>> q;
-            q.push({0, 0});
-            visited[0][0] = true;
+            for(int i = 0; i < storage.size(); i++)
+            {
+                for(int j = 0; j < storage[i].size(); j++)
+                {
+                    if(i == 0 || j == 0 || i >= storage.size()-1 || j >= storage[0].size()-1)
+                    {
+                        q.push({i, j});
+                        visited[i][j] = true;
+                    }
+                }
+            }
             while(q.size())
             {
                 auto cur = q.front();
                 q.pop();
-                for(int dir = 0; dir < 4; dir++)
+                int cy = cur.first;
+                int cx = cur.second;
+                if(storage[cy][cx] != '0') alps[std::string(1, storage[cy][cx])].push_back({cy, cx});
+                else
                 {
-                    int ny = cur.first + dy[dir];
-                    int nx = cur.second + dx[dir];
-                    if(ny < 0 || nx < 0 || ny >= areas.size() || nx >= areas[0].size() || visited[ny][nx]) continue;
-                    if(areas[ny][nx] == '0')
+                    for(int dir = 0; dir < 4; dir++)
                     {
-                        q.push({ny, nx});
+                        int ny = cy + dy[dir];
+                        int nx = cx + dx[dir];
+                        if(ny < 0 || nx < 0 || ny >= storage.size() || nx >= storage[0].size()) continue;
+                        if(visited[ny][nx]) continue;
                         visited[ny][nx] = true;
-                    }
-                    else if(areas[ny][nx] == req[0])
-                    {
-                        erases.insert({ny, nx});
+                        q.push({ny, nx});
                     }
                 }
             }
-            answer -= erases.size();
-            for(const auto& iter : erases)
-                areas[iter.first][iter.second] = '0';
         }
         else
         {
-            for(int i = 1; i <= storage.size(); i++)
+            for(int i = 0; i < storage.size(); i++)
             {
-                for(int j = 1; j <= storage[0].size(); j++)
+                for(int j = 0; j < storage[i].size(); j++)
                 {
-                    if(areas[i][j] == req[0])
-                    {
-                        areas[i][j] = '0';
-                        answer--;
-                    }
+                    if(storage[i][j] == '0') continue;
+                    std::string cur(1, storage[i][j]);
+                    alps[cur + storage[i][j]].push_back({i, j});
                 }
             }
         }
+        for(const auto& iter : alps[req])
+                storage[iter.first][iter.second] = '0';
     }
+    int answer = 0;
+    for(int i = 0; i < storage.size(); i++)
+    {
+        for(int j = 0; j < storage[i].size(); j++)
+        {
+            //std::cout << storage[i][j] << ' ';
+            if(storage[i][j] != '0')
+                answer++;
+        }
+        //std::cout << '\n';
+    }        
     return answer;
 }
