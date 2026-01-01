@@ -1,43 +1,59 @@
-//https://school.programmers.co.kr/learn/courses/30/lessons/60059
 #include <bits/stdc++.h>
+
 using namespace std;
-std::vector<std::vector<int>> RotateKey(vector<vector<int>>& key)
+
+void RotateCW(std::vector<std::vector<int>>& arr)
 {
-    std::vector<std::vector<int>> ret(key.size(), std::vector<int>(key.size(), 0));
-    for(int i = 0; i < key.size(); i++)
-        for(int j = 0; j < key[i].size(); j++)
-            ret[j][key.size() - 1 - i] = key[i][j];
-    return ret;
+    std::vector<std::vector<int>> temp(arr.size(), std::vector<int>(arr[0].size(), 0));
+    for(int i = 0; i < arr.size(); i++)
+        for(int j = 0; j < arr[i].size(); j++)
+            temp[i][j] = arr[arr.size() - 1 - j][i];
+    for(int i = 0; i < arr.size(); i++)
+        for(int j = 0; j < arr[i].size(); j++)
+            arr[i][j] = temp[i][j];
 }
-bool Check(const vector<vector<int>>& key, const int& y, const int& x, vector<vector<int>> lock)
+bool Check(const std::vector<std::vector<int>>& key, const std::vector<std::vector<int>>& lock)
 {
-    for(int i = 0; i < key.size(); i++)
-        for(int j = 0; j < key.size(); j++)
-            lock[y + i][x + j] += key[i][j];
-    
-    for(int i = 0; i < lock.size() - key.size() * 2; i++)
-        for(int j = 0; j < lock.size() - key.size() * 2; j++)
-            if(lock[key.size() + i][key.size() + j] != 1) 
-                return false;
-    return true;
+    int n = lock.size();
+    for(int i = -n; i < n; i++)
+    {
+        for(int j = -n; j < n; j++)
+        {
+            int cnt = 0;
+            for(int ii = 0; ii < lock.size(); ii++)
+            {
+                for(int jj = 0; jj < lock[0].size(); jj++)
+                {
+                    int ny = i + ii;
+                    int nx = j + jj;
+                    if(ny < 0 || nx < 0 || ny >= key.size() || nx >= key[0].size())
+                    {
+                        if(!lock[ii][jj]) 
+                            break;
+                    }
+                    else
+                    {
+                        if(lock[ii][jj] && key[ny][nx])
+                            break;
+                        if(!lock[ii][jj] && !key[ny][nx])
+                            break;
+                    }
+                    cnt++;
+                }
+            }
+            if(cnt >= lock.size() * lock[0].size())
+                return true;
+        }
+    }
+    return false;
 }
 bool solution(vector<vector<int>> key, vector<vector<int>> lock) 
-{
-    int b = lock.size() + key.size() * 2;
-    std::vector<std::vector<int>> arr(b, std::vector<int>(b, 0));
-    
-    for(int i = 0; i < lock.size(); i++)
-        for(int j = 0; j < lock.size(); j++)
-            arr[key.size() + i][key.size() + j] = lock[i][j];
-    
-    for(int r = 0; r < 4; r++)
+{ 
+    for(int i = 0; i < 4; i++)
     {
-        for(int offset_i = 0; offset_i < b - key.size(); offset_i++)
-            for(int offset_j = 0; offset_j < b - key.size(); offset_j++)
-                if(Check(key, offset_i, offset_j, arr))
-                    return true;
-        key = RotateKey(key);
+        RotateCW(key);
+        if(Check(key, lock))
+            return true;
     }
-    
     return false;
 }
