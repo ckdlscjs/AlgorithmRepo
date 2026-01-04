@@ -1,21 +1,21 @@
 #include <bits/stdc++.h>
 using namespace std;
-int arr[15];
-bool CheckQueen(int y)
+
+bool diagonal_ru[30];
+bool diagonal_ld[30];
+bool vertical[15];
+int Check(const int n, int i)
 {
-    for(int i = 0; i < y; i++)
-        if(arr[y] == arr[i] || y-i == std::abs(arr[y] - arr[i])) return false;
-    return true;
-}
-int Check(const int& n, int y)
-{
-    if(y >= n) return 1;
+    if(i >= n) return 1;
     int ret = 0;
     for(int j = 0; j < n; j++)
     {
-        arr[y] = j;
-        if(CheckQueen(y))
-            ret += Check(n, y+1);
+        if(!vertical[j] & !diagonal_ru[i+j] & !diagonal_ld[i-j+n-1])
+        {
+            vertical[j] = diagonal_ru[i+j] = diagonal_ld[i-j+n-1] = true;
+            ret += Check(n, i+1);
+            vertical[j] = diagonal_ru[i+j] = diagonal_ld[i-j+n-1] = false;
+        }
     }
     return ret;
 }
