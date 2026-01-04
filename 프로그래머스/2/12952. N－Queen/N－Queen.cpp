@@ -2,7 +2,7 @@
 using namespace std;
 
 bool diagonal_ru[30];
-bool diagonal_ld[30];
+bool diagonal_rd[30];
 bool vertical[15];
 int Check(const int n, int i)
 {
@@ -10,11 +10,11 @@ int Check(const int n, int i)
     int ret = 0;
     for(int j = 0; j < n; j++)
     {
-        if(!vertical[j] & !diagonal_ru[i+j] & !diagonal_ld[i-j+n-1])
+        if(!vertical[j] & !diagonal_ru[i+j] & !diagonal_rd[i-j+n-1])
         {
-            vertical[j] = diagonal_ru[i+j] = diagonal_ld[i-j+n-1] = true;
+            vertical[j] = diagonal_ru[i+j] = diagonal_rd[i-j+n-1] = true;
             ret += Check(n, i+1);
-            vertical[j] = diagonal_ru[i+j] = diagonal_ld[i-j+n-1] = false;
+            vertical[j] = diagonal_ru[i+j] = diagonal_rd[i-j+n-1] = false;
         }
     }
     return ret;
