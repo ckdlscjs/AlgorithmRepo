@@ -1,90 +1,96 @@
 #include <bits/stdc++.h>
-/*
-"U X": 현재 선택된 행에서 X칸 위에 있는 행을 선택합니다.
-"D X": 현재 선택된 행에서 X칸 아래에 있는 행을 선택합니다.
-"C" : 현재 선택된 행을 삭제한 후, 바로 아래 행을 선택합니다. 단, 삭제된 행이 가장 마지막 행인 경우 바로 윗 행을 선택합니다.
-"Z" : 가장 최근에 삭제된 행을 원래대로 복구합니다. 단, 현재 선택된 행은 바뀌지 않습니다.
-n : 행 개수
-k : 처음 선택된 행의 위치
-cmd : 명령어들이 담긴 문자열배열
-*/
+
 using namespace std;
+//0행~마지막행을 벗어나지 않는다
+//U -> 현재칸에서 X칸위
+//D -> 현재칸에서 X칸아래
+//C -> 현재선택칸 삭제후 아래행을 선택한다, 마지막행일경우 윗행을선택한다
+//Z -> 최근 삭제행을 되돌린다, 현재선택행이 바뀌지않는다
 struct Node
 {
-    int idx = 0;
-    Node* prev = nullptr;
-    Node* next = nullptr;
-    Node(int _idx) : idx(_idx), prev(nullptr), next(nullptr) {}
+    int value;
+    Node* prev;
+    Node* next;
 };
+std::string answer;
 Node* cursor;
+Node* lists;
 std::stack<Node*> st;
-bool check[1000005];
-void Order(const std::string& order)
-{
-    int X = order.size() <= 1 ? 0 : std::stoi(order.substr(2));
-    if(order[0] == 'U')
-    {
-        for(int i = 0; i < X; i++)
-            cursor = cursor->prev;
-    }
-    if(order[0] == 'D')
-    {
-        for(int i = 0; i < X; i++)
-            cursor = cursor->next;
-    }
-    if(order[0] == 'C')
-    {   
-        check[cursor->idx] = false;
-        st.push(cursor);
-        Node* prevNode = cursor->prev;
-        Node* nextNode = cursor->next;
-        if(prevNode)
-            prevNode->next = nextNode;
-        if(nextNode)
-            nextNode->prev = prevNode; 
-        cursor = (nextNode) ? nextNode : prevNode;
-    }
-    if(order[0] == 'Z')
-    {
-        Node* delNode = st.top();
-        check[delNode->idx] = true;
-        st.pop();
-        if(delNode->prev)
-            delNode->prev->next = delNode;
-        if(delNode->next)
-            delNode->next->prev = delNode;
-    }
-}
-
 string solution(int n, int k, vector<string> cmd) 
 {
-    string answer = "";
-    
-    std::memset(check, true, sizeof(check));
-    Node* head = new Node(0);
-    Node* temp = head;
-    cursor = head;
-    for(int i = 1; i < n; i++)
-    {
-        Node* newNode = new Node(i);
-        newNode->prev = temp;
-        temp->next = newNode;
-        temp = newNode;
-        if(i == k)
-            cursor = newNode;
-        
-    }
-    for(int i = 0; i < cmd.size(); i++)
-        Order(cmd[i]);
-   
-    while(head)
-    {
-        Node* nextNode = head->next;
-        delete head;
-        head = nextNode;
-    }
+    answer = std::string(n, 'O');
     for(int i = 0; i < n; i++)
-        answer += check[i] ? "O" : "X";
-  
+    {
+        Node* newNode = new Node();
+        newNode->value = i;
+        if(lists)
+            lists->next = newNode;
+        newNode->prev = lists;
+        lists = newNode;
+    }
+    while(lists->prev != nullptr)
+        lists = lists->prev;
+    cursor = lists;
+    for(int i = 0; i < k; i++)
+        cursor = cursor->next;
+
+    for(const auto& iter : cmd)
+    {
+        int X;
+        if(iter[0] == 'U')
+        {
+            X = std::stoi(iter.substr(2));
+            for(int i = 0; i < X && cursor->prev != nullptr; i++)
+                cursor = cursor->prev;
+        }
+        else if(iter[0] == 'D')
+        {
+            X = std::stoi(iter.substr(2));
+            for(int i = 0; i < X && cursor->next != nullptr; i++)
+                cursor = cursor->next;
+        }
+        else if(iter[0] == 'C')
+        {
+            answer[cursor->value] = 'X';
+            st.push(cursor);
+            Node* prevNode = cursor->prev;
+            Node* nextNode = cursor->next;
+            if(prevNode != nullptr)
+                prevNode->next = nextNode;
+            if(nextNode == nullptr)
+            {
+                 cursor = prevNode; 
+            }
+            else
+            {
+                cursor = nextNode;
+                cursor->prev = prevNode; 
+            }  
+        }
+        else if(iter[0] == 'Z')
+        {
+            auto cur = st.top();
+            st.pop();
+            answer[cur->value] = 'O';
+            if(cur->prev == nullptr)
+            {
+                Node* nextNode = cur->next;
+                nextNode->prev = cur;
+            }
+            else if(cur->next == nullptr)
+            {
+                Node* prevNode = cur->prev;
+                prevNode->next = cur;
+            }
+            else
+            {
+                Node* nextNode = cur->next;
+                Node* prevNode = cur->prev;
+                prevNode->next = cur;
+                nextNode->prev = cur;
+            }
+        }
+    }
+    
     return answer;
 }
