@@ -2,83 +2,78 @@
 using namespace std;
 struct Node
 {
-    int left = -1;
-    int right = -1; 
-    int value = -1;
-    int idx = -1;
+    int val = 0;
+    int x = 0;
+    std::vector<Node> left;
+    std::vector<Node> right;
 };
-Node node[10005];
-void InsertNode(int parent, int idx, int value)
+void Insert(Node& cur, const std::vector<int>& node)
 {
-    if(node[parent].value == -1)
+    if(cur.val == 0)
     {
-        node[parent].idx = idx;
-        node[parent].value = value;
+        cur.val = node[2];
+        cur.x = node[0];
+        return;
     }
-    else if(value < node[parent].value)
+    if(node[0] < cur.x)
     {
-        if(node[parent].left == -1)
-        {
-            node[parent].left = idx;
-            node[idx].idx = idx;
-            node[idx].value = value;
-        }
-        else
-            InsertNode(node[parent].left, idx, value);
+        if(!cur.left.size()) cur.left.push_back(Node());
+        Insert(cur.left[0], node);
     }
     else
     {
-       if(node[parent].right == -1)
-        {
-            node[parent].right = idx;
-            node[idx].idx = idx;
-            node[idx].value = value;
-        }
-        else
-            InsertNode(node[parent].right, idx, value);
+        if(!cur.right.size()) cur.right.push_back(Node());
+        Insert(cur.right[0], node);
     }
 }
-void PreOrder(int idx, std::vector<int>& ans)
+void PrintInOrder(const Node& cur)
 {
-    ans.push_back(node[idx].idx);
-    if(node[idx].left != -1)
-        PreOrder(node[idx].left, ans);
-    if(node[idx].right != -1)
-        PreOrder(node[idx].right, ans);
+    if(cur.left.size()) PrintInOrder(cur.left[0]);
+    std::cout << cur.val << ' ';
+    if(cur.right.size()) PrintInOrder(cur.right[0]);
 }
-void PostOrder(int idx, std::vector<int>& ans)
+std::vector<int> PreOrder(const Node& cur)
 {
-    if(node[idx].left != -1)
-        PostOrder(node[idx].left, ans);
-    if(node[idx].right != -1)
-        PostOrder(node[idx].right, ans);
-    ans.push_back(node[idx].idx);
+    std::vector<int> ret;
+    ret.push_back(cur.val);
+    if(cur.left.size())
+    {
+        auto temp = PreOrder(cur.left[0]);
+        ret.insert(ret.begin() + ret.size(), temp.begin(), temp.end());
+    }
+    if(cur.right.size())
+    {
+        auto temp = PreOrder(cur.right[0]);
+        ret.insert(ret.begin() + ret.size(), temp.begin(), temp.end());
+    }
+    return ret;
 }
-std::priority_queue<std::pair<int, std::pair<int, int>>, std::vector<std::pair<int, std::pair<int, int>>>,
-std::less<std::pair<int, std::pair<int, int>>>> pq;
+
+std::vector<int> PostOrder(const Node& cur)
+{
+    std::vector<int> ret;
+    if(cur.left.size())
+    {
+        auto temp = PostOrder(cur.left[0]);
+        ret.insert(ret.begin() + ret.size(), temp.begin(), temp.end());
+    }
+    if(cur.right.size())
+    {
+        auto temp = PostOrder(cur.right[0]);
+        ret.insert(ret.begin() + ret.size(), temp.begin(), temp.end());
+    }
+    ret.push_back(cur.val);
+    return ret;
+}
 vector<vector<int>> solution(vector<vector<int>> nodeinfo) 
 {
-    for(int i = 0; i < nodeinfo.size(); i++)
-    {
-        int x = nodeinfo[i][0];
-        int y = nodeinfo[i][1];
-        pq.push({y,{i+1, x}});
-    }
-    int rootidx = pq.top().second.first;
-    while(pq.size())
-    {
-        auto iter = pq.top();
-        pq.pop();
-        InsertNode(rootidx, iter.second.first, iter.second.second);
-    }
-    vector<vector<int>> answer;
-    std::vector<int> ans;
-    PreOrder(rootidx, ans);
-    answer.push_back(ans);
-    ans.clear();
-    PostOrder(rootidx, ans);
-    answer.push_back(ans);
-    ans.clear();
-    
-    return answer;
+    for(int i = 0; i < nodeinfo.size(); i++) nodeinfo[i].push_back(i+1);
+    std::sort(nodeinfo.begin(), nodeinfo.end(), [](const std::vector<int>& a, const std::vector<int>& b)
+              {
+                  return a[1] > b[1];
+              });
+    Node root;
+    for(const auto& iter : nodeinfo) Insert(root, iter);
+    //PrintInOrder(root);
+    return {PreOrder(root), PostOrder(root)};
 }
