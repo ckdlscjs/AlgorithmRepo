@@ -1,7 +1,7 @@
 #include <bits/stdc++.h>
 
 using namespace std;
-
+const int maxDivisor = 1e7;
 vector<int> solution(long long begin, long long end) 
 {
     vector<int> answer;
@@ -18,7 +18,7 @@ vector<int> solution(long long begin, long long end)
             if(begin % i == 0)
             {
                 res = std::max(res, i);
-                if(begin / i <= 10'000'000)
+                if(begin / i <= maxDivisor)
                 {
                     res = begin / i;
                     break;
