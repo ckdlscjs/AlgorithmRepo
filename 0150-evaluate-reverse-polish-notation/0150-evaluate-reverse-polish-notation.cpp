@@ -26,25 +26,25 @@ public:
                 switch(iter[0])
                 {
                     case '+' :
-                    
+                    {
                         num = rval + lval;
                         break;
-                    
+                    }
                     case '-' :
-                    
+                    {
                         num = rval - lval;
                         break;
-                    
+                    }
                     case '*' :
-                    
+                    {
                         num = rval * lval;
                         break;
-                    
+                    }
                     case '/' :
-                    
+                    {
                         num = rval / lval;
                         break;
-                    
+                    }
                 }
                 st.push(num);
             }   
