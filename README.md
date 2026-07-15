@@ -6,6 +6,7 @@ This is a auto push repository for Baekjoon Online Judge created with [BaekjoonH
 ## Array
 |  |
 | ------- |
+| [0150-evaluate-reverse-polish-notation](https://github.com/ckdlscjs/AlgorithmRepo/tree/master/0150-evaluate-reverse-polish-notation) |
 | [1441-build-an-array-with-stack-operations](https://github.com/ckdlscjs/AlgorithmRepo/tree/master/1441-build-an-array-with-stack-operations) |
 | [1929-concatenation-of-array](https://github.com/ckdlscjs/AlgorithmRepo/tree/master/1929-concatenation-of-array) |
 ## Simulation
@@ -16,5 +17,10 @@ This is a auto push repository for Baekjoon Online Judge created with [BaekjoonH
 ## Stack
 |  |
 | ------- |
+| [0150-evaluate-reverse-polish-notation](https://github.com/ckdlscjs/AlgorithmRepo/tree/master/0150-evaluate-reverse-polish-notation) |
 | [1441-build-an-array-with-stack-operations](https://github.com/ckdlscjs/AlgorithmRepo/tree/master/1441-build-an-array-with-stack-operations) |
+## Math
+|  |
+| ------- |
+| [0150-evaluate-reverse-polish-notation](https://github.com/ckdlscjs/AlgorithmRepo/tree/master/0150-evaluate-reverse-polish-notation) |
 <!---LeetCode Topics End-->
