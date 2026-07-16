@@ -4,7 +4,7 @@ auto fastio = []()
     std::cin.tie(0);
     std::cout.tie(0);
     return 0;
-}();
+};
 
 class Solution 
 {
