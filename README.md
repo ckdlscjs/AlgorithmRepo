@@ -6,6 +6,7 @@ This is a auto push repository for Baekjoon Online Judge created with [BaekjoonH
 ## Array
 |  |
 | ------- |
+| [0084-largest-rectangle-in-histogram](https://github.com/ckdlscjs/AlgorithmRepo/tree/master/0084-largest-rectangle-in-histogram) |
 | [0150-evaluate-reverse-polish-notation](https://github.com/ckdlscjs/AlgorithmRepo/tree/master/0150-evaluate-reverse-polish-notation) |
 | [0636-exclusive-time-of-functions](https://github.com/ckdlscjs/AlgorithmRepo/tree/master/0636-exclusive-time-of-functions) |
 | [0739-daily-temperatures](https://github.com/ckdlscjs/AlgorithmRepo/tree/master/0739-daily-temperatures) |
@@ -19,6 +20,7 @@ This is a auto push repository for Baekjoon Online Judge created with [BaekjoonH
 ## Stack
 |  |
 | ------- |
+| [0084-largest-rectangle-in-histogram](https://github.com/ckdlscjs/AlgorithmRepo/tree/master/0084-largest-rectangle-in-histogram) |
 | [0150-evaluate-reverse-polish-notation](https://github.com/ckdlscjs/AlgorithmRepo/tree/master/0150-evaluate-reverse-polish-notation) |
 | [0636-exclusive-time-of-functions](https://github.com/ckdlscjs/AlgorithmRepo/tree/master/0636-exclusive-time-of-functions) |
 | [0739-daily-temperatures](https://github.com/ckdlscjs/AlgorithmRepo/tree/master/0739-daily-temperatures) |
@@ -30,5 +32,6 @@ This is a auto push repository for Baekjoon Online Judge created with [BaekjoonH
 ## Monotonic Stack
 |  |
 | ------- |
+| [0084-largest-rectangle-in-histogram](https://github.com/ckdlscjs/AlgorithmRepo/tree/master/0084-largest-rectangle-in-histogram) |
 | [0739-daily-temperatures](https://github.com/ckdlscjs/AlgorithmRepo/tree/master/0739-daily-temperatures) |
 <!---LeetCode Topics End-->
