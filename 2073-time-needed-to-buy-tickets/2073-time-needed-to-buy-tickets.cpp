@@ -11,18 +11,17 @@ class Solution
 public:
     int timeRequiredToBuy(vector<int>& tickets, int k) 
     {
-        std::queue<int> q;
-        for(int i = 0; i < tickets.size(); i++)
-            q.push(i);
         int ret = 0;
-        while(tickets[k] > 0)
+        for(int i = 0; i < tickets.size(); i++)
         {
-            int cur = q.front(); q.pop();
-            tickets[cur]--;
-            if(tickets[cur] > 0)
-                q.push(cur);
-            ret++;
+            if(tickets[i] < tickets[k]) ret += tickets[i];
+            else
+            {
+                if(i <= k) ret += tickets[k];
+                else ret += tickets[k] - 1;
+            }
         }
+       
         return ret;
     }
 };
