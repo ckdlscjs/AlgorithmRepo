@@ -10,6 +10,7 @@ This is a auto push repository for Baekjoon Online Judge created with [BaekjoonH
 | [0150-evaluate-reverse-polish-notation](https://github.com/ckdlscjs/AlgorithmRepo/tree/master/0150-evaluate-reverse-polish-notation) |
 | [0636-exclusive-time-of-functions](https://github.com/ckdlscjs/AlgorithmRepo/tree/master/0636-exclusive-time-of-functions) |
 | [0739-daily-temperatures](https://github.com/ckdlscjs/AlgorithmRepo/tree/master/0739-daily-temperatures) |
+| [1046-last-stone-weight](https://github.com/ckdlscjs/AlgorithmRepo/tree/master/1046-last-stone-weight) |
 | [1441-build-an-array-with-stack-operations](https://github.com/ckdlscjs/AlgorithmRepo/tree/master/1441-build-an-array-with-stack-operations) |
 | [1700-number-of-students-unable-to-eat-lunch](https://github.com/ckdlscjs/AlgorithmRepo/tree/master/1700-number-of-students-unable-to-eat-lunch) |
 | [1929-concatenation-of-array](https://github.com/ckdlscjs/AlgorithmRepo/tree/master/1929-concatenation-of-array) |
@@ -50,4 +51,8 @@ This is a auto push repository for Baekjoon Online Judge created with [BaekjoonH
 |  |
 | ------- |
 | [0232-implement-queue-using-stacks](https://github.com/ckdlscjs/AlgorithmRepo/tree/master/0232-implement-queue-using-stacks) |
+## Heap (Priority Queue)
+|  |
+| ------- |
+| [1046-last-stone-weight](https://github.com/ckdlscjs/AlgorithmRepo/tree/master/1046-last-stone-weight) |
 <!---LeetCode Topics End-->
