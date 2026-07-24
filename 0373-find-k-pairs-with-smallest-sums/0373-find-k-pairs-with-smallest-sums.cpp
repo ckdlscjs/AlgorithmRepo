@@ -11,8 +11,8 @@ public:
     vector<vector<int>> kSmallestPairs(vector<int>& nums1, vector<int>& nums2, int k) 
     {
         std::priority_queue<tiii, std::vector<tiii>, std::greater<tiii>> pq;
-        
-        for(int i = 0; i < std::min(k, (int)nums1.size()); i++)
+        int smallest = std::min(k, (int)(nums1.size()));
+        for(int i = 0; i < smallest; i++)
         {
             pq.push({nums1[i] + nums2[0], i, 0});
         }
