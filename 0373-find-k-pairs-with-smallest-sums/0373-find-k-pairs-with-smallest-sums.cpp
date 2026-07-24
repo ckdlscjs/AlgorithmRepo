@@ -19,7 +19,7 @@ public:
 
         std::vector<std::vector<int>> ret;
         int i = 1;
-        while(k)
+        while(k && !pq.empty())
         {
             k--;
             auto iter = pq.top(); pq.pop();
