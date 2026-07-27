@@ -12,6 +12,7 @@ This is a auto push repository for Baekjoon Online Judge created with [BaekjoonH
 | [0636-exclusive-time-of-functions](https://github.com/ckdlscjs/AlgorithmRepo/tree/master/0636-exclusive-time-of-functions) |
 | [0739-daily-temperatures](https://github.com/ckdlscjs/AlgorithmRepo/tree/master/0739-daily-temperatures) |
 | [1046-last-stone-weight](https://github.com/ckdlscjs/AlgorithmRepo/tree/master/1046-last-stone-weight) |
+| [1354-construct-target-array-with-multiple-sums](https://github.com/ckdlscjs/AlgorithmRepo/tree/master/1354-construct-target-array-with-multiple-sums) |
 | [1441-build-an-array-with-stack-operations](https://github.com/ckdlscjs/AlgorithmRepo/tree/master/1441-build-an-array-with-stack-operations) |
 | [1700-number-of-students-unable-to-eat-lunch](https://github.com/ckdlscjs/AlgorithmRepo/tree/master/1700-number-of-students-unable-to-eat-lunch) |
 | [1929-concatenation-of-array](https://github.com/ckdlscjs/AlgorithmRepo/tree/master/1929-concatenation-of-array) |
@@ -57,4 +58,5 @@ This is a auto push repository for Baekjoon Online Judge created with [BaekjoonH
 | ------- |
 | [0373-find-k-pairs-with-smallest-sums](https://github.com/ckdlscjs/AlgorithmRepo/tree/master/0373-find-k-pairs-with-smallest-sums) |
 | [1046-last-stone-weight](https://github.com/ckdlscjs/AlgorithmRepo/tree/master/1046-last-stone-weight) |
+| [1354-construct-target-array-with-multiple-sums](https://github.com/ckdlscjs/AlgorithmRepo/tree/master/1354-construct-target-array-with-multiple-sums) |
 <!---LeetCode Topics End-->
