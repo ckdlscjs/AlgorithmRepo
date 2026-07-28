@@ -42,7 +42,7 @@ public:
                 ret = "+*-***-***-";
             else if(cnt == 12)
                 ret = "+**-***-***-";
-            else if(cnt == 13)
+            else
                 ret = "+***-***-***-";
             ret += local[cnt-4];
             ret += local[cnt-3];
