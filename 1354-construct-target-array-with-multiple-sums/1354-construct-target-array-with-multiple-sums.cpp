@@ -20,7 +20,7 @@ public:
         while(!pq.empty() && pq.top() != 1)
         {
             auto top = pq.top(); pq.pop();
-            int R = sum - top;
+            long long R = sum - top;
             if(R == 1) return true;
             if(R < 1 || top <= R || top % R == 0) return false;
             int prev = top % R;
