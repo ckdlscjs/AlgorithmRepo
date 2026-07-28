@@ -64,4 +64,5 @@ This is a auto push repository for Baekjoon Online Judge created with [BaekjoonH
 | ------- |
 | [0482-license-key-formatting](https://github.com/ckdlscjs/AlgorithmRepo/tree/master/0482-license-key-formatting) |
 | [0520-detect-capital](https://github.com/ckdlscjs/AlgorithmRepo/tree/master/0520-detect-capital) |
+| [0831-masking-personal-information](https://github.com/ckdlscjs/AlgorithmRepo/tree/master/0831-masking-personal-information) |
 <!---LeetCode Topics End-->
