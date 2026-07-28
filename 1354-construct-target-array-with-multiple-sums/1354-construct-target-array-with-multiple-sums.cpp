@@ -20,11 +20,11 @@ public:
         while(!pq.empty() && pq.top() != 1)
         {
             auto top = pq.top(); pq.pop();
-            long long mod = sum - top;
-            if(mod == 1) return true;
-            if( mod <= 0 || top <= mod || top % mod == 0) return false;
-            int prev = top % mod;
-            sum = mod + prev;
+            int R = sum - top;
+            if(R == 1) return true;
+            if(R < 1 || top <= R || top % R == 0) return false;
+            int prev = top % R;
+            sum = prev + R;
             pq.push(prev);
         }
         return true;
