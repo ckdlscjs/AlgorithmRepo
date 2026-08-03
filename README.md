@@ -74,4 +74,8 @@ This is a auto push repository for Baekjoon Online Judge created with [BaekjoonH
 | [0459-repeated-substring-pattern](https://github.com/ckdlscjs/AlgorithmRepo/tree/master/0459-repeated-substring-pattern) |
 | [0686-repeated-string-match](https://github.com/ckdlscjs/AlgorithmRepo/tree/master/0686-repeated-string-match) |
 | [0796-rotate-string](https://github.com/ckdlscjs/AlgorithmRepo/tree/master/0796-rotate-string) |
+## Linked List
+|  |
+| ------- |
+| [0083-remove-duplicates-from-sorted-list](https://github.com/ckdlscjs/AlgorithmRepo/tree/master/0083-remove-duplicates-from-sorted-list) |
 <!---LeetCode Topics End-->
