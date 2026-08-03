@@ -78,4 +78,5 @@ This is a auto push repository for Baekjoon Online Judge created with [BaekjoonH
 |  |
 | ------- |
 | [0083-remove-duplicates-from-sorted-list](https://github.com/ckdlscjs/AlgorithmRepo/tree/master/0083-remove-duplicates-from-sorted-list) |
+| [0328-odd-even-linked-list](https://github.com/ckdlscjs/AlgorithmRepo/tree/master/0328-odd-even-linked-list) |
 <!---LeetCode Topics End-->
