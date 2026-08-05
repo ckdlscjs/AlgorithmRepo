@@ -79,6 +79,7 @@ This is a auto push repository for Baekjoon Online Judge created with [BaekjoonH
 |  |
 | ------- |
 | [0083-remove-duplicates-from-sorted-list](https://github.com/ckdlscjs/AlgorithmRepo/tree/master/0083-remove-duplicates-from-sorted-list) |
+| [0138-copy-list-with-random-pointer](https://github.com/ckdlscjs/AlgorithmRepo/tree/master/0138-copy-list-with-random-pointer) |
 | [0206-reverse-linked-list](https://github.com/ckdlscjs/AlgorithmRepo/tree/master/0206-reverse-linked-list) |
 | [0328-odd-even-linked-list](https://github.com/ckdlscjs/AlgorithmRepo/tree/master/0328-odd-even-linked-list) |
 ## Recursion
@@ -89,4 +90,5 @@ This is a auto push repository for Baekjoon Online Judge created with [BaekjoonH
 |  |
 | ------- |
 | [0001-two-sum](https://github.com/ckdlscjs/AlgorithmRepo/tree/master/0001-two-sum) |
+| [0138-copy-list-with-random-pointer](https://github.com/ckdlscjs/AlgorithmRepo/tree/master/0138-copy-list-with-random-pointer) |
 <!---LeetCode Topics End-->
