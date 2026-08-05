@@ -7,6 +7,7 @@ This is a auto push repository for Baekjoon Online Judge created with [BaekjoonH
 |  |
 | ------- |
 | [0001-two-sum](https://github.com/ckdlscjs/AlgorithmRepo/tree/master/0001-two-sum) |
+| [0041-first-missing-positive](https://github.com/ckdlscjs/AlgorithmRepo/tree/master/0041-first-missing-positive) |
 | [0084-largest-rectangle-in-histogram](https://github.com/ckdlscjs/AlgorithmRepo/tree/master/0084-largest-rectangle-in-histogram) |
 | [0150-evaluate-reverse-polish-notation](https://github.com/ckdlscjs/AlgorithmRepo/tree/master/0150-evaluate-reverse-polish-notation) |
 | [0373-find-k-pairs-with-smallest-sums](https://github.com/ckdlscjs/AlgorithmRepo/tree/master/0373-find-k-pairs-with-smallest-sums) |
@@ -90,5 +91,6 @@ This is a auto push repository for Baekjoon Online Judge created with [BaekjoonH
 |  |
 | ------- |
 | [0001-two-sum](https://github.com/ckdlscjs/AlgorithmRepo/tree/master/0001-two-sum) |
+| [0041-first-missing-positive](https://github.com/ckdlscjs/AlgorithmRepo/tree/master/0041-first-missing-positive) |
 | [0138-copy-list-with-random-pointer](https://github.com/ckdlscjs/AlgorithmRepo/tree/master/0138-copy-list-with-random-pointer) |
 <!---LeetCode Topics End-->
