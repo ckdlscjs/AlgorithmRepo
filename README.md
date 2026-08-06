@@ -17,6 +17,7 @@ This is a auto push repository for Baekjoon Online Judge created with [BaekjoonH
 | [1354-construct-target-array-with-multiple-sums](https://github.com/ckdlscjs/AlgorithmRepo/tree/master/1354-construct-target-array-with-multiple-sums) |
 | [1441-build-an-array-with-stack-operations](https://github.com/ckdlscjs/AlgorithmRepo/tree/master/1441-build-an-array-with-stack-operations) |
 | [1700-number-of-students-unable-to-eat-lunch](https://github.com/ckdlscjs/AlgorithmRepo/tree/master/1700-number-of-students-unable-to-eat-lunch) |
+| [1732-find-the-highest-altitude](https://github.com/ckdlscjs/AlgorithmRepo/tree/master/1732-find-the-highest-altitude) |
 | [1929-concatenation-of-array](https://github.com/ckdlscjs/AlgorithmRepo/tree/master/1929-concatenation-of-array) |
 | [2073-time-needed-to-buy-tickets](https://github.com/ckdlscjs/AlgorithmRepo/tree/master/2073-time-needed-to-buy-tickets) |
 ## Simulation
@@ -93,4 +94,8 @@ This is a auto push repository for Baekjoon Online Judge created with [BaekjoonH
 | [0001-two-sum](https://github.com/ckdlscjs/AlgorithmRepo/tree/master/0001-two-sum) |
 | [0041-first-missing-positive](https://github.com/ckdlscjs/AlgorithmRepo/tree/master/0041-first-missing-positive) |
 | [0138-copy-list-with-random-pointer](https://github.com/ckdlscjs/AlgorithmRepo/tree/master/0138-copy-list-with-random-pointer) |
+## Prefix Sum
+|  |
+| ------- |
+| [1732-find-the-highest-altitude](https://github.com/ckdlscjs/AlgorithmRepo/tree/master/1732-find-the-highest-altitude) |
 <!---LeetCode Topics End-->
