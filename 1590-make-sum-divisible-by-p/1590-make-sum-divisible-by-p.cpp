@@ -2,24 +2,25 @@ class Solution {
 public:
     int minSubarray(vector<int>& nums, int p) 
     {
-        long long allSum = 0;
+        long long sum_all = 0;
         for(const auto& iter : nums)
-            allSum += iter;
-        int R = allSum % p;
-        if(R == 0) return 0;
-        std::unordered_map<int, int> index;
-        index[0] = -1;
-        long long curSum = 0;
-        int minLen = nums.size();
-        for(int j = 0; j < nums.size(); j++)
+            sum_all += iter;
+        int R = sum_all % p;
+        if(R <= 0) return 0;
+
+        std::unordered_map<int, int> u_d;
+        u_d[0] = -1;
+        long long sum_cur = 0;
+        int ret = nums.size();
+        for(int i = 0; i < nums.size(); i++)
         {
-            curSum += nums[j];
-            int curMod = curSum % p;
-            int X = (curMod - R + p) % p;
-            if(index.count(X))
-                minLen = std::min(minLen, j - index[X]);
-            index[curMod] = j;
+            sum_cur += nums[i];
+            int R1 = sum_cur % p;
+            int R2 = (R1 - R + p) % p;
+            if(u_d.count(R2))
+                ret = std::min(ret, i - u_d[R2]);
+            u_d[R1] = i;
         }
-        return minLen < nums.size() ? minLen : -1;
+        return ret < nums.size() ? ret : -1;
     }
 };
