@@ -7,7 +7,7 @@ public:
             allSum += iter;
         int R = allSum % p;
         if(R == 0) return 0;
-        std::map<int, int> index;
+        std::unordered_map<int, int> index;
         index[0] = -1;
         long long curSum = 0;
         int minLen = nums.size();
