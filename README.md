@@ -14,6 +14,7 @@ This is a auto push repository for Baekjoon Online Judge created with [BaekjoonH
 | [0636-exclusive-time-of-functions](https://github.com/ckdlscjs/AlgorithmRepo/tree/master/0636-exclusive-time-of-functions) |
 | [0739-daily-temperatures](https://github.com/ckdlscjs/AlgorithmRepo/tree/master/0739-daily-temperatures) |
 | [1046-last-stone-weight](https://github.com/ckdlscjs/AlgorithmRepo/tree/master/1046-last-stone-weight) |
+| [1200-minimum-absolute-difference](https://github.com/ckdlscjs/AlgorithmRepo/tree/master/1200-minimum-absolute-difference) |
 | [1354-construct-target-array-with-multiple-sums](https://github.com/ckdlscjs/AlgorithmRepo/tree/master/1354-construct-target-array-with-multiple-sums) |
 | [1441-build-an-array-with-stack-operations](https://github.com/ckdlscjs/AlgorithmRepo/tree/master/1441-build-an-array-with-stack-operations) |
 | [1590-make-sum-divisible-by-p](https://github.com/ckdlscjs/AlgorithmRepo/tree/master/1590-make-sum-divisible-by-p) |
@@ -103,4 +104,8 @@ This is a auto push repository for Baekjoon Online Judge created with [BaekjoonH
 | [1590-make-sum-divisible-by-p](https://github.com/ckdlscjs/AlgorithmRepo/tree/master/1590-make-sum-divisible-by-p) |
 | [1664-ways-to-make-a-fair-array](https://github.com/ckdlscjs/AlgorithmRepo/tree/master/1664-ways-to-make-a-fair-array) |
 | [1732-find-the-highest-altitude](https://github.com/ckdlscjs/AlgorithmRepo/tree/master/1732-find-the-highest-altitude) |
+## Sorting
+|  |
+| ------- |
+| [1200-minimum-absolute-difference](https://github.com/ckdlscjs/AlgorithmRepo/tree/master/1200-minimum-absolute-difference) |
 <!---LeetCode Topics End-->
