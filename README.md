@@ -21,6 +21,7 @@ This is a auto push repository for Baekjoon Online Judge created with [BaekjoonH
 | [1664-ways-to-make-a-fair-array](https://github.com/ckdlscjs/AlgorithmRepo/tree/master/1664-ways-to-make-a-fair-array) |
 | [1700-number-of-students-unable-to-eat-lunch](https://github.com/ckdlscjs/AlgorithmRepo/tree/master/1700-number-of-students-unable-to-eat-lunch) |
 | [1732-find-the-highest-altitude](https://github.com/ckdlscjs/AlgorithmRepo/tree/master/1732-find-the-highest-altitude) |
+| [1887-reduction-operations-to-make-the-array-elements-equal](https://github.com/ckdlscjs/AlgorithmRepo/tree/master/1887-reduction-operations-to-make-the-array-elements-equal) |
 | [1929-concatenation-of-array](https://github.com/ckdlscjs/AlgorithmRepo/tree/master/1929-concatenation-of-array) |
 | [2073-time-needed-to-buy-tickets](https://github.com/ckdlscjs/AlgorithmRepo/tree/master/2073-time-needed-to-buy-tickets) |
 ## Simulation
@@ -108,4 +109,5 @@ This is a auto push repository for Baekjoon Online Judge created with [BaekjoonH
 |  |
 | ------- |
 | [1200-minimum-absolute-difference](https://github.com/ckdlscjs/AlgorithmRepo/tree/master/1200-minimum-absolute-difference) |
+| [1887-reduction-operations-to-make-the-array-elements-equal](https://github.com/ckdlscjs/AlgorithmRepo/tree/master/1887-reduction-operations-to-make-the-array-elements-equal) |
 <!---LeetCode Topics End-->
