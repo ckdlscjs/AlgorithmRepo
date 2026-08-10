@@ -8,6 +8,7 @@ This is a auto push repository for Baekjoon Online Judge created with [BaekjoonH
 | ------- |
 | [0001-two-sum](https://github.com/ckdlscjs/AlgorithmRepo/tree/master/0001-two-sum) |
 | [0041-first-missing-positive](https://github.com/ckdlscjs/AlgorithmRepo/tree/master/0041-first-missing-positive) |
+| [0056-merge-intervals](https://github.com/ckdlscjs/AlgorithmRepo/tree/master/0056-merge-intervals) |
 | [0084-largest-rectangle-in-histogram](https://github.com/ckdlscjs/AlgorithmRepo/tree/master/0084-largest-rectangle-in-histogram) |
 | [0150-evaluate-reverse-polish-notation](https://github.com/ckdlscjs/AlgorithmRepo/tree/master/0150-evaluate-reverse-polish-notation) |
 | [0373-find-k-pairs-with-smallest-sums](https://github.com/ckdlscjs/AlgorithmRepo/tree/master/0373-find-k-pairs-with-smallest-sums) |
@@ -108,6 +109,11 @@ This is a auto push repository for Baekjoon Online Judge created with [BaekjoonH
 ## Sorting
 |  |
 | ------- |
+| [0056-merge-intervals](https://github.com/ckdlscjs/AlgorithmRepo/tree/master/0056-merge-intervals) |
 | [1200-minimum-absolute-difference](https://github.com/ckdlscjs/AlgorithmRepo/tree/master/1200-minimum-absolute-difference) |
 | [1887-reduction-operations-to-make-the-array-elements-equal](https://github.com/ckdlscjs/AlgorithmRepo/tree/master/1887-reduction-operations-to-make-the-array-elements-equal) |
+## Quicksort
+|  |
+| ------- |
+| [0056-merge-intervals](https://github.com/ckdlscjs/AlgorithmRepo/tree/master/0056-merge-intervals) |
 <!---LeetCode Topics End-->
