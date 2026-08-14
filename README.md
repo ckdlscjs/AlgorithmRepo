@@ -47,6 +47,7 @@ This is a auto push repository for Baekjoon Online Judge created with [BaekjoonH
 |  |
 | ------- |
 | [0150-evaluate-reverse-polish-notation](https://github.com/ckdlscjs/AlgorithmRepo/tree/master/0150-evaluate-reverse-polish-notation) |
+| [0633-sum-of-square-numbers](https://github.com/ckdlscjs/AlgorithmRepo/tree/master/0633-sum-of-square-numbers) |
 ## Monotonic Stack
 |  |
 | ------- |
@@ -120,9 +121,14 @@ This is a auto push repository for Baekjoon Online Judge created with [BaekjoonH
 ## Binary Search
 |  |
 | ------- |
+| [0633-sum-of-square-numbers](https://github.com/ckdlscjs/AlgorithmRepo/tree/master/0633-sum-of-square-numbers) |
 | [0852-peak-index-in-a-mountain-array](https://github.com/ckdlscjs/AlgorithmRepo/tree/master/0852-peak-index-in-a-mountain-array) |
 ## Ternary Search
 |  |
 | ------- |
 | [0852-peak-index-in-a-mountain-array](https://github.com/ckdlscjs/AlgorithmRepo/tree/master/0852-peak-index-in-a-mountain-array) |
+## Two Pointers
+|  |
+| ------- |
+| [0633-sum-of-square-numbers](https://github.com/ckdlscjs/AlgorithmRepo/tree/master/0633-sum-of-square-numbers) |
 <!---LeetCode Topics End-->
