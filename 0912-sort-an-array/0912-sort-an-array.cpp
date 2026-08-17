@@ -1,3 +1,9 @@
+auto fastio = []() {
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(nullptr);
+    return 0;
+}();
+
 class Solution {
     void MergeSort(std::vector<int>& arr, std::vector<int>& temp, int s, int e)
     {
