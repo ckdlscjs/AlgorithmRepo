@@ -94,6 +94,7 @@ This is a auto push repository for Baekjoon Online Judge created with [BaekjoonH
 | ------- |
 | [0083-remove-duplicates-from-sorted-list](https://github.com/ckdlscjs/AlgorithmRepo/tree/master/0083-remove-duplicates-from-sorted-list) |
 | [0138-copy-list-with-random-pointer](https://github.com/ckdlscjs/AlgorithmRepo/tree/master/0138-copy-list-with-random-pointer) |
+| [0147-insertion-sort-list](https://github.com/ckdlscjs/AlgorithmRepo/tree/master/0147-insertion-sort-list) |
 | [0206-reverse-linked-list](https://github.com/ckdlscjs/AlgorithmRepo/tree/master/0206-reverse-linked-list) |
 | [0328-odd-even-linked-list](https://github.com/ckdlscjs/AlgorithmRepo/tree/master/0328-odd-even-linked-list) |
 ## Recursion
@@ -117,6 +118,7 @@ This is a auto push repository for Baekjoon Online Judge created with [BaekjoonH
 |  |
 | ------- |
 | [0056-merge-intervals](https://github.com/ckdlscjs/AlgorithmRepo/tree/master/0056-merge-intervals) |
+| [0147-insertion-sort-list](https://github.com/ckdlscjs/AlgorithmRepo/tree/master/0147-insertion-sort-list) |
 | [0215-kth-largest-element-in-an-array](https://github.com/ckdlscjs/AlgorithmRepo/tree/master/0215-kth-largest-element-in-an-array) |
 | [0912-sort-an-array](https://github.com/ckdlscjs/AlgorithmRepo/tree/master/0912-sort-an-array) |
 | [1200-minimum-absolute-difference](https://github.com/ckdlscjs/AlgorithmRepo/tree/master/1200-minimum-absolute-difference) |
