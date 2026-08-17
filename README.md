@@ -12,6 +12,7 @@ This is a auto push repository for Baekjoon Online Judge created with [BaekjoonH
 | [0056-merge-intervals](https://github.com/ckdlscjs/AlgorithmRepo/tree/master/0056-merge-intervals) |
 | [0084-largest-rectangle-in-histogram](https://github.com/ckdlscjs/AlgorithmRepo/tree/master/0084-largest-rectangle-in-histogram) |
 | [0150-evaluate-reverse-polish-notation](https://github.com/ckdlscjs/AlgorithmRepo/tree/master/0150-evaluate-reverse-polish-notation) |
+| [0215-kth-largest-element-in-an-array](https://github.com/ckdlscjs/AlgorithmRepo/tree/master/0215-kth-largest-element-in-an-array) |
 | [0373-find-k-pairs-with-smallest-sums](https://github.com/ckdlscjs/AlgorithmRepo/tree/master/0373-find-k-pairs-with-smallest-sums) |
 | [0636-exclusive-time-of-functions](https://github.com/ckdlscjs/AlgorithmRepo/tree/master/0636-exclusive-time-of-functions) |
 | [0739-daily-temperatures](https://github.com/ckdlscjs/AlgorithmRepo/tree/master/0739-daily-temperatures) |
@@ -67,6 +68,7 @@ This is a auto push repository for Baekjoon Online Judge created with [BaekjoonH
 ## Heap (Priority Queue)
 |  |
 | ------- |
+| [0215-kth-largest-element-in-an-array](https://github.com/ckdlscjs/AlgorithmRepo/tree/master/0215-kth-largest-element-in-an-array) |
 | [0373-find-k-pairs-with-smallest-sums](https://github.com/ckdlscjs/AlgorithmRepo/tree/master/0373-find-k-pairs-with-smallest-sums) |
 | [1046-last-stone-weight](https://github.com/ckdlscjs/AlgorithmRepo/tree/master/1046-last-stone-weight) |
 | [1354-construct-target-array-with-multiple-sums](https://github.com/ckdlscjs/AlgorithmRepo/tree/master/1354-construct-target-array-with-multiple-sums) |
@@ -113,6 +115,7 @@ This is a auto push repository for Baekjoon Online Judge created with [BaekjoonH
 |  |
 | ------- |
 | [0056-merge-intervals](https://github.com/ckdlscjs/AlgorithmRepo/tree/master/0056-merge-intervals) |
+| [0215-kth-largest-element-in-an-array](https://github.com/ckdlscjs/AlgorithmRepo/tree/master/0215-kth-largest-element-in-an-array) |
 | [1200-minimum-absolute-difference](https://github.com/ckdlscjs/AlgorithmRepo/tree/master/1200-minimum-absolute-difference) |
 | [1887-reduction-operations-to-make-the-array-elements-equal](https://github.com/ckdlscjs/AlgorithmRepo/tree/master/1887-reduction-operations-to-make-the-array-elements-equal) |
 ## Quicksort
@@ -133,4 +136,12 @@ This is a auto push repository for Baekjoon Online Judge created with [BaekjoonH
 |  |
 | ------- |
 | [0633-sum-of-square-numbers](https://github.com/ckdlscjs/AlgorithmRepo/tree/master/0633-sum-of-square-numbers) |
+## Divide and Conquer
+|  |
+| ------- |
+| [0215-kth-largest-element-in-an-array](https://github.com/ckdlscjs/AlgorithmRepo/tree/master/0215-kth-largest-element-in-an-array) |
+## Quickselect
+|  |
+| ------- |
+| [0215-kth-largest-element-in-an-array](https://github.com/ckdlscjs/AlgorithmRepo/tree/master/0215-kth-largest-element-in-an-array) |
 <!---LeetCode Topics End-->
