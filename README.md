@@ -18,6 +18,7 @@ This is a auto push repository for Baekjoon Online Judge created with [BaekjoonH
 | [0739-daily-temperatures](https://github.com/ckdlscjs/AlgorithmRepo/tree/master/0739-daily-temperatures) |
 | [0852-peak-index-in-a-mountain-array](https://github.com/ckdlscjs/AlgorithmRepo/tree/master/0852-peak-index-in-a-mountain-array) |
 | [0912-sort-an-array](https://github.com/ckdlscjs/AlgorithmRepo/tree/master/0912-sort-an-array) |
+| [0932-beautiful-array](https://github.com/ckdlscjs/AlgorithmRepo/tree/master/0932-beautiful-array) |
 | [1046-last-stone-weight](https://github.com/ckdlscjs/AlgorithmRepo/tree/master/1046-last-stone-weight) |
 | [1200-minimum-absolute-difference](https://github.com/ckdlscjs/AlgorithmRepo/tree/master/1200-minimum-absolute-difference) |
 | [1354-construct-target-array-with-multiple-sums](https://github.com/ckdlscjs/AlgorithmRepo/tree/master/1354-construct-target-array-with-multiple-sums) |
@@ -51,6 +52,7 @@ This is a auto push repository for Baekjoon Online Judge created with [BaekjoonH
 | ------- |
 | [0150-evaluate-reverse-polish-notation](https://github.com/ckdlscjs/AlgorithmRepo/tree/master/0150-evaluate-reverse-polish-notation) |
 | [0633-sum-of-square-numbers](https://github.com/ckdlscjs/AlgorithmRepo/tree/master/0633-sum-of-square-numbers) |
+| [0932-beautiful-array](https://github.com/ckdlscjs/AlgorithmRepo/tree/master/0932-beautiful-array) |
 ## Monotonic Stack
 |  |
 | ------- |
@@ -146,6 +148,7 @@ This is a auto push repository for Baekjoon Online Judge created with [BaekjoonH
 | ------- |
 | [0215-kth-largest-element-in-an-array](https://github.com/ckdlscjs/AlgorithmRepo/tree/master/0215-kth-largest-element-in-an-array) |
 | [0912-sort-an-array](https://github.com/ckdlscjs/AlgorithmRepo/tree/master/0912-sort-an-array) |
+| [0932-beautiful-array](https://github.com/ckdlscjs/AlgorithmRepo/tree/master/0932-beautiful-array) |
 ## Quickselect
 |  |
 | ------- |
