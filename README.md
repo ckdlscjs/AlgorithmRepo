@@ -11,6 +11,7 @@ This is a auto push repository for Baekjoon Online Judge created with [BaekjoonH
 | [0041-first-missing-positive](https://github.com/ckdlscjs/AlgorithmRepo/tree/master/0041-first-missing-positive) |
 | [0056-merge-intervals](https://github.com/ckdlscjs/AlgorithmRepo/tree/master/0056-merge-intervals) |
 | [0084-largest-rectangle-in-histogram](https://github.com/ckdlscjs/AlgorithmRepo/tree/master/0084-largest-rectangle-in-histogram) |
+| [0106-construct-binary-tree-from-inorder-and-postorder-traversal](https://github.com/ckdlscjs/AlgorithmRepo/tree/master/0106-construct-binary-tree-from-inorder-and-postorder-traversal) |
 | [0150-evaluate-reverse-polish-notation](https://github.com/ckdlscjs/AlgorithmRepo/tree/master/0150-evaluate-reverse-polish-notation) |
 | [0215-kth-largest-element-in-an-array](https://github.com/ckdlscjs/AlgorithmRepo/tree/master/0215-kth-largest-element-in-an-array) |
 | [0373-find-k-pairs-with-smallest-sums](https://github.com/ckdlscjs/AlgorithmRepo/tree/master/0373-find-k-pairs-with-smallest-sums) |
@@ -108,6 +109,7 @@ This is a auto push repository for Baekjoon Online Judge created with [BaekjoonH
 | ------- |
 | [0001-two-sum](https://github.com/ckdlscjs/AlgorithmRepo/tree/master/0001-two-sum) |
 | [0041-first-missing-positive](https://github.com/ckdlscjs/AlgorithmRepo/tree/master/0041-first-missing-positive) |
+| [0106-construct-binary-tree-from-inorder-and-postorder-traversal](https://github.com/ckdlscjs/AlgorithmRepo/tree/master/0106-construct-binary-tree-from-inorder-and-postorder-traversal) |
 | [0138-copy-list-with-random-pointer](https://github.com/ckdlscjs/AlgorithmRepo/tree/master/0138-copy-list-with-random-pointer) |
 | [1590-make-sum-divisible-by-p](https://github.com/ckdlscjs/AlgorithmRepo/tree/master/1590-make-sum-divisible-by-p) |
 ## Prefix Sum
@@ -146,6 +148,7 @@ This is a auto push repository for Baekjoon Online Judge created with [BaekjoonH
 ## Divide and Conquer
 |  |
 | ------- |
+| [0106-construct-binary-tree-from-inorder-and-postorder-traversal](https://github.com/ckdlscjs/AlgorithmRepo/tree/master/0106-construct-binary-tree-from-inorder-and-postorder-traversal) |
 | [0215-kth-largest-element-in-an-array](https://github.com/ckdlscjs/AlgorithmRepo/tree/master/0215-kth-largest-element-in-an-array) |
 | [0912-sort-an-array](https://github.com/ckdlscjs/AlgorithmRepo/tree/master/0912-sort-an-array) |
 | [0932-beautiful-array](https://github.com/ckdlscjs/AlgorithmRepo/tree/master/0932-beautiful-array) |
@@ -169,4 +172,12 @@ This is a auto push repository for Baekjoon Online Judge created with [BaekjoonH
 |  |
 | ------- |
 | [0912-sort-an-array](https://github.com/ckdlscjs/AlgorithmRepo/tree/master/0912-sort-an-array) |
+## Tree
+|  |
+| ------- |
+| [0106-construct-binary-tree-from-inorder-and-postorder-traversal](https://github.com/ckdlscjs/AlgorithmRepo/tree/master/0106-construct-binary-tree-from-inorder-and-postorder-traversal) |
+## Binary Tree
+|  |
+| ------- |
+| [0106-construct-binary-tree-from-inorder-and-postorder-traversal](https://github.com/ckdlscjs/AlgorithmRepo/tree/master/0106-construct-binary-tree-from-inorder-and-postorder-traversal) |
 <!---LeetCode Topics End-->
